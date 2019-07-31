@@ -1,0 +1,19 @@
+debug: true
+server:
+  port: 8080
+spring:
+  data:
+    mongodb:
+      host: 39.108.144.152
+      port: 27017
+      database: TaskRepository
+      username: autovisa
+      password: autovisa123
+      authentication-database: admin
+tencent:
+  exmail:
+    corpid: wm076b4e42189f34ed
+    newsletter-secrect: cN_MgA-UhSEeoddf9NzC4HYG1VZe3H3YK-cOpelOTXL0aeoP_6MRbh0Tm-7FpHuW
+aliyun:
+  captcha:
+    api-code: fcb5bac879ff42f89a4ceaa3df8d2024
