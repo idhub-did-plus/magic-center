@@ -4,16 +4,12 @@ server:
 spring:
   data:
     mongodb:
-      host: 39.108.144.152
+      host: 127.0.0.1
       port: 27017
-      database: TaskRepository
-      username: autovisa
-      password: autovisa123
+      database: MagicRepository
+      username: byq
+      password: 2218283
       authentication-database: admin
-tencent:
-  exmail:
-    corpid: wm076b4e42189f34ed
-    newsletter-secrect: cN_MgA-UhSEeoddf9NzC4HYG1VZe3H3YK-cOpelOTXL0aeoP_6MRbh0Tm-7FpHuW
-aliyun:
-  captcha:
-    api-code: fcb5bac879ff42f89a4ceaa3df8d2024
+web3j:
+  client-address: http://localhost:8545
+  admin-client: false
