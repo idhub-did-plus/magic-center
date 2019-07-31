@@ -1,5 +1,5 @@
 
-package com.idhub.magic.service;
+package com.idhub.magic.center;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;

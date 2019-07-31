@@ -1,4 +1,4 @@
-package com.idhub.magic.service;
+package com.idhub.magic.center;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
