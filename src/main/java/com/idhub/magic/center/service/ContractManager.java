@@ -70,6 +70,7 @@ public class ContractManager {
                 credentials,
                 contractGasProvider
         );
+    
     }
     
      public EthereumClaimsRegistryInterface getRegistry780() {
