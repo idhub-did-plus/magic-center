@@ -26,7 +26,8 @@ public class AuthenticationAspect {
 		String signed = req.getHeader("signed");
 		String qs = req.getQueryString();
 		String identity = req.getParameter("identity");
-		boolean authenticated = Utils.authenticate(signed, qs, identity);
+		String timestamp = req.getParameter("timestamp");
+		boolean authenticated = Utils.authenticate(signed, identity + timestamp);
 		if(!authenticated)
 			throw new RuntimeException("....");
 		
