@@ -1,16 +1,36 @@
 package com.idhub.magic.center;
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import org.web3j.abi.FunctionEncoder;
+import org.web3j.abi.TypeReference;
+import org.web3j.abi.datatypes.Address;
+import org.web3j.abi.datatypes.Bool;
+import org.web3j.abi.datatypes.Function;
+import org.web3j.abi.datatypes.Type;
 import org.web3j.abi.datatypes.generated.Bytes32;
+import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.abi.datatypes.generated.Uint8;
 import org.web3j.crypto.CipherException;
 import org.web3j.crypto.Credentials;
 import org.web3j.crypto.ECKeyPair;
 import org.web3j.crypto.Hash;
 import org.web3j.crypto.Keys;
+import org.web3j.crypto.RawTransaction;
 import org.web3j.crypto.Sign;
+import org.web3j.crypto.TransactionEncoder;
 import org.web3j.crypto.WalletUtils;
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
+import org.web3j.protocol.core.methods.response.EthSendTransaction;
+import org.web3j.protocol.http.HttpService;
+import org.web3j.utils.Convert;
+import org.web3j.utils.Numeric;
 
 public class Utils {
 	static public void main(String[] ss) throws Exception {
@@ -38,6 +58,55 @@ public class Utils {
 		 * System.out.println("Recovered address1 : 0x"+address);
 		 * System.out.println("Recovered address2 : 0x"+address2);
 		 */
+	}
+	void test() {
+	
+	        try {
+	            String privateKey_ = "123456";
+	            String contractAddress_ = "111111";
+	            
+	            Credentials credentials = Credentials.create(privateKey_);
+	            String fromAddress = credentials.getAddress();
+	            Web3j web3j = Web3j.build(new HttpService());
+	            EthGetTransactionCount ethGetTransactionCount = web3j
+	                    .ethGetTransactionCount(fromAddress, DefaultBlockParameterName.LATEST).sendAsync().get();
+	            BigInteger nonce = ethGetTransactionCount.getTransactionCount();
+	            
+	            List<Type> inputParameters = new ArrayList<>();
+	            
+	            Address[] address = {new Address("0x092754..."),new Address("0x2b6186.....")};
+	            Uint256[] theBalance = {new Uint256(10),new Uint256(20)};
+	            
+	            //这里加入会报错
+	            inputParameters.add(Arrays.asList(address));
+	            inputParameters.add(Arrays.asList(theBalance));
+	            
+	            List<TypeReference<?>> outputParameters = new ArrayList<>();
+	            TypeReference<Bool> result = new TypeReference<Bool>() {};
+	            outputParameters.add(result);
+	            
+	            Function function = new Function("setMultiPlyRewardInfo",
+	                inputParameters,outputParameters);
+	            String encodedFunction = FunctionEncoder.encode(function);
+	            
+	            RawTransaction rawTransaction = RawTransaction.createTransaction(nonce,
+	                    Convert.toWei("1", Convert.Unit.GWEI).toBigInteger(),
+	                    new BigInteger("5000000"), contractAddress_, encodedFunction);
+	            
+	            byte[] signedMessage = TransactionEncoder.signMessage(rawTransaction,(byte) 18928,credentials);
+	            String hexValue = Numeric.toHexString(signedMessage);
+
+	            EthSendTransaction ethSendTransaction = web3j.ethSendRawTransaction(hexValue).sendAsync().get();
+	            return ethSendTransaction.getTransactionHash();
+	        } catch (InterruptedException e) {
+	            e.printStackTrace();
+	            return "";
+	        } catch (ExecutionException e) {
+	            e.printStackTrace();
+	            return "";
+	        }
+	    }
+
 	}
 	// https://ethereum.stackexchange.com/questions/17708/solidity-ecrecover-and-web3j-sign-signmessage-are-not-compatible-is-it
 }
