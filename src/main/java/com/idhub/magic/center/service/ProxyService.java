@@ -25,6 +25,7 @@ import rx.Subscription;
 
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.methods.response.EthBlock;
+import org.web3j.protocol.core.methods.response.NetVersion;
 import org.web3j.protocol.core.methods.response.Transaction;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.utils.Convert;
@@ -37,6 +38,16 @@ public class ProxyService {
     @PostConstruct
     void init(){
     	System.out.println(web3j.toString());
+    	
+    	 try {
+    		NetVersion nv = web3j.netVersion().send();
+    		System.out.println(nv.getNetVersion());
+    		 String v = getClientVersion();
+    		 System.out.println(v);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public String getClientVersion() throws IOException {
@@ -50,6 +61,7 @@ public class ProxyService {
 
     static public void main(String[] ss) {
     	Web3j web3j = Web3j.build(new HttpService());  // defaults to http://localhost:8545/
+    	
     }
 
     private void run() throws Exception {
