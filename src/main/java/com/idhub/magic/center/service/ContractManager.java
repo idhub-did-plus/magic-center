@@ -24,7 +24,7 @@ import org.web3j.utils.Numeric;
 import com.idhub.magic.contracts.ERC1056ResolverInterface;
 import com.idhub.magic.contracts.EthereumClaimsRegistryInterface;
 import com.idhub.magic.contracts.EthereumDIDRegistryInterface;
-import com.idhub.magic.contracts.IdentityRegistry;
+import com.idhub.magic.contracts.IdentityRegistryInterface;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -37,7 +37,7 @@ public class ContractManager {
 	@Autowired
     private Web3j web3j;
 
-	 IdentityRegistry registry1484;
+	IdentityRegistryInterface registry1484;
 	 ERC1056ResolverInterface resolver1056;
 	 EthereumDIDRegistryInterface registry1056;
 	 EthereumClaimsRegistryInterface registry780;
@@ -50,7 +50,7 @@ public class ContractManager {
         log.info("Credentials loaded");
         
         ContractGasProvider contractGasProvider = new DefaultGasProvider();
-        registry1484 = IdentityRegistry.load(DeployedContractAddress.IdentityRegistryInterface,
+        registry1484 = IdentityRegistryInterface.load(DeployedContractAddress.IdentityRegistryInterface,
                 web3j,
                 credentials,
                 contractGasProvider
@@ -76,15 +76,12 @@ public class ContractManager {
 		return registry780;
 	}
 
-	public void setRegistry1484(IdentityRegistry registry1484) {
-		this.registry1484 = registry1484;
-	}
 
 	public ERC1056ResolverInterface getResolver1056() {
 		return resolver1056;
 	}
 
-	public IdentityRegistry getRegistry1484() {
+	public IdentityRegistryInterface getRegistry1484() {
 		return registry1484;
 	}
 
