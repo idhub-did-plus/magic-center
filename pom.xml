@@ -120,7 +120,7 @@
 		<dependency>
 			<groupId>org.web3j</groupId>
 			<artifactId>core</artifactId>
-			<version>3.6.0</version>
+			<version>4.2.0</version>
 		</dependency>
 	</dependencies>
 

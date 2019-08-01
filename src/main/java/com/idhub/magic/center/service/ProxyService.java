@@ -20,8 +20,7 @@ import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import rx.Observable;
-import rx.Subscription;
+
 
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.methods.response.EthBlock;
@@ -29,6 +28,8 @@ import org.web3j.protocol.core.methods.response.NetVersion;
 import org.web3j.protocol.core.methods.response.Transaction;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.utils.Convert;
+
+import io.reactivex.disposables.Disposable;
 @Service
 public class ProxyService {
 	@Autowired
@@ -66,25 +67,25 @@ public class ProxyService {
 
     private void run() throws Exception {
         simpleFilterExample();
-        blockInfoExample();
-        countingEtherExample();
-        clientVersionExample();
+     //   blockInfoExample();
+     //   countingEtherExample();
+      //  clientVersionExample();
         System.exit(0);  // we explicitly call the exit to clean up our ScheduledThreadPoolExecutor used by web3j
     }
 
 
     void simpleFilterExample() throws Exception {
 
-        Subscription subscription = web3j.blockObservable(false).subscribe(block -> {
+        Disposable subscription = web3j.blockFlowable(false).subscribe(block -> {
             log.info("Sweet, block number " + block.getBlock().getNumber()
                     + " has just been created");
         }, Throwable::printStackTrace);
 
         TimeUnit.MINUTES.sleep(2);
-        subscription.unsubscribe();
+        subscription.dispose();
     }
 
-    void blockInfoExample() throws Exception {
+   /* void blockInfoExample() throws Exception {
         CountDownLatch countDownLatch = new CountDownLatch(COUNT);
 
         log.info("Waiting for " + COUNT + " transactions...");
@@ -142,5 +143,5 @@ public class ProxyService {
 
         countDownLatch.await();
         subscription.unsubscribe();
-    }
+    }*/
 }
