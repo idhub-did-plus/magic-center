@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.admin.Admin;
 import org.web3j.protocol.core.methods.response.Web3ClientVersion;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -14,6 +15,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+
+import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +30,14 @@ import org.web3j.protocol.http.HttpService;
 import org.web3j.utils.Convert;
 @Service
 public class ProxyService {
-
-    @Autowired
+	@Autowired
     private Web3j web3j;
+	@Autowired 
+	Admin admin;
+    @PostConstruct
+    void init(){
+    	System.out.println(web3j.toString());
+    }
 
     public String getClientVersion() throws IOException {
         Web3ClientVersion web3ClientVersion = web3j.web3ClientVersion().send();
@@ -40,8 +48,8 @@ public class ProxyService {
     private static Logger log = LoggerFactory.getLogger(ProxyService.class);
 
 
-    public void Main() {
-        web3j = Web3j.build(new HttpService());  // defaults to http://localhost:8545/
+    static public void main(String[] ss) {
+    	Web3j web3j = Web3j.build(new HttpService());  // defaults to http://localhost:8545/
     }
 
     private void run() throws Exception {

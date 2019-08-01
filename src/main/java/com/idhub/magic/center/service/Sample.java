@@ -5,13 +5,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.web3j.crypto.Credentials;
 import org.web3j.crypto.WalletUtils;
-import org.web3j.model.Greeter;
+//import org.web3j.model.Greeter;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.Transfer;
-import org.web3j.tx.gas.ContractGasProvider;
-import org.web3j.tx.gas.DefaultGasProvider;
+//import org.web3j.tx.gas.ContractGasProvider;
+//import org.web3j.tx.gas.DefaultGasProvider;
 import org.web3j.utils.Convert;
 import org.web3j.utils.Numeric;
 
@@ -81,8 +81,8 @@ public class Sample {
 
         // Now lets deploy a smart contract
         log.info("Deploying smart contract");
-        ContractGasProvider contractGasProvider = new DefaultGasProvider();
-        Greeter contract = Greeter.deploy(
+    //    ContractGasProvider contractGasProvider = new DefaultGasProvider();
+  /*      Greeter contract = Greeter.deploy(
                 web3j,
                 credentials,
                 contractGasProvider,
@@ -109,6 +109,6 @@ public class Sample {
                     + ", new value: " + event.newGreeting);
             log.info("Indexed event previous value: " + Numeric.toHexString(event.oldGreetingIdx)
                     + ", new value: " + Numeric.toHexString(event.newGreetingIdx));
-        }
+        }*/
     }
 }
