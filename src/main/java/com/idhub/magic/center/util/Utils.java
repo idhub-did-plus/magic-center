@@ -1,4 +1,4 @@
-package com.idhub.magic.center;
+package com.idhub.magic.center.util;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -106,7 +106,9 @@ public class Utils {
 	            return "";
 	        }
 	    }
-
+	public static boolean authenticate(String signed, String qs, String identity) {
+		return null;
 	}
-	// https://ethereum.stackexchange.com/questions/17708/solidity-ecrecover-and-web3j-sign-signmessage-are-not-compatible-is-it
+
+
 }

@@ -1,6 +1,7 @@
 package com.idhub.magic.center.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/alipay")
 
 public class WalletProxyController {
-    @PostMapping("/crreateIdentity.json")
-	public String crreateIdentity(String identity, String json) {
+    @PostMapping("/crreateIdentity")
+	public String crreateIdentity(@RequestBody String json) {
 		return null;
 	}
 }
