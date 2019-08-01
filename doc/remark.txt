@@ -8,3 +8,13 @@ web3j solidity generate -b contracts\compiled\IdentityRegistry.bin -a contracts\
 
 solc contracts\1484\examples\Resolvers\ERC1056\ERC1056ResolverInterface.sol --bin --abi --optimize -o contracts\compiled
 web3j solidity generate -b contracts\compiled\ERC1056ResolverInterface.bin -a contracts\compiled\ERC1056ResolverInterface.abi -o src/main/java -p com.idhub.magic.contracts
+
+
+solc contracts\1056\EthereumDIDRegistryInterface.sol --bin --abi --optimize -o contracts\compiled
+web3j solidity generate -b contracts\compiled\EthereumDIDRegistryInterface.bin -a contracts\compiled\EthereumDIDRegistryInterface.abi -o src/main/java -p com.idhub.magic.contracts
+
+
+
+solc contracts\780\EthereumClaimsRegistryInterface.sol --bin --abi --optimize -o contracts\compiled
+web3j solidity generate -b contracts\compiled\EthereumClaimsRegistryInterface.bin -a contracts\compiled\EthereumClaimsRegistryInterface.abi -o src/main/java -p com.idhub.magic.contracts
+

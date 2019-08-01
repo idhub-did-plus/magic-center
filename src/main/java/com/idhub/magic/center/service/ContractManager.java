@@ -22,6 +22,8 @@ import org.web3j.utils.Convert;
 import org.web3j.utils.Numeric;
 
 import com.idhub.magic.contracts.ERC1056ResolverInterface;
+import com.idhub.magic.contracts.EthereumClaimsRegistryInterface;
+import com.idhub.magic.contracts.EthereumDIDRegistryInterface;
 import com.idhub.magic.contracts.IdentityRegistry;
 
 import java.io.IOException;
@@ -37,6 +39,8 @@ public class ContractManager {
 
 	 IdentityRegistry registry1484;
 	 ERC1056ResolverInterface resolver1056;
+	 EthereumDIDRegistryInterface registry1056;
+	 EthereumClaimsRegistryInterface registry780;
 	 Credentials credentials;
     private void init() throws Exception, CipherException {
     	credentials =
@@ -56,9 +60,27 @@ public class ContractManager {
                 credentials,
                 contractGasProvider
         );
+        registry1056 = EthereumDIDRegistryInterface.load(DeployedContractAddress.EthereumDIDRegistryInterface,
+                web3j,
+                credentials,
+                contractGasProvider
+        );
+        registry780 = registry780.load(DeployedContractAddress.EthereumClaimsRegistryInterface,
+                web3j,
+                credentials,
+                contractGasProvider
+        );
     }
     
-     public ERC1056ResolverInterface getResolver1056() {
+     public EthereumClaimsRegistryInterface getRegistry780() {
+		return registry780;
+	}
+
+	public void setRegistry1484(IdentityRegistry registry1484) {
+		this.registry1484 = registry1484;
+	}
+
+	public ERC1056ResolverInterface getResolver1056() {
 		return resolver1056;
 	}
 
