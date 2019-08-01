@@ -105,7 +105,11 @@
 			<artifactId>web3j-spring-boot-starter</artifactId>
 			<version>1.6.0</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.web3j</groupId>
+			<artifactId>core</artifactId>
+			<version>3.6.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
