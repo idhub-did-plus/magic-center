@@ -21,7 +21,7 @@ import org.web3j.tx.gas.DefaultGasProvider;
 import org.web3j.utils.Convert;
 import org.web3j.utils.Numeric;
 
-import com.idhub.magic.contracts.DeployedContractAddress;
+import com.idhub.magic.contracts.ERC1056ResolverInterface;
 import com.idhub.magic.contracts.IdentityRegistry;
 
 import java.io.IOException;
@@ -36,7 +36,7 @@ public class ContractManager {
     private Web3j web3j;
 
 	 IdentityRegistry registry1484;
-	 
+	 ERC1056ResolverInterface resolver1056;
 	 Credentials credentials;
     private void init() throws Exception, CipherException {
     	credentials =
@@ -46,14 +46,23 @@ public class ContractManager {
         log.info("Credentials loaded");
         
         ContractGasProvider contractGasProvider = new DefaultGasProvider();
-    	IdentityRegistry contract = IdentityRegistry.load(DeployedContractAddress.IdentityRegistry,
+        registry1484 = IdentityRegistry.load(DeployedContractAddress.IdentityRegistryInterface,
+                web3j,
+                credentials,
+                contractGasProvider
+        );
+        resolver1056 = ERC1056ResolverInterface.load(DeployedContractAddress.ERC1056ResolverInterface,
                 web3j,
                 credentials,
                 contractGasProvider
         );
     }
     
-     public IdentityRegistry getRegistry1484() {
+     public ERC1056ResolverInterface getResolver1056() {
+		return resolver1056;
+	}
+
+	public IdentityRegistry getRegistry1484() {
 		return registry1484;
 	}
 
