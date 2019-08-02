@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
+import com.idhub.magic.center.util.AuthenticationUtils;
 import com.idhub.magic.center.util.Utils;
 
 @Aspect
@@ -27,7 +28,7 @@ public class AuthenticationAspect {
 		String qs = req.getQueryString();
 		String identity = req.getParameter("identity");
 		String timestamp = req.getParameter("timestamp");
-		boolean authenticated = Utils.authenticate(signed, identity + timestamp, identity);
+		boolean authenticated = AuthenticationUtils.authenticate(signed, identity + timestamp, identity);
 		if(!authenticated)
 			throw new RuntimeException("....");
 		

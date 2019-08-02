@@ -1,6 +1,10 @@
 package com.idhub.magic.center.util;
 
 public class Signature {
+	public Signature() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	public Signature(String r, String s, int v) {
 		super();
 		this.r = r;

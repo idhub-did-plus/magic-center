@@ -38,17 +38,54 @@ import org.web3j.utils.Numeric;
 import com.alibaba.fastjson.JSON;
 import com.idhub.magic.center.crypto.CryptoManager;
 
-public class Utils {
+public class AuthenticationUtils {
 
-	private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
-	public static String bytesToHex(byte[] bytes) {
-	    char[] hexChars = new char[bytes.length * 2];
-	    for (int j = 0; j < bytes.length; j++) {
-	        int v = bytes[j] & 0xFF;
-	        hexChars[j * 2] = HEX_ARRAY[v >>> 4];
-	        hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
-	    }
-	    return new String(hexChars);
+	
+	static public Signature sig(String plainMessage) {
+		
+		byte[] hexMessage = Hash.sha3(plainMessage.getBytes());
+		
+		Credentials credentials = CryptoManager.getCredentials();
+		ECKeyPair pair = credentials.getEcKeyPair();
+
+
+	
+	
+		Sign.SignatureData signMessage = Sign.signMessage(hexMessage, pair);
+		String r = Base64.getEncoder().encodeToString(signMessage.getR());
+		String s = Base64.getEncoder().encodeToString(signMessage.getS());
+		
+	
+		int v = signMessage.getV();
+		return new Signature(r, s, v);
 	}
 	
+	public static boolean authenticate(String signature, String original, String address) {
+		Signature sig = JSON.parseObject(signature, Signature.class);
+		byte v = (byte) sig.v;
+		byte[] r = Base64.getDecoder().decode(sig.r);
+		
+		byte[] s = Base64.getDecoder().decode(sig.s);
+		
+		byte[] hexMessage = Hash.sha3(original.getBytes());
+		
+		Sign.SignatureData signMessage = new Sign.SignatureData((byte)sig.v, r, s);
+		
+		
+		String pubKey;
+		try {
+			pubKey = Sign.signedMessageToKey(hexMessage, signMessage).toString(16);
+		
+			String signerAddress = "0x" + Keys.getAddress(pubKey);
+			
+			return signerAddress.equalsIgnoreCase(address);
+		} catch (SignatureException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	
+	}
+
+
 }
