@@ -52,7 +52,6 @@ public class ProxyService {
     	BigInteger V = Numeric.toBigInt(param.v);
     	try {
 			c1484.createIdentityDelegated(param.recoveryAddress, param.associatedAddress, param.providers, param.resolvers, V, r, s, ts).send();
-		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
