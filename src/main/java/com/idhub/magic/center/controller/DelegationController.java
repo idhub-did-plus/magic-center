@@ -8,12 +8,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.idhub.magic.center.service.DelegationService;
 import com.idhub.magic.center.util.AuthenticationUtils;
 
 @RestController
-@RequestMapping("/proxy")
+@RequestMapping("/delegation")
 
-public class WalletProxyController {
+public class DelegationController {
+	@Autowired
+	DelegationService delegation;
     @PostMapping("/createIdentity")
 	public String createIdentity(@RequestBody String json) {
     	

@@ -33,7 +33,7 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 @Service
-public class ProxyService {
+public class DelegationService {
 	@Autowired
     private Web3j web3j;
 	@Autowired 
@@ -58,7 +58,7 @@ public class ProxyService {
 		}
     }
 
-    private static Logger log = LoggerFactory.getLogger(ProxyService.class);
+    private static Logger log = LoggerFactory.getLogger(DelegationService.class);
 
 
 
