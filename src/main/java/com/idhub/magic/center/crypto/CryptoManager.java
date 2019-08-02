@@ -13,7 +13,8 @@ public class CryptoManager {
 	static Credentials credentials;
 	static {
 		try {
-			credentials = WalletUtils.loadCredentials("2218283", "D:\\magicspace\\UTC--2019-08-01T10-04-24.655000000Z--1603690b9e570ff1239880011d2eafa61954b85c.json");
+			
+			credentials = WalletUtils.loadCredentials("2218283", "D:\\magicspace\\magic-center\\keystore\\keys.json");
 
 			log.info("Credentials loaded");
 		} catch (IOException e) {
