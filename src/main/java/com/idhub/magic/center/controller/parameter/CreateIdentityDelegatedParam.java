@@ -7,8 +7,8 @@ public class CreateIdentityDelegatedParam {
 	public String associatedAddress;
 	public List<String> providers;
 	public List<String> resolvers;
-	public int v;//27\28->BigInteger
-	public String  r;//base64
-	public String s;//base64
-	public String timestamp;//timestamp->base64.decode->BigInteger(byte[]);
+	public String v;//hex
+	public String  r;//hex
+	public String s;//hex
+	public String timestamp;//hex
 }
