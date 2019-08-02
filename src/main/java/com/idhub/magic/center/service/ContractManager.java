@@ -21,6 +21,7 @@ import org.web3j.tx.gas.DefaultGasProvider;
 import org.web3j.utils.Convert;
 import org.web3j.utils.Numeric;
 
+import com.idhub.magic.center.crypto.CryptoManager;
 import com.idhub.magic.contracts.ERC1056ResolverInterface;
 import com.idhub.magic.contracts.EthereumClaimsRegistryInterface;
 import com.idhub.magic.contracts.EthereumDIDRegistryInterface;
@@ -43,11 +44,7 @@ public class ContractManager {
 	 EthereumClaimsRegistryInterface registry780;
 	 Credentials credentials;
     private void init() throws Exception, CipherException {
-    	credentials =
-                WalletUtils.loadCredentials(
-                        "<password>",
-                        "/path/to/<walletfile>");
-        log.info("Credentials loaded");
+    	credentials = CryptoManager.getCredentials();
         
         ContractGasProvider contractGasProvider = new DefaultGasProvider();
         registry1484 = IdentityRegistryInterface.load(DeployedContractAddress.IdentityRegistryInterface,

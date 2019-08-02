@@ -2,8 +2,10 @@ package com.idhub.magic.center.util;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 import org.web3j.abi.FunctionEncoder;
@@ -32,6 +34,9 @@ import org.web3j.protocol.core.methods.response.EthSendTransaction;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.utils.Convert;
 import org.web3j.utils.Numeric;
+
+import com.alibaba.fastjson.JSON;
+import com.idhub.magic.center.crypto.CryptoManager;
 
 public class Utils {
 	static public void main(String[] ss) throws Exception {
@@ -62,7 +67,19 @@ public class Utils {
 		 * System.out.println("Recovered address2 : 0x"+address2);
 		 */
 	}
-
+	
+	static public Signature sig(String plainMessage) {
+		
+		byte[] hexMessage = Hash.sha3(plainMessage.getBytes());
+		Credentials credentials = CryptoManager.getCredentials();
+		ECKeyPair pair = credentials.getEcKeyPair();
+		Sign.SignatureData signMessage = Sign.signMessage(hexMessage, pair);
+		String r = Base64.getEncoder().encodeToString(signMessage.getR());
+		String s = Base64.getEncoder().encodeToString(signMessage.getS());
+		int v = signMessage.getV();
+		return new Signature(s, s, v);
+	}
+	
 	/*
 	 * void test() {
 	 * 
@@ -105,9 +122,27 @@ public class Utils {
 	 * e.printStackTrace(); return ""; } catch (ExecutionException e) {
 	 * e.printStackTrace(); return ""; } }
 	 */
-	public static boolean authenticate(String signed, String original) {
-		ECDSASignature
-		return null;
+	public static boolean authenticate(String signature, String original, String address) {
+		Signature sig = JSON.parseObject(signature, Signature.class);
+		byte v = (byte) sig.v;
+		byte[] r = Base64.getDecoder().decode(sig.r);
+		byte[] s = Base64.getDecoder().decode(sig.s);
+		
+		byte[] hexMessage = Hash.sha3(original.getBytes());
+		Sign.SignatureData signMessage = new Sign.SignatureData((byte)sig.v, r, s);
+		
+		
+		String pubKey;
+		try {
+			pubKey = Sign.signedMessageToKey(hexMessage, signMessage).toString(16);
+			String signerAddress = Keys.getAddress(pubKey);
+			return signerAddress.equals(address);
+		} catch (SignatureException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	
 	}
 
 

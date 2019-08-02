@@ -11,5 +11,5 @@ spring:
       password: 2218283
       authentication-database: admin
 web3j:
-  client-address: http://localhost:8545
+  client-address: http://localhost:7545
   admin-client: true
