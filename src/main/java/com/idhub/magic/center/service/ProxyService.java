@@ -48,10 +48,8 @@ public class ProxyService {
     	IdentityRegistryInterface c1484 = contractManager.getRegistry1484();
     	byte[] r = Numeric.hexStringToByteArray(param.r);
     	byte[] s = Numeric.hexStringToByteArray(param.s);
-    	byte[] v = new byte[1];
-    	v[0] = (byte) param.v;
     	BigInteger ts = Numeric.toBigInt(param.timestamp);
-    	BigInteger V = Numeric.toBigInt(v);
+    	BigInteger V = Numeric.toBigInt(param.v);
     	try {
 			c1484.createIdentityDelegated(param.recoveryAddress, param.associatedAddress, param.providers, param.resolvers, V, r, s, ts).send();
 		
