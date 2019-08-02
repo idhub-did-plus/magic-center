@@ -25,7 +25,7 @@ public class ClientTest {
 		  String sgt = JSON.toJSONString(sig);
 		  boolean authenticated = AuthenticationUtils.authenticate(sgt, id + ts, id);
 		  System.out.println(authenticated);
-		  HttpPost post =  new HttpPost("http://localhost:8080/proxy/createIdentity?identity=" + id + "&timestamp=" + ts);
+		  HttpPost post =  new HttpPost("http://localhost:8080/delegation/createIdentity?identity=" + id + "&timestamp=" + ts);
 		  post.addHeader("signature", sgt);
 		  try {
 		  StringEntity en = new StringEntity(sgt);

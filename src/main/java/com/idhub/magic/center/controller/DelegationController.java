@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
+import com.idhub.magic.center.controller.parameter.CreateIdentityDelegatedParam;
 import com.idhub.magic.center.service.DelegationService;
 import com.idhub.magic.center.util.AuthenticationUtils;
 
@@ -18,9 +20,10 @@ public class DelegationController {
 	@Autowired
 	DelegationService delegation;
     @PostMapping("/createIdentity")
-	public String createIdentity(@RequestBody String json) {
-    	
-		return null;
+	public MagicResponse createIdentity(@RequestBody String json) {
+    	CreateIdentityDelegatedParam param = JSON.parseObject(json, CreateIdentityDelegatedParam.class);
+    	this.delegation.createEntityDelegated(param);
+		return new MagicResponse();
 	}
 
 	
