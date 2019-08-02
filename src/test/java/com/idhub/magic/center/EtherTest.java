@@ -1,4 +1,6 @@
 package com.idhub.magic.center;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.io.IOException;
 
 import org.apache.http.conn.HttpHostConnectException;
@@ -7,11 +9,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.web3j.protocol.Web3jService;
 
 import com.idhub.magic.center.service.ProxyService;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

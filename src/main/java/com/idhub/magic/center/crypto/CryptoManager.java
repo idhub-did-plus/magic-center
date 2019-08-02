@@ -8,8 +8,6 @@ import org.web3j.crypto.CipherException;
 import org.web3j.crypto.Credentials;
 import org.web3j.crypto.WalletUtils;
 
-import com.idhub.magic.center.service.ContractManager;
-
 public class CryptoManager {
 	 private static final Logger log = LoggerFactory.getLogger(CryptoManager.class);
 	static Credentials credentials;

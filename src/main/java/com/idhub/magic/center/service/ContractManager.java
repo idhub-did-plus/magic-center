@@ -1,34 +1,29 @@
 package com.idhub.magic.center.service;
 
 
+import java.math.BigDecimal;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.web3j.crypto.CipherException;
 import org.web3j.crypto.Credentials;
-import org.web3j.crypto.WalletUtils;
 //import org.web3j.model.Greeter;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
-import org.web3j.protocol.exceptions.TransactionException;
-import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.Transfer;
 import org.web3j.tx.gas.ContractGasProvider;
 import org.web3j.tx.gas.DefaultGasProvider;
 //import org.web3j.tx.gas.ContractGasProvider;
 //import org.web3j.tx.gas.DefaultGasProvider;
 import org.web3j.utils.Convert;
-import org.web3j.utils.Numeric;
 
 import com.idhub.magic.center.crypto.CryptoManager;
 import com.idhub.magic.contracts.ERC1056ResolverInterface;
 import com.idhub.magic.contracts.EthereumClaimsRegistryInterface;
 import com.idhub.magic.contracts.EthereumDIDRegistryInterface;
 import com.idhub.magic.contracts.IdentityRegistryInterface;
-
-import java.io.IOException;
-import java.math.BigDecimal;
 
 @Service
 public class ContractManager {
