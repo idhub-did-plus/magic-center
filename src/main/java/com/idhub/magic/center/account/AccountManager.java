@@ -1,4 +1,4 @@
-package com.idhub.magic.center.crypto;
+package com.idhub.magic.center.account;
 
 import java.io.IOException;
 
@@ -8,8 +8,8 @@ import org.web3j.crypto.CipherException;
 import org.web3j.crypto.Credentials;
 import org.web3j.crypto.WalletUtils;
 
-public class CryptoManager {
-	 private static final Logger log = LoggerFactory.getLogger(CryptoManager.class);
+public class AccountManager {
+	 private static final Logger log = LoggerFactory.getLogger(AccountManager.class);
 	static Credentials credentials;
 	static {
 		try {

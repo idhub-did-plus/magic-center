@@ -19,8 +19,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.assertj.core.util.Preconditions;
 
 import com.alibaba.fastjson.JSON;
+import com.idhub.magic.center.account.AccountManager;
 import com.idhub.magic.center.controller.parameter.CreateIdentityDelegatedParam;
-import com.idhub.magic.center.crypto.CryptoManager;
 import com.idhub.magic.center.service.DeployedContractAddress;
 import com.idhub.magic.center.util.AuthenticationUtils;
 import com.idhub.magic.center.util.CryptoUtil;
@@ -30,7 +30,7 @@ public class ClientTest {
 	public static void main(String[] args) {
 
 		  long ts = System.currentTimeMillis();
-		  String id = CryptoManager.getCredentials().getAddress();
+		  String id = AccountManager.getCredentials().getAddress();
 		  String pt = id + ts;
 		  Signature sig = AuthenticationUtils.sig(pt);
 		  String sgt = JSON.toJSONString(sig);

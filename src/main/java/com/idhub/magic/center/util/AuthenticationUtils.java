@@ -10,7 +10,7 @@ import org.web3j.crypto.Keys;
 import org.web3j.crypto.Sign;
 
 import com.alibaba.fastjson.JSON;
-import com.idhub.magic.center.crypto.CryptoManager;
+import com.idhub.magic.center.account.AccountManager;
 
 public class AuthenticationUtils {
 
@@ -19,7 +19,7 @@ public class AuthenticationUtils {
 		
 		byte[] hexMessage = Hash.sha3(plainMessage.getBytes());
 		
-		Credentials credentials = CryptoManager.getCredentials();
+		Credentials credentials = AccountManager.getCredentials();
 		ECKeyPair pair = credentials.getEcKeyPair();
 
 
