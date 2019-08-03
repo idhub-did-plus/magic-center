@@ -26,8 +26,8 @@ import org.web3j.protocol.http.HttpService;
 import org.web3j.utils.Convert;
 import org.web3j.utils.Numeric;
 
+import com.idhub.magic.center.contracts.IdentityRegistryInterface;
 import com.idhub.magic.center.controller.parameter.CreateIdentityDelegatedParam;
-import com.idhub.magic.contracts.IdentityRegistryInterface;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
