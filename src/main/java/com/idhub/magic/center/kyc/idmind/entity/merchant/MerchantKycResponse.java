@@ -1,6 +1,12 @@
-package com.idhub.magic.center.kyc.idmind.entity;
+package com.idhub.magic.center.kyc.idmind.entity.merchant;
 
-public class CustomerKycResponse {
+import com.idhub.magic.center.kyc.idmind.entity.DocumentVerification;
+import com.idhub.magic.center.kyc.idmind.entity.EDNAPolicyResult;
+import com.idhub.magic.center.kyc.idmind.entity.ExternalizedTransactionScorecard;
+import com.idhub.magic.center.kyc.idmind.entity.FraudPolicyResult;
+import com.idhub.magic.center.kyc.idmind.entity.QuestionsWrapper;
+
+public class MerchantKycResponse {
 	public String mtid;
 	/*string
 	optional	The transaction ID for this KYC. This ID should be provided on subsequent updates to the KYC.*/
@@ -14,7 +20,7 @@ public class CustomerKycResponse {
 	/*array[string]
 	optional	List of owner applications associated with the merchant*/
 	public String parentMerchant;
-	/*string
+/*	string
 	optional	*/
 	public String smsVerification;
 	/*string
@@ -44,7 +50,7 @@ public class CustomerKycResponse {
 	//string	The name of the fraud rule that fired
 	public String frd;
 	//string	The description of the fraud rule that fired
-	public  ExternalizedTransactionScorecard ednaScoreCard;
+	public ExternalizedTransactionScorecard ednaScoreCard;
 	//ExternalizedTransactionScorecard	The score card for the current transaction
 	public String arpd;
 	/*string
@@ -64,7 +70,7 @@ public class CustomerKycResponse {
 	INDETERMINATE - No ARP rule fired
 	SUCCESS - An ARP rule fired and the transaction was accepted*/
 	public FraudPolicyResult frp;
-/*	FraudPolicyResult
+	/*FraudPolicyResult
 	optional	Result of fraud evaluation. Possible values are:
 	ACCEPT
 	MANUAL_REVIEW
@@ -77,7 +83,7 @@ public class CustomerKycResponse {
 	SUSPICIOUS
 	BAD*/
 	public String erd;
-/*	string
+	/*string
 	optional	A description of the reason for the user’s reputation*/
 	public FraudPolicyResult res;
 	/*FraudPolicyResult
@@ -90,5 +96,4 @@ public class CustomerKycResponse {
 	optional	User seen count*/
 	public String tid;
 	//string	The transaction ID.
-	
 }

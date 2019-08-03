@@ -1,5 +1,7 @@
 package com.idhub.magic.center.kyc.idmind.entity;
 
-public class FraudPolicyResult {
-
+public enum FraudPolicyResult {
+	ACCEPT,
+	MANUAL_REVIEW,
+	DENY,
 }

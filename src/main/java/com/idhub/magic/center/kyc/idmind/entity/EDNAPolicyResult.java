@@ -1,5 +1,8 @@
 package com.idhub.magic.center.kyc.idmind.entity;
 
-public class EDNAPolicyResult {
-
+public enum EDNAPolicyResult {
+	TRUSTED,
+	UNKNOWN,
+	SUSPICIOUS,
+	BAD
 }

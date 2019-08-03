@@ -1,11 +1,110 @@
-package com.idhub.magic.center.kyc.idmind.entity;
+package com.idhub.magic.center.kyc.idmind.entity.merchant;
 
 import java.util.Date;
 
-public class CustomerKycRequest {
-	public  String dob;
+public class MerchantKycRequest {
+	public String ataxid;
 	/*string
-	optional	Applicant’s date of birth encoded as an ISO 8601 string (YYYY-MM-DD)*/
+	optional	The business tax ID*/
+	public String amn;
+	/*string
+	required	Legal name of the business*/
+	public String afn;
+	/*string
+	optional	The first name of the contact person for the business*/
+	public String aln;
+	/*string
+	optional	The last name of the contract person for the business*/
+	public String asn;
+	/*string
+	optional	The business’ street address*/
+	public String ac;
+	/*string
+	optional	The business’ city*/
+	public String aco;
+	/*string
+	optional	The business’ country. ISO 3166-1 alpha-2 country code of the billing address of the transaction. Default is US.
+
+	Maximum length is 2 characters*/
+	public String as;
+	/*string
+	optional	The business’ state. Use official postal state/region abbreviations whenever possible (e.g. CA for California).*/
+	public String az;
+	/*string
+	optional	The business’ zip / postal code*/
+	public String aph;
+	/*string;
+	optional	The business’ primary phone number*/
+	public String dba;
+	/*string
+	optional	Alternate “doing business as” name of the business*/
+	public String bin;
+	/*string
+	optional	The business risk ID*/
+	public String website;
+	/*string
+	optional	The URL of the business’ website*/
+	public String businesstype;
+	/*BusinessType
+	optional	The type of business. Possible values are:*/
+	public String corporation; //- Corporation
+	public String llc; //- LLC
+	public String partnership; //- Partnership
+	public String individual; //- Individual/Sole Proprietorship
+	public String nonprofit; //- Nonprofit
+	public String foreigncorp; //- Foreign corporation
+	public boolean ccaccept;
+	/*boolean
+	optional	Whether the business accepts credit cards*/
+	public boolean ppaccept;
+	/*boolean
+	optional	Whether the business accepts PayPal*/
+	public boolean achaccept;
+/*	boolean
+	optional	Whether the business accepts ACH*/
+	public boolean bitcoinaccept;
+/*	boolean
+	optional	Whether the business accepts Bitcoin*/
+	public String merchantgroup;
+	/*string
+	required for underwriting	Aggregation that defines the KYC policy configuration and risk monitoring thresholds*/
+	public String bankaccounttype;
+	/*BankAccountType
+	optional	Bank account type. Valid values are:*/
+	public String checking;
+	public String saving;
+	public String mcc;
+	public String MerchantCategoryCode;
+	/*optional	The MCC code of the business*/
+	public String giin;
+	/*string
+	optional	The business’ Global Intermediary Identification Number. GIIN is a 19 character number that uniquely identifies an entity as having registered with the IRS for the purposes of FACTA*/
+	public String title;
+	/*string
+	optional	Title of the applicant*/
+	public String stage;
+	/*integer
+	optional	Stage of application being processed. An integer between 1 and 5. If not provided, defaults to 1.*/
+	public String scanData;
+	/*string
+	optional	Document front-side image data, Base64 encoded. 400KB minimum size, 4MB maximum size, color only.*/
+	public String faceImageData;
+	/*string
+	optional	Document face image data, Base64 encoded. 400KB minimum size, 4MB maximum size, color only.*/
+	public String backsideImageData;
+	/*string
+	optional	Document back-side image data, Base64 encoded. 400KB minimum size, 4MB maximum size, color only.*/
+	public String merchantAid;
+	/*string
+	optional	If this individual is linked to a merchant (business) as one of the owners of the business, this parameter should match the exact application ID of the merchant.
+
+	This field can also be used to link a corporate owner to a merchant.*/
+	public boolean personalguarantee;
+	/*boolean
+	optional	If this individual is linked to a merchant (business) as one of the owners of the business, whether the individual provides a personal guarantee of debt*/
+	double ownership;
+	/*number
+	optional	If this individual is linked to a merchant (business) as one of the owners of the business, the percentage of ownership*/
 	public String assn;
 	/*string
 	optional	Applicant’s social security number or national identification number
@@ -16,32 +115,9 @@ public class CustomerKycRequest {
 	public String assnl4;
 	/*string
 	optional	Last 4 digits of the applicant’s social security number or national identification number*/
-	public String scanData;
+	public String dob;
 	/*string
-	optional	Document front-side image data, Base64 encoded. 400KB minimum size, 4MB maximum size, color only.*/
-	public String faceImageData;
-	/*string
-	optional	Document face image data, Base64 encoded. 400KB minimum size, 4MB maximum size, color only.*/
-	public String backsideImageData;
-	/*string
-	optional	Document back-side image data, Base64 encoded. 400KB minimum size, 4MB maximum size, color only.*/
-	int stage;
-	/*integer
-	optional	Stage of application being processed. An integer between 1 and 5. If not provided, defaults to 1.*/
-	public String merchantAid;
-	/*string
-	optional	If this individual is linked to a merchant (business) as one of the owners of the business, this parameter should match the exact application ID of the merchant.
-
-	This field can also be used to link a corporate owner to a merchant.*/
-	boolean personalguarantee;
-	/*boolean
-	optional	If this individual is linked to a merchant (business) as one of the owners of the business, whether the individual provides a personal guarantee of debt*/
-	int ownership;
-	/*number
-	optional	If this individual is linked to a merchant (business) as one of the owners of the business, the percentage of ownership*/
-	public String title;
-	/*string
-	optional	Title of the applicant*/
+	optional	Applicant’s date of birth encoded as an ISO 8601 string (YYYY-MM-DD)*/
 	public String m;
 	/*string
 	optional	Reflects the merchant’s merchantAPIname that was assigned on account creation*/
@@ -52,7 +128,7 @@ public class CustomerKycRequest {
 	Maximum length is 32 characters*/
 	public String man;
 	/*string
-	required	Account name for the user
+	optional	Account name for the user
 
 	Maximum length is 60 characters*/
 	public String tea;
@@ -64,24 +140,24 @@ public class CustomerKycRequest {
 	/*string
 	optional	OAuth service that authenticated the user. For example, google or facebook*/
 	public String ip;
-	/*string
+/*	string
 	optional	Customer’s IP address
 
 	Maximum length is 40 characters*/
 	public String dfp;
-	/*string
+	/*string;
 	optional	Device fingerprint blob*/
 	public String dft;
 	/*string
 	optional	Device fingerprint type:*/
 	public String AU;// - Augur
-	public String IO;// - Iovation
-	public String CB;// - ThreatMetrix
-	public String IA;// - InAuth
+	public String IO ;//- Iovation
+	public String CB ;//- ThreatMetrix
+	public String IA ;//- InAuth
 	/*Augur has full Security Test support, the other types are for device matching purposes only.*/
 	public Date tti;
 	/*Object
-	optional	Transaction time in UTC. Encoded as a Unix time stamp or ISO 8601 string. Data containing milliseconds will not be accepted.*/
+	optional	Transaction time in UTC. Encoded as a Unix timestamp or IISO 8601 string. Data containing milliseconds will not be accepted.*/
 	public String bfn;
 	/*string
 	optional	Billing (source) first name
@@ -106,11 +182,11 @@ public class CustomerKycRequest {
 	Maximum length is 64 characters*/
 	public String pcty;
 	/*string
-	optional	The card type. Possible values are:*/
-	public String CREDIT;
-	public String DEBIT;
-	public String PREPAID;
-	//UNKNOWN
+	optional	The card type. Possible values are:
+	CREDIT
+	DEBIT
+	PREPAID
+	UNKNOWN*/
 	public String phash;
 	/*string
 	optional	Generic payment account unique identifier (hash). This is used when IdentityMind does not natively support the payment type.
@@ -122,11 +198,11 @@ public class CustomerKycRequest {
 	Maximum length is 128 characters*/
 	public String ptoken;
 	/*string
-	optional	A masked or tokenized version of the account token. 
+	optional	A masked or tokenized version of the account token 
 
 	If the payment instrument is Skrill, the ptoken should follow the format skrill:emailaddress. For example, skrill:johndoe@gmail.com. 
 
-	Maximum length is 64 characters*/
+	Maximum length is 64 characters.*/
 	public String profile;
 	/*string
 	optional	The policy profile to be used to evaluate this transaction. If no profile is specified, the DEFAULT profile is used. Prior to IDMRisk 1.19, this was encoded in the smid field.*/
@@ -202,13 +278,11 @@ public class CustomerKycRequest {
 	Maximum length is 30 characters*/
 	public String aflid;
 	/*string
-	optional	Affiliate ID. The client specific identifier for the affiliate that generated this transaction.
-
-	Maximum length is 100 characters*/
+	optional	Affiliate ID. The client specific identifier for the affiliate that generated this transaction.*/
 	public String aflsd;
 	/*string
 	optional	The signup/affiliate creation date of the affiliate associated with this transaction. Either an ISO 8601 encoded string or a Unix timestamp.*/
-	long accountCreationTime;
+	public long accountCreationTime;
 	/*long
 	optional	User account creation time with the merchant in UTC. Encoded as a Unix timestamp.*/
 	public String blg;
@@ -221,20 +295,14 @@ public class CustomerKycRequest {
 	/*string
 	optional	Customer longitude*/
 	public String phn;
-	/*string
-	optional	Customer primary phone number
-
-	public String Maximum length is 60 characters*/
-	public String pm;;
-	/*string
-	optional	Customer mobile phone number
-
-	Maximum length is 60 characters*/
-	public String pw;
 /*	string
-	optional	Customer work phone number
-
-	Maximum length is 60 characters*/
+	optional	Customer primary phone number*/
+	public String pm;
+	/*string
+	optional	Customer mobile phone number*/
+	public String pw;
+	/*string
+	optional	Customer work phone number*/
 	public String pach;
 	/*string
 	optional	ACH account unique identifier (hash)
@@ -244,7 +312,7 @@ public class CustomerKycRequest {
 	/*string
 	optional	Hash of the unique identifier for a Bitcoin wallet*/
 	public String memo;
-/*	string
+	/*string
 	optional	Free-form memo field for client use.
 
 	memo and memo1-memo40 are available for use as custom fields. These custom fields are viewable, searchable, sortable, and can be labelled using the IdentityMind UI.
