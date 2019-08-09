@@ -23,6 +23,9 @@
 //
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
+const PrivateKeyProvider = require("truffle-privatekey-provider");
+const privateKey = "0fa176071001fbb7a431758512d7b0c1f19a5e8169b4721715f32cc6639b31cb";
+const provider =  new PrivateKeyProvider(privateKey, 'http://localhost:7545');
 
 module.exports = {
   /**
