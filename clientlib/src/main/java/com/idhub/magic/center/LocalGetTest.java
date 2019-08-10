@@ -32,10 +32,10 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.assertj.core.util.Preconditions;
+
 
 import com.alibaba.fastjson.JSON;
-import com.idhub.magic.center.account.AccountManager;
+
 import com.idhub.magic.center.contracts.IdentityRegistryInterface;
 import com.idhub.magic.center.controller.parameter.CreateIdentityDelegatedParam;
 import com.idhub.magic.center.service.DeployedContractAddress;

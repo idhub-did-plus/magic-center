@@ -1,6 +1,7 @@
 package com.idhub.magic.center.contracts;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -188,6 +189,12 @@ public class IdentityRegistryInterface extends Contract {
                     @Override
                     public Tuple4<String, List<String>, List<String>, List<String>> call() throws Exception {
                         List<Type> results = executeCallMultipleValueReturn(function);
+                        if(results.isEmpty())
+                        	return new Tuple4<String, List<String>, List<String>, List<String>>(
+                                    "", 
+                                    new ArrayList<String>(),
+                                    new ArrayList<String>(),
+                                    new ArrayList<String>());
                         return new Tuple4<String, List<String>, List<String>, List<String>>(
                                 (String) results.get(0).getValue(), 
                                 convertToNative((List<Address>) results.get(1).getValue()), 
