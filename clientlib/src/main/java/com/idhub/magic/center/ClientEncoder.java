@@ -8,14 +8,8 @@ import org.web3j.abi.datatypes.Address;
 import org.web3j.crypto.Credentials;
 import org.web3j.crypto.ECKeyPair;
 import org.web3j.crypto.Sign;
-import org.web3j.protocol.Web3j;
-import org.web3j.protocol.http.HttpService;
-import org.web3j.tx.gas.ContractGasProvider;
-import org.web3j.tx.gas.DefaultGasProvider;
 import org.web3j.utils.Numeric;
 
-import com.idhub.magic.center.account.AccountManager;
-import com.idhub.magic.center.contracts.IdentityRegistryInterface;
 import com.idhub.magic.center.controller.parameter.CreateIdentityDelegatedParam;
 import com.idhub.magic.center.service.DeployedContractAddress;
 import com.idhub.magic.center.util.CryptoUtil;

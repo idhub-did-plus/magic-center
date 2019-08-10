@@ -10,16 +10,14 @@ import org.web3j.crypto.Keys;
 import org.web3j.crypto.Sign;
 
 import com.alibaba.fastjson.JSON;
-import com.idhub.magic.center.account.AccountManager;
 
 public class AuthenticationUtils {
 
 	
-	static public Signature sig(String plainMessage) {
+	static public Signature sig(String plainMessage,Credentials credentials) {
 		
 		byte[] hexMessage = Hash.sha3(plainMessage.getBytes());
 		System.out.println(new String(hexMessage));
-		Credentials credentials = AccountManager.getClient();
 		ECKeyPair pair = credentials.getEcKeyPair();
 
 
