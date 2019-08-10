@@ -180,7 +180,7 @@ public class CryptoUtil {
         return new Sign.SignatureData(v, r, s);
     }
 
-    public static byte[] soliditySha3(Object... data) {
+    public static byte[] encodePacked(Object... data) {
         if (data.length == 1) {
             return Hash.sha3(toBytes(data[0]));
         }
@@ -195,7 +195,11 @@ public class CryptoUtil {
        // return Hash.sha3(array);
         return array;
     }
-
+    public static byte[] soliditySha3(Object... data) {
+    	 byte[] array = encodePacked(data);
+    	 return Hash.sha3(array);
+       
+    }
     public static KeyPair decodeKeyPair(ECKeyPair ecKeyPair) {
         byte[] bytes = Numeric.toBytesPadded(ecKeyPair.getPublicKey(), 64);
         BigInteger x = Numeric.toBigInt(Arrays.copyOfRange(bytes, 0, 32));

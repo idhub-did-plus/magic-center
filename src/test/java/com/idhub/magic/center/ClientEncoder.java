@@ -30,22 +30,25 @@ public class ClientEncoder {
 		List<BigInteger> resolvers = toAddresses(param.resolvers);
 		BigInteger tst = Numeric.toBigInt(param.timestamp);
 		Address contract = new Address(DeployedContractAddress.IdentityRegistryInterface);
-		byte[] hexMessage = CryptoUtil.soliditySha3((byte) 0x19, (byte) 0x00,
+		byte[] hexMessage = CryptoUtil.encodePacked((byte) 0x19, (byte) 0x00,
 				contract,
 				"I authorize the creation of an Identity on my behalf.", 
 				rec, 
 				asso,
 				providers,
 				resolvers,
-				Numeric.toBigInt(DeployedContractAddress.ERC1056ResolverInterface), tst
+				tst
 
-		);
-		byte[] hexMessage1 = CryptoUtil.soliditySha3((byte) 0x19, (byte) 0x00,
-				new Address(DeployedContractAddress.IdentityRegistryInterface),
-				"I authorize the creation of an Identity on my behalf.", asso, asso,
-				Numeric.toBigInt(DeployedContractAddress.ERC1056ResolverInterface), tst
-
-		);
+		); 
+		
+		/*
+		 * byte[] hexMessage1 = CryptoUtil.soliditySha3((byte) 0x19, (byte) 0x00, new
+		 * Address(DeployedContractAddress.IdentityRegistryInterface),
+		 * "I authorize the creation of an Identity on my behalf.", asso, asso,
+		 * Numeric.toBigInt(DeployedContractAddress.ERC1056ResolverInterface), tst
+		 * 
+		 * );
+		 */
 		ECKeyPair pair = credentials.getEcKeyPair();
 
 		Sign.SignatureData sm = Sign.signMessage(hexMessage, pair);

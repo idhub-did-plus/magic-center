@@ -15,6 +15,7 @@ import org.web3j.crypto.Keys;
 import org.web3j.crypto.Sign;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
+import org.web3j.tuples.generated.Tuple4;
 import org.web3j.tx.gas.ContractGasProvider;
 import org.web3j.tx.gas.DefaultGasProvider;
 import org.web3j.utils.Numeric;
@@ -42,48 +43,21 @@ import com.idhub.magic.center.util.AuthenticationUtils;
 import com.idhub.magic.center.util.CryptoUtil;
 import com.idhub.magic.center.util.Signature;
 
-public class LocalTest {
+public class LocalGetTest {
 
 	public static void main(String[] args) throws Exception {
 
 		Credentials credentials = AccountManager.getClient();
 
-		String id = credentials.getAddress();
-		Address address = new Address(id);
-
-		long ts = System.currentTimeMillis();
-		ts = ts / 1000;
-		BigInteger tst = BigInteger.valueOf(ts);
-
-		byte[] hexMessage = CryptoUtil.encodePacked((byte) 0x19, (byte) 0x00,
-				new Address(DeployedContractAddress.IdentityRegistryInterface),
-				"I authorize the creation of an Identity on my behalf.", address, address,
-				Numeric.toBigInt(DeployedContractAddress.ERC1056ResolverInterface), tst
-
-		);
-		// hexMessage =
-		// Numeric.hexStringToByteArray("0xeff3c26e0428bead656787146bbd078bb5563305d38e935c7f15738815e1367a");
-		System.out.println(Numeric.toHexString(hexMessage));
-		ECKeyPair pair = credentials.getEcKeyPair();
-
-		Sign.SignatureData signMessage = Sign.signMessage(hexMessage, pair);
-
-		List<String> rss = new ArrayList<String>();
-		rss.add(DeployedContractAddress.ERC1056ResolverInterface);
-		List<String> pss = new ArrayList<String>();
+		
 
 		ContractGasProvider contractGasProvider = new DefaultGasProvider();
 		Web3j web3j = Web3j.build(new HttpService("http://localhost:7545"));
 		IdentityRegistryInterface registry1484 = IdentityRegistryInterface
 				.load(DeployedContractAddress.IdentityRegistryInterface, web3j, credentials, contractGasProvider);
 
-		byte[] data = registry1484.encode(credentials.getAddress(), credentials.getAddress(), pss, rss, tst).send();
-		System.out.println(Numeric.toHexString(data));
-		data = registry1484.hash(credentials.getAddress(), credentials.getAddress(), pss, rss, tst).send();
-		System.out.println(Numeric.toHexString(data));
-
-		registry1484.createIdentityDelegated(credentials.getAddress(), credentials.getAddress(), pss, rss,
-				BigInteger.valueOf(signMessage.getV()), signMessage.getR(), signMessage.getS(), tst).send();
+		Tuple4<String, List<String>, List<String>, List<String>> data = registry1484.getIdentity(BigInteger.valueOf(1)).send();
+		System.out.println(data);
 
 	}
 
