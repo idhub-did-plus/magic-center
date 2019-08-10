@@ -1,0 +1,15 @@
+debug: true
+server:
+  port: 8080
+spring:
+  data:
+    mongodb:
+      host: 127.0.0.1
+      port: 27017
+      database: MagicRepository
+      username: byq
+      password: 2218283
+      authentication-database: admin
+web3j:
+  client-address: http://localhost:7545
+  admin-client: true

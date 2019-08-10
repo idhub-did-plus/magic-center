@@ -1,6 +1,6 @@
-/backend/target/
-/backend/magic-contract/build
-/backend/magic-contract/node_modules
+/target/
+/magic-contract/build
+/magic-contract/node_modules
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
