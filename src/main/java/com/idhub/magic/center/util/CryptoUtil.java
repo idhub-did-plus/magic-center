@@ -10,6 +10,7 @@ import java.security.NoSuchProviderException;
 import java.security.SignatureException;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -108,6 +109,27 @@ public class CryptoUtil {
     }
 
     public static byte[] toBytes(Object obj) {
+    	if (obj instanceof List) {
+    		List ll = (List)obj;
+    		if(ll.isEmpty())
+    			return new byte[0];
+    		List<byte[]> arrays = new ArrayList<byte[]>();
+    		for(Object o : ll)
+    		{
+    			arrays.add(toBytes(o));
+    		}
+            ByteBuffer buffer = ByteBuffer.allocate(arrays.stream().mapToInt(a -> a.length).sum());
+            for (byte[] a : arrays) {
+                buffer.put(a);
+            }
+   		 	return buffer.array();
+   	 	}
+    	 if (obj instanceof String) {
+    		 return ((String)obj).getBytes();
+    	 }
+    	  if (obj instanceof Byte) {
+    		  return new byte[] {(byte)(obj)};
+    	  }
         if (obj instanceof byte[]) {
             int length = ((byte[]) obj).length;
             Preconditions.checkArgument(length <= 32);
@@ -169,7 +191,9 @@ public class CryptoUtil {
         }
         byte[] array = buffer.array();
         assert buffer.position() == array.length;
-        return Hash.sha3(array);
+        System.out.println(Numeric.toHexString(array));
+       // return Hash.sha3(array);
+        return array;
     }
 
     public static KeyPair decodeKeyPair(ECKeyPair ecKeyPair) {

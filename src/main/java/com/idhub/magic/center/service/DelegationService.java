@@ -21,6 +21,7 @@ import org.web3j.protocol.admin.Admin;
 import org.web3j.protocol.core.methods.response.EthBlock;
 import org.web3j.protocol.core.methods.response.NetVersion;
 import org.web3j.protocol.core.methods.response.Transaction;
+import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.core.methods.response.Web3ClientVersion;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.utils.Convert;
@@ -51,7 +52,11 @@ public class DelegationService {
     	BigInteger ts = Numeric.toBigInt(param.timestamp);
     	BigInteger V = Numeric.toBigInt(param.v);
     	try {
-			c1484.createIdentityDelegated(param.recoveryAddress, param.associatedAddress, param.providers, param.resolvers, V, r, s, ts).send();
+			TransactionReceipt tr = c1484.createIdentityDelegated(param.recoveryAddress, param.associatedAddress, param.providers, param.resolvers, V, r, s, ts).send();
+			BigInteger b = c1484.getEIN(param.associatedAddress).send();
+			
+			System.out.println(tr.getStatus());
+			System.out.println(b);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

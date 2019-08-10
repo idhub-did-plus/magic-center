@@ -4,9 +4,9 @@ import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 
 public class ClaimService {
-	public ddd() {
-		
-		Jwts.builder().signWith(alg, secretKey)claim("", "").
-	}
-
+	/*
+	 * public ddd() {
+	 * 
+	 * Jwts.builder().signWith(alg, secretKey)claim("", ""). }
+	 */
 }

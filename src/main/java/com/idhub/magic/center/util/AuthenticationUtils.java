@@ -18,8 +18,8 @@ public class AuthenticationUtils {
 	static public Signature sig(String plainMessage) {
 		
 		byte[] hexMessage = Hash.sha3(plainMessage.getBytes());
-		
-		Credentials credentials = AccountManager.getCredentials();
+		System.out.println(new String(hexMessage));
+		Credentials credentials = AccountManager.getClient();
 		ECKeyPair pair = credentials.getEcKeyPair();
 
 

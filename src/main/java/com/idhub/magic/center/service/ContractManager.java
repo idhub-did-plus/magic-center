@@ -3,6 +3,8 @@ package com.idhub.magic.center.service;
 
 import java.math.BigDecimal;
 
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +40,9 @@ public class ContractManager {
 	 EthereumDIDRegistryInterface registry1056;
 	 EthereumClaimsRegistryInterface registry780;
 	 Credentials credentials;
+	 @PostConstruct
     private void init() throws Exception, CipherException {
-    	credentials = AccountManager.getCredentials();
+    	credentials = AccountManager.getServer();
         
         ContractGasProvider contractGasProvider = new DefaultGasProvider();
         registry1484 = IdentityRegistryInterface.load(DeployedContractAddress.IdentityRegistryInterface,

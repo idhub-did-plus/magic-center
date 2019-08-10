@@ -16,7 +16,7 @@ public class ContractsDeploy {
 		 try {
 			EthereumClaimsRegistry contract = EthereumClaimsRegistry.deploy(
 			            web3j,
-			            AccountManager.getCredentials(),
+			            AccountManager.getServer(),
 			            contractGasProvider
 			            ).send();
 			 System.out.println(contract.getContractAddress());

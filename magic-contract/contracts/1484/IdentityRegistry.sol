@@ -227,7 +227,65 @@ contract IdentityRegistry is SignatureVerifier {
 
         return createIdentity(recoveryAddress, associatedAddress, providers, resolvers, true);
     }
+    function encode(
+        address recoveryAddress, address associatedAddress, address[] memory providers, address[] memory resolvers,
+         uint timestamp
+    )
+        public view returns (bytes memory ein)
+    {
+       
+              bytes memory rst = abi.encodePacked(
+                        byte(0x19), byte(0), address(this),
+                        "I authorize the creation of an Identity on my behalf.",
+                        recoveryAddress, associatedAddress, providers, resolvers, timestamp);
+                    
+      
 
+        return rst;
+    }
+    function hash(
+        address recoveryAddress, address associatedAddress, address[] memory providers, address[] memory resolvers,
+         uint timestamp
+    )
+        public view returns (bytes32 ein)
+    {
+       
+              bytes memory rst = abi.encodePacked(
+                        byte(0x19), byte(0), address(this),
+                        "I authorize the creation of an Identity on my behalf.",
+                        recoveryAddress, associatedAddress, providers, resolvers, timestamp);
+                    
+      bytes32 h = keccak256(
+                  rst
+                );
+    return h;
+      
+    }
+      function mapuint8(uint8 data) public view returns (uint8){
+      return data;
+      }
+       function mapbytes32(bytes32 data) public view returns (bytes32){
+      return data;
+      }
+    function erecover(
+        address recoveryAddress, address associatedAddress, address[] memory providers, address[] memory resolvers,
+          uint8 v, bytes32 r, bytes32 s,uint timestamp
+    )
+        public view returns (address ein)
+    {
+       
+              bytes memory rst = abi.encodePacked(
+                        byte(0x19), byte(0), address(this),
+                        "I authorize the creation of an Identity on my behalf.",
+                        recoveryAddress, associatedAddress, providers, resolvers, timestamp);
+                    
+      bytes32 h = keccak256(
+                  rst
+                );
+    return ecrecover(h, v, r, s);
+      
+    }
+    
     /// @dev Common logic for all identity creation.
     function createIdentity(
         address recoveryAddress,

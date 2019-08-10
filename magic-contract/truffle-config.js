@@ -40,8 +40,7 @@ module.exports = {
 
   networks: {
     ganache: {
-      host: "127.0.0.1",
-      port: 7545,
+      provider: provider,
       network_id: "*" // matching any id
     }
     // Useful for testing. The `development` name is special - truffle uses it by default

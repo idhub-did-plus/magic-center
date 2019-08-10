@@ -2,6 +2,7 @@ const ecr = artifacts.require("EthereumClaimsRegistry");
 const r1484 = artifacts.require("IdentityRegistry");
 const resolver = artifacts.require("ERC1056");
 const r1056 = artifacts.require("EthereumDIDRegistry");
+const r780 = artifacts.require("EthereumClaimsRegistry");
 let addr1484;
 let addr1056;
 let addr1056r;
@@ -21,5 +22,12 @@ module.exports = function(deployer) {
     return deployer
         .deploy(
             resolver, addr1484,addr1056);
+})
+.then(inst1056r => {
+  
+
+    return deployer
+        .deploy(
+            r780);
 })
 };

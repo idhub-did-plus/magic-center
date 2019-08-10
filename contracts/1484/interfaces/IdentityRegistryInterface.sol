@@ -19,6 +19,10 @@ interface IdentityRegistryInterface {
     // Identity Management Functions ///////////////////////////////////////////////////////////////////////////////////
     function createIdentity(address recoveryAddress, address[] calldata providers, address[] calldata resolvers)
         external returns (uint ein);
+        
+       function encode(
+        address recoveryAddress, address associatedAddress, address[] memory providers, address[] memory resolvers,
+         uint timestamp)   external view returns (bytes);
     function createIdentityDelegated(
         address recoveryAddress, address associatedAddress, address[] calldata providers, address[] calldata resolvers,
         uint8 v, bytes32 r, bytes32 s, uint timestamp

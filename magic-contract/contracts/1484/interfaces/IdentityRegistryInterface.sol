@@ -15,7 +15,19 @@ interface IdentityRegistryInterface {
         address recoveryAddress,
         address[] memory associatedAddresses, address[] memory providers, address[] memory resolvers
     );
-
+    function mapuint8(uint8 data) external view returns (uint8);
+    function mapbytes32(bytes32 data) external view returns (bytes32);
+         function erecover(
+        address recoveryAddress, address associatedAddress, address[] calldata providers, address[] calldata resolvers,
+          uint8 v, bytes32 r, bytes32 s,uint timestamp
+    )
+        external view returns (address ein);
+       function encode(
+        address recoveryAddress, address associatedAddress, address[] calldata providers, address[] calldata resolvers,
+         uint timestamp)   external view returns (bytes memory);
+              function hash(
+        address recoveryAddress, address associatedAddress, address[] calldata providers, address[] calldata resolvers,
+         uint timestamp)   external view returns (bytes32 );
     // Identity Management Functions ///////////////////////////////////////////////////////////////////////////////////
     function createIdentity(address recoveryAddress, address[] calldata providers, address[] calldata resolvers)
         external returns (uint ein);
