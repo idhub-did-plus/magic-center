@@ -5,6 +5,6 @@ import org.web3j.protocol.Web3j;
 
 public interface CredentialProvider {
 	Credentials getByAddress(String address);
-	Credentials getContractLoaderAddress();
+	Credentials getDefaultAddress();
 	Web3j web3j();
 }

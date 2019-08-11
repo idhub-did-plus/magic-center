@@ -48,20 +48,23 @@ import com.idhub.magic.clientlib.interfaces.IdentityChain;
 
 public class IdentityChainLocal implements IdentityChain {
 	public void createIdentity(String recovery, String associate, List<String> providers, List<String> resolvers) {
-		Credentials credentials = ProviderFactory.getProvider().getByAddress(associate);
-
-
-		
-
 		TransactionReceipt data;
 		try {
 			data = ContractManager.getRegistry1484().createIdentity(recovery, providers, resolvers).send();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	
 
 	}
+	public long getEIN(String associate) {
+		BigInteger data;
+		try {
+			data = ContractManager.getRegistry1484().getEIN(associate).send();
+			return data.longValue();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 
+}
 }

@@ -26,7 +26,7 @@ public class MockProvider implements CredentialProvider {
 		return client;
 	}
 	@Override
-	public Credentials getContractLoaderAddress() {
+	public Credentials getDefaultAddress() {
 		// TODO Auto-generated method stub
 		return client;
 	}
