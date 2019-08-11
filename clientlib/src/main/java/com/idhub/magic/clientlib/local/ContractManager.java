@@ -3,12 +3,8 @@ package com.idhub.magic.clientlib.local;
 
 import java.math.BigDecimal;
 
-import javax.annotation.PostConstruct;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.web3j.crypto.CipherException;
 import org.web3j.crypto.Credentials;
 //import org.web3j.model.Greeter;
 import org.web3j.protocol.Web3j;

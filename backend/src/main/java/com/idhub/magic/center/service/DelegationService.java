@@ -1,6 +1,5 @@
 package com.idhub.magic.center.service;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.Instant;
@@ -11,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 
-import org.reactivestreams.Subscription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +17,14 @@ import org.springframework.stereotype.Service;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.admin.Admin;
 import org.web3j.protocol.core.methods.response.EthBlock;
-import org.web3j.protocol.core.methods.response.NetVersion;
 import org.web3j.protocol.core.methods.response.Transaction;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
-import org.web3j.protocol.core.methods.response.Web3ClientVersion;
-import org.web3j.protocol.http.HttpService;
 import org.web3j.utils.Convert;
 import org.web3j.utils.Numeric;
 
 import com.idhub.magic.center.contracts.IdentityRegistryInterface;
 import com.idhub.magic.center.controller.parameter.CreateIdentityDelegatedParam;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 @Service

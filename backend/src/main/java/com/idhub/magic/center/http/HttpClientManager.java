@@ -1,35 +1,41 @@
 package com.idhub.magic.center.http;
 
-import org.apache.http.*;
-import org.apache.http.client.CookieStore;
-import org.apache.http.client.config.CookieSpecs;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.conn.ssl.X509HostnameVerifier;
-import org.apache.http.config.Registry;
-import org.apache.http.config.RegistryBuilder;
-import org.apache.http.config.SocketConfig;
-import org.apache.http.conn.socket.ConnectionSocketFactory;
-import org.apache.http.conn.socket.PlainConnectionSocketFactory;
-import org.apache.http.conn.ssl.*;
-import org.apache.http.cookie.*;
-import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.client.LaxRedirectStrategy;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.impl.cookie.DefaultCookieSpec;
-import org.apache.http.protocol.*;
+import java.io.IOException;
 import java.security.SecureRandom;
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Service;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
-import java.io.IOException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
+
+import org.apache.http.HttpHost;
+import org.apache.http.client.config.CookieSpecs;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.config.Registry;
+import org.apache.http.config.RegistryBuilder;
+import org.apache.http.config.SocketConfig;
+import org.apache.http.conn.socket.ConnectionSocketFactory;
+import org.apache.http.conn.socket.PlainConnectionSocketFactory;
+import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.SSLContexts;
+import org.apache.http.conn.ssl.TrustStrategy;
+import org.apache.http.conn.ssl.X509HostnameVerifier;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.cookie.CookieOrigin;
+import org.apache.http.cookie.CookieSpec;
+import org.apache.http.cookie.CookieSpecProvider;
+import org.apache.http.cookie.MalformedCookieException;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.LaxRedirectStrategy;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.impl.cookie.DefaultCookieSpec;
+import org.apache.http.protocol.HttpContext;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
 @Service
 public class HttpClientManager {
