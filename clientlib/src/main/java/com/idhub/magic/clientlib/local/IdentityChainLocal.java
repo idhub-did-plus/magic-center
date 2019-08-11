@@ -34,7 +34,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
-
 import com.alibaba.fastjson.JSON;
 
 import com.idhub.magic.center.contracts.IdentityRegistryInterface;
@@ -44,6 +43,7 @@ import com.idhub.magic.center.util.AuthenticationUtils;
 import com.idhub.magic.center.util.CryptoUtil;
 import com.idhub.magic.center.util.Signature;
 import com.idhub.magic.clientlib.ProviderFactory;
+import com.idhub.magic.clientlib.interfaces.Identity;
 import com.idhub.magic.clientlib.interfaces.IdentityChain;
 
 public class IdentityChainLocal implements IdentityChain {
@@ -54,9 +54,9 @@ public class IdentityChainLocal implements IdentityChain {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	
 
 	}
+
 	public long getEIN(String associate) {
 		BigInteger data;
 		try {
@@ -66,5 +66,19 @@ public class IdentityChainLocal implements IdentityChain {
 			throw new RuntimeException(e);
 		}
 
-}
+	}
+	public Identity getIdentity(long ein) {
+
+		try {
+			 Tuple4<String, List<String>, List<String>, List<String>> data = ContractManager.getRegistry1484().getIdentity(BigInteger.valueOf(ein)).send();
+			
+			 if(data != null)
+				return  new Identity(data.getValue1(), data.getValue2(), data.getValue3(), data.getValue4());
+			 return null;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		
+
+	}
 }
