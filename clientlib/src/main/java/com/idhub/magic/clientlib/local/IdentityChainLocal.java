@@ -1,4 +1,4 @@
-package com.idhub.magic.center;
+package com.idhub.magic.clientlib.local;
 
 import org.web3j.abi.FunctionEncoder;
 import org.web3j.abi.Utils;
@@ -14,6 +14,7 @@ import org.web3j.crypto.Hash;
 import org.web3j.crypto.Keys;
 import org.web3j.crypto.Sign;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tuples.generated.Tuple4;
 import org.web3j.tx.gas.ContractGasProvider;
@@ -42,22 +43,24 @@ import com.idhub.magic.center.service.DeployedContractAddress;
 import com.idhub.magic.center.util.AuthenticationUtils;
 import com.idhub.magic.center.util.CryptoUtil;
 import com.idhub.magic.center.util.Signature;
+import com.idhub.magic.clientlib.ProviderFactory;
+import com.idhub.magic.clientlib.interfaces.IdentityChain;
 
-public class LocalGetTest {
+public class IdentityChainLocal implements IdentityChain {
+	public void createIdentity(String recovery, String associate, List<String> providers, List<String> resolvers) {
+		Credentials credentials = ProviderFactory.getProvider().getByAddress(associate);
 
-	public static void main(String[] args) throws Exception {
-
-		Credentials credentials = AccountManager.getClient();
 
 		
 
-		ContractGasProvider contractGasProvider = new DefaultGasProvider();
-		Web3j web3j = Web3j.build(new HttpService("http://localhost:7545"));
-		IdentityRegistryInterface registry1484 = IdentityRegistryInterface
-				.load(DeployedContractAddress.IdentityRegistryInterface, web3j, credentials, contractGasProvider);
-
-		Tuple4<String, List<String>, List<String>, List<String>> data = registry1484.getIdentity(BigInteger.valueOf(1)).send();
-		System.out.println(data);
+		TransactionReceipt data;
+		try {
+			data = ContractManager.getRegistry1484().createIdentity(recovery, providers, resolvers).send();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 
 	}
 

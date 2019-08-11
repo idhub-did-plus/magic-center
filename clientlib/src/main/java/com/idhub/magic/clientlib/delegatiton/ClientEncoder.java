@@ -1,4 +1,4 @@
-package com.idhub.magic.center;
+package com.idhub.magic.clientlib.delegatiton;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -13,11 +13,12 @@ import org.web3j.utils.Numeric;
 import com.idhub.magic.center.controller.parameter.CreateIdentityDelegatedParam;
 import com.idhub.magic.center.service.DeployedContractAddress;
 import com.idhub.magic.center.util.CryptoUtil;
+import com.idhub.magic.clientlib.ProviderFactory;
 
 public class ClientEncoder {
-	static Credentials credentials = AccountManager.getClient();
-	static public CreateIdentityDelegatedParam encode(CreateIdentityDelegatedParam param) {
 
+	static public CreateIdentityDelegatedParam encode(CreateIdentityDelegatedParam param) {
+		
 		Address asso = new Address(param.associatedAddress);
 		Address rec = new Address(param.recoveryAddress);
 		List<BigInteger> providers = toAddresses(param.providers);
@@ -43,6 +44,7 @@ public class ClientEncoder {
 		 * 
 		 * );
 		 */
+		Credentials credentials = ProviderFactory.getProvider().getByAddress(param.associatedAddress);
 		ECKeyPair pair = credentials.getEcKeyPair();
 
 		Sign.SignatureData sm = Sign.signMessage(hexMessage, pair);
