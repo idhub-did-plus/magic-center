@@ -45,8 +45,9 @@ import com.idhub.magic.center.util.Signature;
 import com.idhub.magic.clientlib.ProviderFactory;
 import com.idhub.magic.clientlib.interfaces.Identity;
 import com.idhub.magic.clientlib.interfaces.IdentityChain;
+import com.idhub.magic.clientlib.interfaces.IdentityChainViewer;
 
-public class IdentityChainLocal implements IdentityChain {
+public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 	public void createIdentity(String recovery, String associate, List<String> providers, List<String> resolvers) {
 		TransactionReceipt data;
 		try {
