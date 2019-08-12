@@ -178,8 +178,8 @@ public class IdentityRegistryInterface extends Contract {
             typedResponse.log = eventValues.getLog();
             typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
             typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
-            typedResponse.recoveryAddress = (String) eventValues.getNonIndexedValues().get(0).getValue();
-            typedResponse.associatedAddress = (String) eventValues.getNonIndexedValues().get(1).getValue();
+            typedResponse.associatedAddress = (String) eventValues.getNonIndexedValues().get(0).getValue();
+            typedResponse.recoveryAddress = (String) eventValues.getNonIndexedValues().get(1).getValue();
             typedResponse.providers = (List<String>) eventValues.getNonIndexedValues().get(2).getValue();
             typedResponse.resolvers = (List<String>) eventValues.getNonIndexedValues().get(3).getValue();
             typedResponse.delegated = (Boolean) eventValues.getNonIndexedValues().get(4).getValue();
@@ -197,8 +197,8 @@ public class IdentityRegistryInterface extends Contract {
                 typedResponse.log = log;
                 typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
                 typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
-                typedResponse.recoveryAddress = (String) eventValues.getNonIndexedValues().get(0).getValue();
-                typedResponse.associatedAddress = (String) eventValues.getNonIndexedValues().get(1).getValue();
+                typedResponse.associatedAddress = (String) eventValues.getNonIndexedValues().get(0).getValue();
+                typedResponse.recoveryAddress = (String) eventValues.getNonIndexedValues().get(1).getValue();
                 typedResponse.providers = (List<String>) eventValues.getNonIndexedValues().get(2).getValue();
                 typedResponse.resolvers = (List<String>) eventValues.getNonIndexedValues().get(3).getValue();
                 typedResponse.delegated = (Boolean) eventValues.getNonIndexedValues().get(4).getValue();
@@ -953,9 +953,9 @@ public class IdentityRegistryInterface extends Contract {
 
         public BigInteger ein;
 
-        public String recoveryAddress;
-
         public String associatedAddress;
+
+        public String recoveryAddress;
 
         public List<String> providers;
 

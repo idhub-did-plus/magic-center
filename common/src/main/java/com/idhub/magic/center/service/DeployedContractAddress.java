@@ -1,8 +1,8 @@
 package com.idhub.magic.center.service;
 
 public interface DeployedContractAddress {
-	static public  final String IdentityRegistryInterface = "0x47B5D29555aF2aF62C15405B28a58eDFd51b7aDe";
-	static public  final String ERC1056ResolverInterface = "0xeb7825f43C90c58E8Edc3b86E3F1A7D74B564dE3";
-	static public  final String EthereumDIDRegistryInterface = "0xBBEF35d12660725c904cd829A997EE3270ba8351";
-	static public  final String EthereumClaimsRegistryInterface = "0xF81c4AfC4155bc849cfB51c58ee2740f9a90c756";
+	static public  final String IdentityRegistryInterface = "0xcba0524dd4391588091E57A64F6d145D92016e6F";
+	static public  final String ERC1056ResolverInterface = "0x1D2EC6c935150139E736FB43F1C96788aab2A8E3";
+	static public  final String EthereumDIDRegistryInterface = "0xba3Cc1Ab60fB9Eb9D3D3149b03dbCc8050383FBb";
+	static public  final String EthereumClaimsRegistryInterface = "0xaC7A17ecBab2694FB0b3dE4a93dA76be99E58604";
 }

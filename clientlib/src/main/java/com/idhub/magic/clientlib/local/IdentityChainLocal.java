@@ -17,18 +17,7 @@ import com.idhub.magic.clientlib.interfaces.ResultListener;
 
 public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 	public boolean createIdentity(String recovery, String associate, List<String> providers, List<String> resolvers, ResultListener<Boolean> listener) {
-		
-			
-			if(listener == null) {
-				try {
-					TransactionReceipt data = ContractManager.getRegistry1484().createIdentity(recovery, providers, resolvers).send();
-					return true;
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					throw new RuntimeException(e);
-				}
-				
-			}else {
+
 				 CompletableFuture<TransactionReceipt> data = ContractManager.getRegistry1484().createIdentity(recovery, providers, resolvers).sendAsync();
 				 data.thenAccept(transactionReceipt -> {
 
@@ -39,8 +28,6 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 						 return null;
 					 });
 				 return true;
-			}
-			
 
 	}
 	

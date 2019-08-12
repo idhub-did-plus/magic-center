@@ -24,5 +24,26 @@ contract EthereumDIDRegistryInterface {
 
   function revokeAttribute(address identity, bytes32 name, bytes calldata value) external;
  function revokeAttributeSigned(address identity, uint8 sigV, bytes32 sigR, bytes32 sigS, bytes32 name, bytes calldata value) external;
+ event DIDOwnerChanged(
+    address indexed identity,
+    address owner,
+    uint previousChange
+  );
+
+  event DIDDelegateChanged(
+    address indexed identity,
+    bytes32 delegateType,
+    address delegate,
+    uint validTo,
+    uint previousChange
+  );
+
+  event DIDAttributeChanged(
+    address indexed identity,
+    bytes32 name,
+    bytes value,
+    uint validTo,
+    uint previousChange
+  );
 
 }

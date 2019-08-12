@@ -76,11 +76,15 @@ public class LocalTest {
 		Web3j web3j = Web3j.build(new HttpService("http://localhost:7545"));
 		IdentityRegistryInterface registry1484 = IdentityRegistryInterface
 				.load(DeployedContractAddress.IdentityRegistryInterface, web3j, credentials, contractGasProvider);
-		BigInteger ein = registry1484.getEIN("0x458b6862cac349a47658ef7251f22054ffa0d4ed").send();
-		byte[] data = registry1484.encode(credentials.getAddress(), credentials.getAddress(), pss, rss, tst).send();
-		System.out.println(Numeric.toHexString(data));
-		data = registry1484.hash(credentials.getAddress(), credentials.getAddress(), pss, rss, tst).send();
-		System.out.println(Numeric.toHexString(data));
+		/*
+		 * BigInteger ein =
+		 * registry1484.getEIN("0x458b6862cac349a47658ef7251f22054ffa0d4ed").send();
+		 * byte[] data = registry1484.encode(credentials.getAddress(),
+		 * credentials.getAddress(), pss, rss, tst).send();
+		 * System.out.println(Numeric.toHexString(data)); data =
+		 * registry1484.hash(credentials.getAddress(), credentials.getAddress(), pss,
+		 * rss, tst).send(); System.out.println(Numeric.toHexString(data));
+		 */
 
 		registry1484.createIdentityDelegated(credentials.getAddress(), credentials.getAddress(), pss, rss,
 				BigInteger.valueOf(signMessage.getV()), signMessage.getR(), signMessage.getS(), tst).send();

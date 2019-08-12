@@ -36,8 +36,9 @@ public class ChainEventListener {
 
 		final Event event = new Event("IdentityCreated",
 				Arrays.<TypeReference<?>>asList(
-				new TypeReference<Address>(true) {				}, 
 				new TypeReference<Uint256>(true) {				}, 
+				new TypeReference<Address>(true) {				}, 
+			
 				new TypeReference<Address>(false) {				},
 				new TypeReference<Address>(false) {				},
 				new TypeReference<DynamicArray<Address>>(false) {				}, 
@@ -48,18 +49,19 @@ public class ChainEventListener {
 		EthFilter filter = new EthFilter(DefaultBlockParameterName.EARLIEST, DefaultBlockParameterName.LATEST,
 				DeployedContractAddress.IdentityRegistryInterface.substring(2));
 		filter.addSingleTopic(EventEncoder.encode(event));
-		String address = "0x"
-				+ TypeEncoder.encode(new Address(ProviderFactory.getProvider().getDefaultCredentials().getAddress()));
-		String ein = "0x" + TypeEncoder.encode(new Uint256(1));
+		String address = TypeEncoder.encode(new Address("0xC8Efc3D648862eDcad4e222bDc073DAEf0203409"));//ProviderFactory.getProvider().getDefaultCredentials().getAddress()));
+		String ein = TypeEncoder.encode(new Uint256(1));
+		ein = String.format("0x%064X", ein);
+		address= String.format("0x%064X", address);
 		// optTopicAddress=null; optTopicHash=null; if you want not to filter on that
 		// optional topic
-		filter.addOptionalTopics(address, ein);
+		filter.addOptionalTopics(null, address);
 		Disposable dis = ProviderFactory.getProvider().web3j().ethLogFlowable(filter).subscribe(log -> {
 			
 			 EventValues eventValues = Contract.staticExtractEventParameters(event, log);
 			 List<Type> vs = eventValues.getIndexedValues();
-			  String ini = (String) vs.get(0).getValue();
-			  BigInteger ee = (BigInteger) vs.get(1).getValue();
+			  String ini = (String) vs.get(1).getValue();
+			  BigInteger ee = (BigInteger) vs.get(0).getValue();
 			 
 			  Object rec = eventValues.getNonIndexedValues().get(0).getValue();
 			  Object asso =eventValues.getNonIndexedValues().get(1).getValue();

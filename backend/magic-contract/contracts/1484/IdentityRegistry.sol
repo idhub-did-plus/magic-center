@@ -301,7 +301,7 @@ contract IdentityRegistry is SignatureVerifier {
         addProviders(ein, providers, delegated);
         addResolvers(ein, resolvers, delegated);
 
-        emit IdentityCreated(msg.sender, ein, recoveryAddress, associatedAddress, providers, resolvers, delegated);
+        emit IdentityCreated(msg.sender,ein, associatedAddress,  recoveryAddress,  providers, resolvers, delegated);
 
         return ein;
     }
@@ -669,11 +669,11 @@ contract IdentityRegistry is SignatureVerifier {
     // Events //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     event IdentityCreated(
-        address indexed initiator, uint indexed ein,
-        address recoveryAddress, address associatedAddress, address[] providers, address[] resolvers, bool delegated
+         address  indexed  initiator, uint indexed ein,address associatedAddress, 
+        address recoveryAddress,  address[] providers, address[] resolvers, bool delegated
     );
     event AssociatedAddressAdded(
-        address indexed initiator, uint indexed ein, address approvingAddress, address addedAddress, bool delegated
+         address indexed initiator, uint indexed ein,address approvingAddress, address addedAddress, bool delegated
     );
     event AssociatedAddressRemoved(address indexed initiator, uint indexed ein, address removedAddress, bool delegated);
     event ProviderAdded(address indexed initiator, uint indexed ein, address provider, bool delegated);

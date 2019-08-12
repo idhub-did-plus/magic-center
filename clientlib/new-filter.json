@@ -1,0 +1,1 @@
+{"jsonrpc":"2.0","method":"eth_newFilter","params":[{"topics":["0x2d5a3d9be996fe336301b2198716013faf1d676cffed729d2fbc1842d06140bf",[null,"0x000000000000000000000000c8efc3d648862edcad4e222bdc073daef0203409"]],"fromBlock":"earliest","toBlock":"latest","address":["94F94C10Bc93E54fb29321286576B983449587E4"]}],"id":0}
