@@ -27,7 +27,7 @@ public class ContractManager {
 
     private static final Logger log = LoggerFactory.getLogger(ContractManager.class);
 
-    static  Web3j web3j;
+    static  Web3j web3j = ProviderFactory.getProvider().web3j();
 
 	static IdentityRegistryInterface registry1484;
 	static  ERC1056ResolverInterface resolver1056;
