@@ -1,0 +1,9 @@
+# magic-center
+
+1.客户端要设置一个默认address和一个recovery address，默认address是1484的associateaddresses之一。协议本身在associateaddresses中并不区分，但客户端（钱包）可以有default的概念。
+2. 默认address和recovery address由一个CredentialProvider接口来提供，该接口由ProviderFactory获得。clientlib项目中提供了mockprovider，android环境中要用真实的provider替换
+3. 两个接口：IdentityChain和IdentityChainViewer.其中IdentityChain提供了本地实现和代理实现。viewer都是本地实现。
+4.IdentityChain的createIdentity方法有两个，一个是带有全部参数的，一个是不带参数的。不带参数的，recoveryAddress, associateAddress从credential provider中获得，resolver中放1056 resolver合约地址。1484合约本身支持更复杂的场景，但在我们目前的设计中，只是唯一的一个resolver，因此调用不带参数的方法就够了
+5.请求的autherntication签名处理和合约代理方法的erc191签名，都是在clientlib内部做处理，使用时不必关心
+
+
