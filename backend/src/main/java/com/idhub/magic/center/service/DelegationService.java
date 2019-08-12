@@ -23,7 +23,7 @@ import org.web3j.utils.Convert;
 import org.web3j.utils.Numeric;
 
 import com.idhub.magic.center.contracts.IdentityRegistryInterface;
-import com.idhub.magic.center.controller.parameter.CreateIdentityDelegatedParam;
+import com.idhub.magic.center.parameter.CreateIdentityDelegatedParam;
 
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;

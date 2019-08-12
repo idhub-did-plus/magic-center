@@ -1,4 +1,4 @@
-package com.idhub.magic.center.controller.parameter;
+package com.idhub.magic.center.parameter;
 // public RemoteCall<TransactionReceipt> createIdentityDelegated(String recoveryAddress, String associatedAddress, List<String> providers, List<String> resolvers, BigInteger v, byte[] r, byte[] s, BigInteger timestamp) {
 import java.util.List;
 
@@ -11,4 +11,5 @@ public class CreateIdentityDelegatedParam {
 	public String  r;//hex
 	public String s;//hex
 	public String timestamp;//hex
+	public boolean async = true;
 }

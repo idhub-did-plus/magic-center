@@ -36,7 +36,7 @@ import org.assertj.core.util.Preconditions;
 import com.alibaba.fastjson.JSON;
 import com.idhub.magic.center.account.AccountManager;
 import com.idhub.magic.center.contracts.IdentityRegistryInterface;
-import com.idhub.magic.center.controller.parameter.CreateIdentityDelegatedParam;
+import com.idhub.magic.center.parameter.CreateIdentityDelegatedParam;
 import com.idhub.magic.center.service.DeployedContractAddress;
 import com.idhub.magic.center.util.AuthenticationUtils;
 import com.idhub.magic.center.util.CryptoUtil;
