@@ -2,6 +2,7 @@ package com.idhub.magic.clientlib.test;
 
 import com.idhub.magic.clientlib.ApiFactory;
 import com.idhub.magic.clientlib.ProviderFactory;
+import com.idhub.magic.clientlib.interfaces.Identity;
 
 
 public class ClientTest {
@@ -10,6 +11,8 @@ public class ClientTest {
 		String addr = ProviderFactory.getProvider().getDefaultAddress().getAddress();
 		long ein = ApiFactory.getIdentityChainViewer().getEIN(addr);
 		System.out.println(ein);
+		Identity dd = ApiFactory.getIdentityChainViewer().getIdentity(1l);
+		System.out.println(dd.getRecoveryAddress());
 	}
 
 }
