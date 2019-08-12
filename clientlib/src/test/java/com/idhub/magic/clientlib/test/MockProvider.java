@@ -26,7 +26,7 @@ public class MockProvider implements CredentialProvider {
 		return client;
 	}
 	@Override
-	public Credentials getDefaultAddress() {
+	public Credentials getDefaultCredentials() {
 		// TODO Auto-generated method stub
 		return client;
 	}
@@ -34,6 +34,11 @@ public class MockProvider implements CredentialProvider {
 	public Web3j web3j() {
 		// TODO Auto-generated method stub
 		return web3j;
+	}
+	@Override
+	public Credentials getRecoverCredentials() {
+		// TODO Auto-generated method stub
+		return client;
 	}
 
 }

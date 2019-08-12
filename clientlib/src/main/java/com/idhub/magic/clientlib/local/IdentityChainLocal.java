@@ -1,11 +1,14 @@
 package com.idhub.magic.clientlib.local;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tuples.generated.Tuple4;
 
+import com.idhub.magic.center.service.DeployedContractAddress;
+import com.idhub.magic.clientlib.ProviderFactory;
 import com.idhub.magic.clientlib.interfaces.Identity;
 import com.idhub.magic.clientlib.interfaces.IdentityChain;
 import com.idhub.magic.clientlib.interfaces.IdentityChainViewer;
@@ -43,5 +46,17 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 		}
 		
 
+	}
+
+	@Override
+	public void createIdentity() {
+		String rec = ProviderFactory.getProvider().getRecoverCredentials().getAddress();
+		String asso = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
+		List<String> ps = new ArrayList<String>();
+		List<String> rs = new ArrayList<String>();
+		rs.add(DeployedContractAddress.IdentityRegistryInterface);
+		
+		createIdentity(rec, asso, ps, rs);
+		
 	}
 }

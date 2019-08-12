@@ -1,12 +1,15 @@
 package com.idhub.magic.clientlib.delegatiton;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.web3j.utils.Numeric;
 
 import com.alibaba.fastjson.JSON;
 import com.idhub.magic.center.controller.parameter.CreateIdentityDelegatedParam;
+import com.idhub.magic.center.service.DeployedContractAddress;
+import com.idhub.magic.clientlib.ProviderFactory;
 import com.idhub.magic.clientlib.http.HttpAccessor;
 import com.idhub.magic.clientlib.interfaces.IdentityChain;
 
@@ -39,6 +42,17 @@ public class IdentityChainDelegate implements IdentityChain{
 		rst = ClientEncoder.encode(rst);
 		return rst;
 
+	}
+
+	@Override
+	public void createIdentity() {
+		String rec = ProviderFactory.getProvider().getRecoverCredentials().getAddress();
+		String asso = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
+		List<String> ps = new ArrayList<String>();
+		List<String> rs = new ArrayList<String>();
+		rs.add(DeployedContractAddress.IdentityRegistryInterface);
+		
+		createIdentity(rec, asso, ps, rs);
 	}
 
 }

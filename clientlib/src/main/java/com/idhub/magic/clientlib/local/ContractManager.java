@@ -36,7 +36,7 @@ public class ContractManager {
 	static  Credentials credentials;
 
    static{
-    	Credentials credentials = ProviderFactory.getProvider().getDefaultAddress();
+    	Credentials credentials = ProviderFactory.getProvider().getDefaultCredentials();
         
         ContractGasProvider contractGasProvider = new DefaultGasProvider();
         registry1484 = IdentityRegistryInterface.load(DeployedContractAddress.IdentityRegistryInterface,
