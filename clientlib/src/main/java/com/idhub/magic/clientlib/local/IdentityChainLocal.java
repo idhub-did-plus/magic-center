@@ -3,6 +3,7 @@ package com.idhub.magic.clientlib.local;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tuples.generated.Tuple4;
@@ -22,7 +23,21 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 		}
 
 	}
+	public void createIdentityAsync(String recovery, String associate, List<String> providers, List<String> resolvers) {
+		try {
+			 CompletableFuture<TransactionReceipt> data = ContractManager.getRegistry1484().createIdentity(recovery, providers, resolvers).sendAsync();
+			 data.thenAccept(transactionReceipt -> {
 
+				   System.out.println(transactionReceipt);
+
+				 }).exceptionally(transactionReceipt  -> {
+				    return null;
+				 });
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+	}
 	public long getEIN(String associate) {
 		BigInteger data;
 		try {
@@ -31,6 +46,23 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+
+	}
+	public long getEINAsync(String associate) {
+
+		try {
+			CompletableFuture<BigInteger> data = ContractManager.getRegistry1484().getEIN(associate).sendAsync();
+			 data.thenAccept(transactionReceipt -> {
+
+				   System.out.println(transactionReceipt);
+
+				 }).exceptionally(transactionReceipt  -> {
+				    return null;
+				 });
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		return 0;
 
 	}
 	public Identity getIdentity(long ein) {
