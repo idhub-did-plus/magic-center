@@ -1,5 +1,7 @@
 package com.idhub.magic.center.contracts;
 
+import io.reactivex.Flowable;
+import io.reactivex.functions.Function;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,20 +9,23 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
-
+import org.web3j.abi.EventEncoder;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.Bool;
 import org.web3j.abi.datatypes.DynamicArray;
 import org.web3j.abi.datatypes.DynamicBytes;
-import org.web3j.abi.datatypes.Function;
+import org.web3j.abi.datatypes.Event;
 import org.web3j.abi.datatypes.Type;
 import org.web3j.abi.datatypes.generated.Bytes32;
 import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.abi.datatypes.generated.Uint8;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.RemoteCall;
+import org.web3j.protocol.core.methods.request.EthFilter;
+import org.web3j.protocol.core.methods.response.Log;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tuples.generated.Tuple4;
 import org.web3j.tx.Contract;
@@ -101,6 +106,46 @@ public class IdentityRegistryInterface extends Contract {
 
     public static final String FUNC_TRIGGERDESTRUCTION = "triggerDestruction";
 
+    public static final Event IDENTITYCREATED_EVENT = new Event("IdentityCreated", 
+            Arrays.<TypeReference<?>>asList(new TypeReference<Address>(true) {}, new TypeReference<Uint256>(true) {}, new TypeReference<Address>() {}, new TypeReference<Address>() {}, new TypeReference<DynamicArray<Address>>() {}, new TypeReference<DynamicArray<Address>>() {}, new TypeReference<Bool>() {}));
+    ;
+
+    public static final Event ASSOCIATEDADDRESSADDED_EVENT = new Event("AssociatedAddressAdded", 
+            Arrays.<TypeReference<?>>asList(new TypeReference<Address>(true) {}, new TypeReference<Uint256>(true) {}, new TypeReference<Address>() {}, new TypeReference<Address>() {}, new TypeReference<Bool>() {}));
+    ;
+
+    public static final Event ASSOCIATEDADDRESSREMOVED_EVENT = new Event("AssociatedAddressRemoved", 
+            Arrays.<TypeReference<?>>asList(new TypeReference<Address>(true) {}, new TypeReference<Uint256>(true) {}, new TypeReference<Address>() {}, new TypeReference<Bool>() {}));
+    ;
+
+    public static final Event PROVIDERADDED_EVENT = new Event("ProviderAdded", 
+            Arrays.<TypeReference<?>>asList(new TypeReference<Address>(true) {}, new TypeReference<Uint256>(true) {}, new TypeReference<Address>() {}, new TypeReference<Bool>() {}));
+    ;
+
+    public static final Event PROVIDERREMOVED_EVENT = new Event("ProviderRemoved", 
+            Arrays.<TypeReference<?>>asList(new TypeReference<Address>(true) {}, new TypeReference<Uint256>(true) {}, new TypeReference<Address>() {}, new TypeReference<Bool>() {}));
+    ;
+
+    public static final Event RESOLVERADDED_EVENT = new Event("ResolverAdded", 
+            Arrays.<TypeReference<?>>asList(new TypeReference<Address>(true) {}, new TypeReference<Uint256>(true) {}, new TypeReference<Address>() {}, new TypeReference<Bool>() {}));
+    ;
+
+    public static final Event RESOLVERREMOVED_EVENT = new Event("ResolverRemoved", 
+            Arrays.<TypeReference<?>>asList(new TypeReference<Address>(true) {}, new TypeReference<Uint256>(true) {}, new TypeReference<Address>() {}, new TypeReference<Bool>() {}));
+    ;
+
+    public static final Event RECOVERYADDRESSCHANGETRIGGERED_EVENT = new Event("RecoveryAddressChangeTriggered", 
+            Arrays.<TypeReference<?>>asList(new TypeReference<Address>(true) {}, new TypeReference<Uint256>(true) {}, new TypeReference<Address>() {}, new TypeReference<Address>() {}, new TypeReference<Bool>() {}));
+    ;
+
+    public static final Event RECOVERYTRIGGERED_EVENT = new Event("RecoveryTriggered", 
+            Arrays.<TypeReference<?>>asList(new TypeReference<Address>(true) {}, new TypeReference<Uint256>(true) {}, new TypeReference<DynamicArray<Address>>() {}, new TypeReference<Address>() {}));
+    ;
+
+    public static final Event IDENTITYDESTROYED_EVENT = new Event("IdentityDestroyed", 
+            Arrays.<TypeReference<?>>asList(new TypeReference<Address>(true) {}, new TypeReference<Uint256>(true) {}, new TypeReference<Address>() {}, new TypeReference<Bool>() {}));
+    ;
+
     protected static final HashMap<String, String> _addresses;
 
     static {
@@ -125,8 +170,388 @@ public class IdentityRegistryInterface extends Contract {
         super(BINARY, contractAddress, web3j, transactionManager, contractGasProvider);
     }
 
+    public List<IdentityCreatedEventResponse> getIdentityCreatedEvents(TransactionReceipt transactionReceipt) {
+        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(IDENTITYCREATED_EVENT, transactionReceipt);
+        ArrayList<IdentityCreatedEventResponse> responses = new ArrayList<IdentityCreatedEventResponse>(valueList.size());
+        for (Contract.EventValuesWithLog eventValues : valueList) {
+            IdentityCreatedEventResponse typedResponse = new IdentityCreatedEventResponse();
+            typedResponse.log = eventValues.getLog();
+            typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
+            typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+            typedResponse.recoveryAddress = (String) eventValues.getNonIndexedValues().get(0).getValue();
+            typedResponse.associatedAddress = (String) eventValues.getNonIndexedValues().get(1).getValue();
+            typedResponse.providers = (List<String>) eventValues.getNonIndexedValues().get(2).getValue();
+            typedResponse.resolvers = (List<String>) eventValues.getNonIndexedValues().get(3).getValue();
+            typedResponse.delegated = (Boolean) eventValues.getNonIndexedValues().get(4).getValue();
+            responses.add(typedResponse);
+        }
+        return responses;
+    }
+
+    public Flowable<IdentityCreatedEventResponse> identityCreatedEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, IdentityCreatedEventResponse>() {
+            @Override
+            public IdentityCreatedEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(IDENTITYCREATED_EVENT, log);
+                IdentityCreatedEventResponse typedResponse = new IdentityCreatedEventResponse();
+                typedResponse.log = log;
+                typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.recoveryAddress = (String) eventValues.getNonIndexedValues().get(0).getValue();
+                typedResponse.associatedAddress = (String) eventValues.getNonIndexedValues().get(1).getValue();
+                typedResponse.providers = (List<String>) eventValues.getNonIndexedValues().get(2).getValue();
+                typedResponse.resolvers = (List<String>) eventValues.getNonIndexedValues().get(3).getValue();
+                typedResponse.delegated = (Boolean) eventValues.getNonIndexedValues().get(4).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<IdentityCreatedEventResponse> identityCreatedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(IDENTITYCREATED_EVENT));
+        return identityCreatedEventFlowable(filter);
+    }
+
+    public List<AssociatedAddressAddedEventResponse> getAssociatedAddressAddedEvents(TransactionReceipt transactionReceipt) {
+        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(ASSOCIATEDADDRESSADDED_EVENT, transactionReceipt);
+        ArrayList<AssociatedAddressAddedEventResponse> responses = new ArrayList<AssociatedAddressAddedEventResponse>(valueList.size());
+        for (Contract.EventValuesWithLog eventValues : valueList) {
+            AssociatedAddressAddedEventResponse typedResponse = new AssociatedAddressAddedEventResponse();
+            typedResponse.log = eventValues.getLog();
+            typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
+            typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+            typedResponse.approvingAddress = (String) eventValues.getNonIndexedValues().get(0).getValue();
+            typedResponse.addedAddress = (String) eventValues.getNonIndexedValues().get(1).getValue();
+            typedResponse.delegated = (Boolean) eventValues.getNonIndexedValues().get(2).getValue();
+            responses.add(typedResponse);
+        }
+        return responses;
+    }
+
+    public Flowable<AssociatedAddressAddedEventResponse> associatedAddressAddedEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, AssociatedAddressAddedEventResponse>() {
+            @Override
+            public AssociatedAddressAddedEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(ASSOCIATEDADDRESSADDED_EVENT, log);
+                AssociatedAddressAddedEventResponse typedResponse = new AssociatedAddressAddedEventResponse();
+                typedResponse.log = log;
+                typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.approvingAddress = (String) eventValues.getNonIndexedValues().get(0).getValue();
+                typedResponse.addedAddress = (String) eventValues.getNonIndexedValues().get(1).getValue();
+                typedResponse.delegated = (Boolean) eventValues.getNonIndexedValues().get(2).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<AssociatedAddressAddedEventResponse> associatedAddressAddedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(ASSOCIATEDADDRESSADDED_EVENT));
+        return associatedAddressAddedEventFlowable(filter);
+    }
+
+    public List<AssociatedAddressRemovedEventResponse> getAssociatedAddressRemovedEvents(TransactionReceipt transactionReceipt) {
+        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(ASSOCIATEDADDRESSREMOVED_EVENT, transactionReceipt);
+        ArrayList<AssociatedAddressRemovedEventResponse> responses = new ArrayList<AssociatedAddressRemovedEventResponse>(valueList.size());
+        for (Contract.EventValuesWithLog eventValues : valueList) {
+            AssociatedAddressRemovedEventResponse typedResponse = new AssociatedAddressRemovedEventResponse();
+            typedResponse.log = eventValues.getLog();
+            typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
+            typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+            typedResponse.removedAddress = (String) eventValues.getNonIndexedValues().get(0).getValue();
+            typedResponse.delegated = (Boolean) eventValues.getNonIndexedValues().get(1).getValue();
+            responses.add(typedResponse);
+        }
+        return responses;
+    }
+
+    public Flowable<AssociatedAddressRemovedEventResponse> associatedAddressRemovedEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, AssociatedAddressRemovedEventResponse>() {
+            @Override
+            public AssociatedAddressRemovedEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(ASSOCIATEDADDRESSREMOVED_EVENT, log);
+                AssociatedAddressRemovedEventResponse typedResponse = new AssociatedAddressRemovedEventResponse();
+                typedResponse.log = log;
+                typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.removedAddress = (String) eventValues.getNonIndexedValues().get(0).getValue();
+                typedResponse.delegated = (Boolean) eventValues.getNonIndexedValues().get(1).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<AssociatedAddressRemovedEventResponse> associatedAddressRemovedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(ASSOCIATEDADDRESSREMOVED_EVENT));
+        return associatedAddressRemovedEventFlowable(filter);
+    }
+
+    public List<ProviderAddedEventResponse> getProviderAddedEvents(TransactionReceipt transactionReceipt) {
+        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(PROVIDERADDED_EVENT, transactionReceipt);
+        ArrayList<ProviderAddedEventResponse> responses = new ArrayList<ProviderAddedEventResponse>(valueList.size());
+        for (Contract.EventValuesWithLog eventValues : valueList) {
+            ProviderAddedEventResponse typedResponse = new ProviderAddedEventResponse();
+            typedResponse.log = eventValues.getLog();
+            typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
+            typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+            typedResponse.provider = (String) eventValues.getNonIndexedValues().get(0).getValue();
+            typedResponse.delegated = (Boolean) eventValues.getNonIndexedValues().get(1).getValue();
+            responses.add(typedResponse);
+        }
+        return responses;
+    }
+
+    public Flowable<ProviderAddedEventResponse> providerAddedEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, ProviderAddedEventResponse>() {
+            @Override
+            public ProviderAddedEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(PROVIDERADDED_EVENT, log);
+                ProviderAddedEventResponse typedResponse = new ProviderAddedEventResponse();
+                typedResponse.log = log;
+                typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.provider = (String) eventValues.getNonIndexedValues().get(0).getValue();
+                typedResponse.delegated = (Boolean) eventValues.getNonIndexedValues().get(1).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<ProviderAddedEventResponse> providerAddedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(PROVIDERADDED_EVENT));
+        return providerAddedEventFlowable(filter);
+    }
+
+    public List<ProviderRemovedEventResponse> getProviderRemovedEvents(TransactionReceipt transactionReceipt) {
+        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(PROVIDERREMOVED_EVENT, transactionReceipt);
+        ArrayList<ProviderRemovedEventResponse> responses = new ArrayList<ProviderRemovedEventResponse>(valueList.size());
+        for (Contract.EventValuesWithLog eventValues : valueList) {
+            ProviderRemovedEventResponse typedResponse = new ProviderRemovedEventResponse();
+            typedResponse.log = eventValues.getLog();
+            typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
+            typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+            typedResponse.provider = (String) eventValues.getNonIndexedValues().get(0).getValue();
+            typedResponse.delegated = (Boolean) eventValues.getNonIndexedValues().get(1).getValue();
+            responses.add(typedResponse);
+        }
+        return responses;
+    }
+
+    public Flowable<ProviderRemovedEventResponse> providerRemovedEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, ProviderRemovedEventResponse>() {
+            @Override
+            public ProviderRemovedEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(PROVIDERREMOVED_EVENT, log);
+                ProviderRemovedEventResponse typedResponse = new ProviderRemovedEventResponse();
+                typedResponse.log = log;
+                typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.provider = (String) eventValues.getNonIndexedValues().get(0).getValue();
+                typedResponse.delegated = (Boolean) eventValues.getNonIndexedValues().get(1).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<ProviderRemovedEventResponse> providerRemovedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(PROVIDERREMOVED_EVENT));
+        return providerRemovedEventFlowable(filter);
+    }
+
+    public List<ResolverAddedEventResponse> getResolverAddedEvents(TransactionReceipt transactionReceipt) {
+        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(RESOLVERADDED_EVENT, transactionReceipt);
+        ArrayList<ResolverAddedEventResponse> responses = new ArrayList<ResolverAddedEventResponse>(valueList.size());
+        for (Contract.EventValuesWithLog eventValues : valueList) {
+            ResolverAddedEventResponse typedResponse = new ResolverAddedEventResponse();
+            typedResponse.log = eventValues.getLog();
+            typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
+            typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+            typedResponse.resolvers = (String) eventValues.getNonIndexedValues().get(0).getValue();
+            typedResponse.delegated = (Boolean) eventValues.getNonIndexedValues().get(1).getValue();
+            responses.add(typedResponse);
+        }
+        return responses;
+    }
+
+    public Flowable<ResolverAddedEventResponse> resolverAddedEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, ResolverAddedEventResponse>() {
+            @Override
+            public ResolverAddedEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(RESOLVERADDED_EVENT, log);
+                ResolverAddedEventResponse typedResponse = new ResolverAddedEventResponse();
+                typedResponse.log = log;
+                typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.resolvers = (String) eventValues.getNonIndexedValues().get(0).getValue();
+                typedResponse.delegated = (Boolean) eventValues.getNonIndexedValues().get(1).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<ResolverAddedEventResponse> resolverAddedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(RESOLVERADDED_EVENT));
+        return resolverAddedEventFlowable(filter);
+    }
+
+    public List<ResolverRemovedEventResponse> getResolverRemovedEvents(TransactionReceipt transactionReceipt) {
+        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(RESOLVERREMOVED_EVENT, transactionReceipt);
+        ArrayList<ResolverRemovedEventResponse> responses = new ArrayList<ResolverRemovedEventResponse>(valueList.size());
+        for (Contract.EventValuesWithLog eventValues : valueList) {
+            ResolverRemovedEventResponse typedResponse = new ResolverRemovedEventResponse();
+            typedResponse.log = eventValues.getLog();
+            typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
+            typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+            typedResponse.resolvers = (String) eventValues.getNonIndexedValues().get(0).getValue();
+            typedResponse.delegated = (Boolean) eventValues.getNonIndexedValues().get(1).getValue();
+            responses.add(typedResponse);
+        }
+        return responses;
+    }
+
+    public Flowable<ResolverRemovedEventResponse> resolverRemovedEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, ResolverRemovedEventResponse>() {
+            @Override
+            public ResolverRemovedEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(RESOLVERREMOVED_EVENT, log);
+                ResolverRemovedEventResponse typedResponse = new ResolverRemovedEventResponse();
+                typedResponse.log = log;
+                typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.resolvers = (String) eventValues.getNonIndexedValues().get(0).getValue();
+                typedResponse.delegated = (Boolean) eventValues.getNonIndexedValues().get(1).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<ResolverRemovedEventResponse> resolverRemovedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(RESOLVERREMOVED_EVENT));
+        return resolverRemovedEventFlowable(filter);
+    }
+
+    public List<RecoveryAddressChangeTriggeredEventResponse> getRecoveryAddressChangeTriggeredEvents(TransactionReceipt transactionReceipt) {
+        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(RECOVERYADDRESSCHANGETRIGGERED_EVENT, transactionReceipt);
+        ArrayList<RecoveryAddressChangeTriggeredEventResponse> responses = new ArrayList<RecoveryAddressChangeTriggeredEventResponse>(valueList.size());
+        for (Contract.EventValuesWithLog eventValues : valueList) {
+            RecoveryAddressChangeTriggeredEventResponse typedResponse = new RecoveryAddressChangeTriggeredEventResponse();
+            typedResponse.log = eventValues.getLog();
+            typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
+            typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+            typedResponse.oldRecoveryAddress = (String) eventValues.getNonIndexedValues().get(0).getValue();
+            typedResponse.newRecoveryAddress = (String) eventValues.getNonIndexedValues().get(1).getValue();
+            typedResponse.delegated = (Boolean) eventValues.getNonIndexedValues().get(2).getValue();
+            responses.add(typedResponse);
+        }
+        return responses;
+    }
+
+    public Flowable<RecoveryAddressChangeTriggeredEventResponse> recoveryAddressChangeTriggeredEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, RecoveryAddressChangeTriggeredEventResponse>() {
+            @Override
+            public RecoveryAddressChangeTriggeredEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(RECOVERYADDRESSCHANGETRIGGERED_EVENT, log);
+                RecoveryAddressChangeTriggeredEventResponse typedResponse = new RecoveryAddressChangeTriggeredEventResponse();
+                typedResponse.log = log;
+                typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.oldRecoveryAddress = (String) eventValues.getNonIndexedValues().get(0).getValue();
+                typedResponse.newRecoveryAddress = (String) eventValues.getNonIndexedValues().get(1).getValue();
+                typedResponse.delegated = (Boolean) eventValues.getNonIndexedValues().get(2).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<RecoveryAddressChangeTriggeredEventResponse> recoveryAddressChangeTriggeredEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(RECOVERYADDRESSCHANGETRIGGERED_EVENT));
+        return recoveryAddressChangeTriggeredEventFlowable(filter);
+    }
+
+    public List<RecoveryTriggeredEventResponse> getRecoveryTriggeredEvents(TransactionReceipt transactionReceipt) {
+        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(RECOVERYTRIGGERED_EVENT, transactionReceipt);
+        ArrayList<RecoveryTriggeredEventResponse> responses = new ArrayList<RecoveryTriggeredEventResponse>(valueList.size());
+        for (Contract.EventValuesWithLog eventValues : valueList) {
+            RecoveryTriggeredEventResponse typedResponse = new RecoveryTriggeredEventResponse();
+            typedResponse.log = eventValues.getLog();
+            typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
+            typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+            typedResponse.oldAssociatedAddresses = (List<String>) eventValues.getNonIndexedValues().get(0).getValue();
+            typedResponse.newAssociatedAddress = (String) eventValues.getNonIndexedValues().get(1).getValue();
+            responses.add(typedResponse);
+        }
+        return responses;
+    }
+
+    public Flowable<RecoveryTriggeredEventResponse> recoveryTriggeredEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, RecoveryTriggeredEventResponse>() {
+            @Override
+            public RecoveryTriggeredEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(RECOVERYTRIGGERED_EVENT, log);
+                RecoveryTriggeredEventResponse typedResponse = new RecoveryTriggeredEventResponse();
+                typedResponse.log = log;
+                typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.oldAssociatedAddresses = (List<String>) eventValues.getNonIndexedValues().get(0).getValue();
+                typedResponse.newAssociatedAddress = (String) eventValues.getNonIndexedValues().get(1).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<RecoveryTriggeredEventResponse> recoveryTriggeredEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(RECOVERYTRIGGERED_EVENT));
+        return recoveryTriggeredEventFlowable(filter);
+    }
+
+    public List<IdentityDestroyedEventResponse> getIdentityDestroyedEvents(TransactionReceipt transactionReceipt) {
+        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(IDENTITYDESTROYED_EVENT, transactionReceipt);
+        ArrayList<IdentityDestroyedEventResponse> responses = new ArrayList<IdentityDestroyedEventResponse>(valueList.size());
+        for (Contract.EventValuesWithLog eventValues : valueList) {
+            IdentityDestroyedEventResponse typedResponse = new IdentityDestroyedEventResponse();
+            typedResponse.log = eventValues.getLog();
+            typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
+            typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+            typedResponse.recoveryAddress = (String) eventValues.getNonIndexedValues().get(0).getValue();
+            typedResponse.resolversReset = (Boolean) eventValues.getNonIndexedValues().get(1).getValue();
+            responses.add(typedResponse);
+        }
+        return responses;
+    }
+
+    public Flowable<IdentityDestroyedEventResponse> identityDestroyedEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, IdentityDestroyedEventResponse>() {
+            @Override
+            public IdentityDestroyedEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(IDENTITYDESTROYED_EVENT, log);
+                IdentityDestroyedEventResponse typedResponse = new IdentityDestroyedEventResponse();
+                typedResponse.log = log;
+                typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
+                typedResponse.ein = (BigInteger) eventValues.getIndexedValues().get(1).getValue();
+                typedResponse.recoveryAddress = (String) eventValues.getNonIndexedValues().get(0).getValue();
+                typedResponse.resolversReset = (Boolean) eventValues.getNonIndexedValues().get(1).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<IdentityDestroyedEventResponse> identityDestroyedEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(IDENTITYDESTROYED_EVENT));
+        return identityDestroyedEventFlowable(filter);
+    }
+
     public RemoteCall<Boolean> isSigned(String _address, byte[] messageHash, BigInteger v, byte[] r, byte[] s) {
-        final Function function = new Function(FUNC_ISSIGNED, 
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_ISSIGNED, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(_address), 
                 new org.web3j.abi.datatypes.generated.Bytes32(messageHash), 
                 new org.web3j.abi.datatypes.generated.Uint8(v), 
@@ -137,28 +562,28 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<Boolean> identityExists(BigInteger ein) {
-        final Function function = new Function(FUNC_IDENTITYEXISTS, 
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_IDENTITYEXISTS, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein)), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Bool>() {}));
         return executeRemoteCallSingleValueReturn(function, Boolean.class);
     }
 
     public RemoteCall<Boolean> hasIdentity(String _address) {
-        final Function function = new Function(FUNC_HASIDENTITY, 
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_HASIDENTITY, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(_address)), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Bool>() {}));
         return executeRemoteCallSingleValueReturn(function, Boolean.class);
     }
 
     public RemoteCall<BigInteger> getEIN(String _address) {
-        final Function function = new Function(FUNC_GETEIN, 
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETEIN, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(_address)), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {}));
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
     public RemoteCall<Boolean> isAssociatedAddressFor(BigInteger ein, String _address) {
-        final Function function = new Function(FUNC_ISASSOCIATEDADDRESSFOR, 
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_ISASSOCIATEDADDRESSFOR, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein), 
                 new org.web3j.abi.datatypes.Address(_address)), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Bool>() {}));
@@ -166,7 +591,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<Boolean> isProviderFor(BigInteger ein, String provider) {
-        final Function function = new Function(FUNC_ISPROVIDERFOR, 
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_ISPROVIDERFOR, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein), 
                 new org.web3j.abi.datatypes.Address(provider)), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Bool>() {}));
@@ -174,7 +599,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<Boolean> isResolverFor(BigInteger ein, String resolver) {
-        final Function function = new Function(FUNC_ISRESOLVERFOR, 
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_ISRESOLVERFOR, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein), 
                 new org.web3j.abi.datatypes.Address(resolver)), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Bool>() {}));
@@ -182,7 +607,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<Tuple4<String, List<String>, List<String>, List<String>>> getIdentity(BigInteger ein) {
-        final Function function = new Function(FUNC_GETIDENTITY, 
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETIDENTITY, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein)), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {}, new TypeReference<DynamicArray<Address>>() {}, new TypeReference<DynamicArray<Address>>() {}, new TypeReference<DynamicArray<Address>>() {}));
         return new RemoteCall<Tuple4<String, List<String>, List<String>, List<String>>>(
@@ -190,12 +615,6 @@ public class IdentityRegistryInterface extends Contract {
                     @Override
                     public Tuple4<String, List<String>, List<String>, List<String>> call() throws Exception {
                         List<Type> results = executeCallMultipleValueReturn(function);
-                        if(results.isEmpty())
-                        	return new Tuple4<String, List<String>, List<String>, List<String>>(
-                                    "", 
-                                    new ArrayList<String>(),
-                                    new ArrayList<String>(),
-                                    new ArrayList<String>());
                         return new Tuple4<String, List<String>, List<String>, List<String>>(
                                 (String) results.get(0).getValue(), 
                                 convertToNative((List<Address>) results.get(1).getValue()), 
@@ -206,21 +625,21 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<BigInteger> mapuint8(BigInteger data) {
-        final Function function = new Function(FUNC_MAPUINT8, 
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_MAPUINT8, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint8(data)), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Uint8>() {}));
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
     public RemoteCall<byte[]> mapbytes32(byte[] data) {
-        final Function function = new Function(FUNC_MAPBYTES32, 
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_MAPBYTES32, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Bytes32(data)), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Bytes32>() {}));
         return executeRemoteCallSingleValueReturn(function, byte[].class);
     }
 
     public RemoteCall<String> erecover(String recoveryAddress, String associatedAddress, List<String> providers, List<String> resolvers, BigInteger v, byte[] r, byte[] s, BigInteger timestamp) {
-        final Function function = new Function(FUNC_ERECOVER, 
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_ERECOVER, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(recoveryAddress), 
                 new org.web3j.abi.datatypes.Address(associatedAddress), 
                 new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
@@ -238,7 +657,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<byte[]> encode(String recoveryAddress, String associatedAddress, List<String> providers, List<String> resolvers, BigInteger timestamp) {
-        final Function function = new Function(FUNC_ENCODE, 
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_ENCODE, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(recoveryAddress), 
                 new org.web3j.abi.datatypes.Address(associatedAddress), 
                 new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
@@ -253,7 +672,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<byte[]> hash(String recoveryAddress, String associatedAddress, List<String> providers, List<String> resolvers, BigInteger timestamp) {
-        final Function function = new Function(FUNC_HASH, 
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_HASH, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(recoveryAddress), 
                 new org.web3j.abi.datatypes.Address(associatedAddress), 
                 new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
@@ -268,7 +687,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<TransactionReceipt> createIdentity(String recoveryAddress, List<String> providers, List<String> resolvers) {
-        final Function function = new Function(
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_CREATEIDENTITY, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(recoveryAddress), 
                 new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
@@ -282,7 +701,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<TransactionReceipt> createIdentityDelegated(String recoveryAddress, String associatedAddress, List<String> providers, List<String> resolvers, BigInteger v, byte[] r, byte[] s, BigInteger timestamp) {
-        final Function function = new Function(
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_CREATEIDENTITYDELEGATED, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(recoveryAddress), 
                 new org.web3j.abi.datatypes.Address(associatedAddress), 
@@ -301,7 +720,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<TransactionReceipt> addAssociatedAddress(String approvingAddress, String addressToAdd, BigInteger v, byte[] r, byte[] s, BigInteger timestamp) {
-        final Function function = new Function(
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_ADDASSOCIATEDADDRESS, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(approvingAddress), 
                 new org.web3j.abi.datatypes.Address(addressToAdd), 
@@ -314,7 +733,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<TransactionReceipt> addAssociatedAddressDelegated(String approvingAddress, String addressToAdd, List<BigInteger> v, List<byte[]> r, List<byte[]> s, List<BigInteger> timestamp) {
-        final Function function = new Function(
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_ADDASSOCIATEDADDRESSDELEGATED, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(approvingAddress), 
                 new org.web3j.abi.datatypes.Address(addressToAdd), 
@@ -335,7 +754,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<TransactionReceipt> removeAssociatedAddress() {
-        final Function function = new Function(
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_REMOVEASSOCIATEDADDRESS, 
                 Arrays.<Type>asList(), 
                 Collections.<TypeReference<?>>emptyList());
@@ -343,7 +762,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<TransactionReceipt> removeAssociatedAddressDelegated(String addressToRemove, BigInteger v, byte[] r, byte[] s, BigInteger timestamp) {
-        final Function function = new Function(
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_REMOVEASSOCIATEDADDRESSDELEGATED, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(addressToRemove), 
                 new org.web3j.abi.datatypes.generated.Uint8(v), 
@@ -355,7 +774,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<TransactionReceipt> addProviders(List<String> providers) {
-        final Function function = new Function(
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_ADDPROVIDERS, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
                         org.web3j.abi.datatypes.Address.class,
@@ -365,7 +784,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<TransactionReceipt> addProvidersFor(BigInteger ein, List<String> providers) {
-        final Function function = new Function(
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_ADDPROVIDERSFOR, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein), 
                 new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
@@ -376,7 +795,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<TransactionReceipt> removeProviders(List<String> providers) {
-        final Function function = new Function(
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_REMOVEPROVIDERS, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
                         org.web3j.abi.datatypes.Address.class,
@@ -386,7 +805,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<TransactionReceipt> removeProvidersFor(BigInteger ein, List<String> providers) {
-        final Function function = new Function(
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_REMOVEPROVIDERSFOR, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein), 
                 new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
@@ -397,7 +816,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<TransactionReceipt> addResolvers(List<String> resolvers) {
-        final Function function = new Function(
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_ADDRESOLVERS, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
                         org.web3j.abi.datatypes.Address.class,
@@ -407,7 +826,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<TransactionReceipt> addResolversFor(BigInteger ein, List<String> resolvers) {
-        final Function function = new Function(
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_ADDRESOLVERSFOR, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein), 
                 new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
@@ -418,7 +837,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<TransactionReceipt> removeResolvers(List<String> resolvers) {
-        final Function function = new Function(
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_REMOVERESOLVERS, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
                         org.web3j.abi.datatypes.Address.class,
@@ -428,7 +847,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<TransactionReceipt> removeResolversFor(BigInteger ein, List<String> resolvers) {
-        final Function function = new Function(
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_REMOVERESOLVERSFOR, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein), 
                 new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
@@ -439,7 +858,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<TransactionReceipt> triggerRecoveryAddressChange(String newRecoveryAddress) {
-        final Function function = new Function(
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_TRIGGERRECOVERYADDRESSCHANGE, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(newRecoveryAddress)), 
                 Collections.<TypeReference<?>>emptyList());
@@ -447,7 +866,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<TransactionReceipt> triggerRecoveryAddressChangeFor(BigInteger ein, String newRecoveryAddress) {
-        final Function function = new Function(
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_TRIGGERRECOVERYADDRESSCHANGEFOR, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein), 
                 new org.web3j.abi.datatypes.Address(newRecoveryAddress)), 
@@ -456,7 +875,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<TransactionReceipt> triggerRecovery(BigInteger ein, String newAssociatedAddress, BigInteger v, byte[] r, byte[] s, BigInteger timestamp) {
-        final Function function = new Function(
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_TRIGGERRECOVERY, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein), 
                 new org.web3j.abi.datatypes.Address(newAssociatedAddress), 
@@ -469,7 +888,7 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public RemoteCall<TransactionReceipt> triggerDestruction(BigInteger ein, List<String> firstChunk, List<String> lastChunk, Boolean resetResolvers) {
-        final Function function = new Function(
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_TRIGGERDESTRUCTION, 
                 Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein), 
                 new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
@@ -525,5 +944,135 @@ public class IdentityRegistryInterface extends Contract {
 
     public static String getPreviouslyDeployedAddress(String networkId) {
         return _addresses.get(networkId);
+    }
+
+    public static class IdentityCreatedEventResponse {
+        public Log log;
+
+        public String initiator;
+
+        public BigInteger ein;
+
+        public String recoveryAddress;
+
+        public String associatedAddress;
+
+        public List<String> providers;
+
+        public List<String> resolvers;
+
+        public Boolean delegated;
+    }
+
+    public static class AssociatedAddressAddedEventResponse {
+        public Log log;
+
+        public String initiator;
+
+        public BigInteger ein;
+
+        public String approvingAddress;
+
+        public String addedAddress;
+
+        public Boolean delegated;
+    }
+
+    public static class AssociatedAddressRemovedEventResponse {
+        public Log log;
+
+        public String initiator;
+
+        public BigInteger ein;
+
+        public String removedAddress;
+
+        public Boolean delegated;
+    }
+
+    public static class ProviderAddedEventResponse {
+        public Log log;
+
+        public String initiator;
+
+        public BigInteger ein;
+
+        public String provider;
+
+        public Boolean delegated;
+    }
+
+    public static class ProviderRemovedEventResponse {
+        public Log log;
+
+        public String initiator;
+
+        public BigInteger ein;
+
+        public String provider;
+
+        public Boolean delegated;
+    }
+
+    public static class ResolverAddedEventResponse {
+        public Log log;
+
+        public String initiator;
+
+        public BigInteger ein;
+
+        public String resolvers;
+
+        public Boolean delegated;
+    }
+
+    public static class ResolverRemovedEventResponse {
+        public Log log;
+
+        public String initiator;
+
+        public BigInteger ein;
+
+        public String resolvers;
+
+        public Boolean delegated;
+    }
+
+    public static class RecoveryAddressChangeTriggeredEventResponse {
+        public Log log;
+
+        public String initiator;
+
+        public BigInteger ein;
+
+        public String oldRecoveryAddress;
+
+        public String newRecoveryAddress;
+
+        public Boolean delegated;
+    }
+
+    public static class RecoveryTriggeredEventResponse {
+        public Log log;
+
+        public String initiator;
+
+        public BigInteger ein;
+
+        public List<String> oldAssociatedAddresses;
+
+        public String newAssociatedAddress;
+    }
+
+    public static class IdentityDestroyedEventResponse {
+        public Log log;
+
+        public String initiator;
+
+        public BigInteger ein;
+
+        public String recoveryAddress;
+
+        public Boolean resolversReset;
     }
 }

@@ -62,4 +62,24 @@ interface IdentityRegistryInterface {
     function triggerDestruction(
         uint ein, address[] calldata firstChunk, address[] calldata lastChunk, bool resetResolvers
     ) external;
+      event IdentityCreated(
+        address indexed initiator, uint indexed ein,
+        address recoveryAddress, address associatedAddress, address[] providers, address[] resolvers, bool delegated
+    );
+    event AssociatedAddressAdded(
+        address indexed initiator, uint indexed ein, address approvingAddress, address addedAddress, bool delegated
+    );
+    event AssociatedAddressRemoved(address indexed initiator, uint indexed ein, address removedAddress, bool delegated);
+    event ProviderAdded(address indexed initiator, uint indexed ein, address provider, bool delegated);
+    event ProviderRemoved(address indexed initiator, uint indexed ein, address provider, bool delegated);
+    event ResolverAdded(address indexed initiator, uint indexed ein, address resolvers, bool delegated);
+    event ResolverRemoved(address indexed initiator, uint indexed ein, address resolvers, bool delegated);
+    event RecoveryAddressChangeTriggered(
+        address indexed initiator, uint indexed ein,
+        address oldRecoveryAddress, address newRecoveryAddress, bool delegated
+    );
+    event RecoveryTriggered(
+        address indexed initiator, uint indexed ein, address[] oldAssociatedAddresses, address newAssociatedAddress
+    );
+    event IdentityDestroyed(address indexed initiator, uint indexed ein, address recoveryAddress, bool resolversReset);
 }

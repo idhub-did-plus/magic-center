@@ -1,17 +1,26 @@
 package com.idhub.magic.clientlib.event;
 
-
+import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.List;
 
 import org.web3j.abi.EventEncoder;
 import org.web3j.abi.EventValues;
+import org.web3j.abi.TypeEncoder;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Address;
+import org.web3j.abi.datatypes.Bool;
+import org.web3j.abi.datatypes.DynamicArray;
 import org.web3j.abi.datatypes.Event;
+import org.web3j.abi.datatypes.Int;
+import org.web3j.abi.datatypes.IntType;
+import org.web3j.abi.datatypes.Type;
+import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.protocol.core.methods.response.Log;
+import org.web3j.tx.Contract;
 
 import com.idhub.magic.center.service.DeployedContractAddress;
 import com.idhub.magic.clientlib.ProviderFactory;
@@ -22,22 +31,47 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 
 public class ChainEventListener {
-	public void init() {
-	
-	    final Event event = new Event("Approval",
-	            Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {}, new TypeReference<Address>() {}));
-	    EthFilter filter = new EthFilter(DefaultBlockParameterName.EARLIEST, DefaultBlockParameterName.LATEST,DeployedContractAddress.IdentityRegistryInterface.substring(2));
-	    filter.addSingleTopic(EventEncoder.encode(event));
-	   
-	    Disposable dis = ProviderFactory.getProvider().web3j().ethLogFlowable(filter).filter(log ->{
-	    	String data = log.getData();
-	    	return false;
-	    	}).map(new Function<Log, CreateEntityEvent>() {
-			@Override
-			public CreateEntityEvent apply(Log t) throws Exception {
-				// TODO Auto-generated method stub
-				return null;
-			}
-	    }).subscribe();
+
+	static {
+
+		final Event event = new Event("IdentityCreated",
+				Arrays.<TypeReference<?>>asList(
+				new TypeReference<Address>(true) {				}, 
+				new TypeReference<Uint256>(true) {				}, 
+				new TypeReference<Address>(false) {				},
+				new TypeReference<Address>(false) {				},
+				new TypeReference<DynamicArray<Address>>(false) {				}, 
+				new TypeReference<DynamicArray<Address>>(false) {				}, 
+				new TypeReference<Bool>(false) {				}
+				)
+				);
+		EthFilter filter = new EthFilter(DefaultBlockParameterName.EARLIEST, DefaultBlockParameterName.LATEST,
+				DeployedContractAddress.IdentityRegistryInterface.substring(2));
+		filter.addSingleTopic(EventEncoder.encode(event));
+		String address = "0x"
+				+ TypeEncoder.encode(new Address(ProviderFactory.getProvider().getDefaultCredentials().getAddress()));
+		String ein = "0x" + TypeEncoder.encode(new Uint256(1));
+		// optTopicAddress=null; optTopicHash=null; if you want not to filter on that
+		// optional topic
+		filter.addOptionalTopics(address, ein);
+		Disposable dis = ProviderFactory.getProvider().web3j().ethLogFlowable(filter).subscribe(log -> {
+			
+			 EventValues eventValues = Contract.staticExtractEventParameters(event, log);
+			 List<Type> vs = eventValues.getIndexedValues();
+			  String ini = (String) vs.get(0).getValue();
+			  BigInteger ee = (BigInteger) vs.get(1).getValue();
+			 
+			  Object rec = eventValues.getNonIndexedValues().get(0).getValue();
+			  Object asso =eventValues.getNonIndexedValues().get(1).getValue();
+			  Object ps =  eventValues.getNonIndexedValues().get(2).getValue();
+			  Object dd =  eventValues.getNonIndexedValues().get(3).getValue();
+			  Object de = eventValues.getNonIndexedValues().get(4).getValue(); 
+			new CreateEntityEvent();
+		});
+
+	}
+
+	static public void main(String[] ss) {
+
 	}
 }
