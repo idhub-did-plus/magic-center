@@ -1,6 +1,6 @@
 package com.idhub.magic.clientlib.interfaces;
 
 public interface IdentityChainViewer {
-	public long getEIN(String associate,ResultListener<Long> listener);
-	public Identity getIdentity(long ein,ResultListener<Identity> listener);
+	public Listen<Long> getEIN(String associate);
+	public Listen<Identity> getIdentity(long ein);
 }

@@ -19,54 +19,44 @@ import com.idhub.magic.clientlib.interfaces.ResultListener;
 
 public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 
-	
-	public long getEIN(String associate,ResultListener<Long> listener) {
-		if(listener == null) {
-		try {
-			BigInteger data = ContractManager.getRegistry1484().getEIN(associate).send();
-			return data.longValue();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		}else {
-			 CompletableFuture<BigInteger> data = ContractManager.getRegistry1484().getEIN(associate).sendAsync();
-			 data.thenAccept(ein -> {
+	public Listen<Long> getEIN(String associate) {
 
-				  	listener.result(ein.longValue());
+		CompletableFuture<BigInteger> data = ContractManager.getRegistry1484().getEIN(associate).sendAsync();
+		return new Listen<Long>() {
 
-				 }).exceptionally(transactionReceipt  -> {
-					 listener.result(0l);
-					 return null;
-				 });
-			return 0l;
-		}
+			@Override
+			public void listen(ResultListener<Long> l) {
+				data.thenAccept(ein -> {
+					l.result(ein.longValue());
+				}).exceptionally(transactionReceipt -> {
+					l.result(0l);
+					return null;
+				});
+
+			}
+		};
 
 	}
-	
-	public Identity getIdentity(long ein,ResultListener<Identity> listener) {
-		if(listener == null) {
-		try {
-			 Tuple4<String, List<String>, List<String>, List<String>> data = ContractManager.getRegistry1484().getIdentity(BigInteger.valueOf(ein)).send();
-			
-			 if(data != null)
-				return  new Identity(data.getValue1(), data.getValue2(), data.getValue3(), data.getValue4());
-			 return null;
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		}else {
-			 CompletableFuture<Tuple4<String, List<String>, List<String>, List<String>>> data = ContractManager.getRegistry1484().getIdentity(BigInteger.valueOf(ein)).sendAsync();
-			 data.thenAccept(id -> {
-				 Identity identity = new Identity(id.getValue1(), id.getValue2(), id.getValue3(), id.getValue4());
-				  	listener.result(identity);
 
-				 }).exceptionally(transactionReceipt  -> {
-					 listener.result(null);
-					 return null;
-				 });
-			return null;
-		}
-		
+	public Listen<Identity> getIdentity(long ein) {
+
+		CompletableFuture<Tuple4<String, List<String>, List<String>, List<String>>> data = ContractManager
+				.getRegistry1484().getIdentity(BigInteger.valueOf(ein)).sendAsync();
+		return new Listen<Identity>() {
+
+			@Override
+			public void listen(ResultListener<Identity> l) {
+				data.thenAccept(id -> {
+					Identity identity = new Identity(id.getValue1(), id.getValue2(), id.getValue3(), id.getValue4());
+					l.result(identity);
+
+				}).exceptionally(transactionReceipt -> {
+					l.result(null);
+					return null;
+				});
+
+			}
+		};
 
 	}
 
@@ -77,34 +67,33 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 		List<String> ps = new ArrayList<String>();
 		List<String> rs = new ArrayList<String>();
 		rs.add(DeployedContractAddress.IdentityRegistryInterface);
-		
-		
+
 		return createIdentity(rec, asso, ps, rs);
 
-		
 	}
 
 	@Override
-	public Listen<IdentityCreatedEventResponse> createIdentity(String recovery, String associate, List<String> providers, List<String> resolvers) {
-		 CompletableFuture<TransactionReceipt> data = ContractManager.getRegistry1484().createIdentity(recovery, providers, resolvers).sendAsync();
-		 return new Listen<IdentityCreatedEventResponse>() {
+	public Listen<IdentityCreatedEventResponse> createIdentity(String recovery, String associate,
+			List<String> providers, List<String> resolvers) {
+		CompletableFuture<TransactionReceipt> data = ContractManager.getRegistry1484()
+				.createIdentity(recovery, providers, resolvers).sendAsync();
+		return new Listen<IdentityCreatedEventResponse>() {
 
 			@Override
 			public void listen(ResultListener listener) {
-				 data.thenAccept(transactionReceipt -> {
-					 List<IdentityCreatedEventResponse> es = ContractManager.getRegistry1484().getIdentityCreatedEvents(transactionReceipt);
-					  	listener.result(es.get(0));
+				data.thenAccept(transactionReceipt -> {
+					List<IdentityCreatedEventResponse> es = ContractManager.getRegistry1484()
+							.getIdentityCreatedEvents(transactionReceipt);
+					listener.result(es.get(0));
 
-					 }).exceptionally(transactionReceipt  -> {
-						 listener.result(null);
-						 return null;
-					 });
-				
+				}).exceptionally(transactionReceipt -> {
+					listener.result(null);
+					return null;
+				});
+
 			}
-			 
-		 };
-		 
-		
+
+		};
 
 	}
 }
