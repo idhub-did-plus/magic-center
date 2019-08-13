@@ -10,7 +10,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import com.idhub.magic.center.event.EventWrapper;
+import com.idhub.magic.center.event.ChainEventWrapper;
 
 public class EventFetcher {
 	static EventFetcher instance = new EventFetcher();
@@ -31,7 +31,7 @@ public class EventFetcher {
 
 	}
 
-	 void processEvent(EventWrapper e) {
+	 void processEvent(ChainEventWrapper e) {
 
 		Map<String, EventListener> temp = new HashMap<String, EventListener>(listeners);
 		for (String t : temp.keySet()) {
