@@ -2,8 +2,10 @@ package com.idhub.magic.clientlib.interfaces;
 
 import java.util.List;
 
-public interface IdentityChain {
-	boolean createIdentity(ResultListener<Boolean> listener);
+import com.idhub.magic.center.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
 
-	boolean createIdentity(String recovery, String associate, List<String> providers, List<String> rssolvers,ResultListener<Boolean> listener);
+public interface IdentityChain {
+	Listen<IdentityCreatedEventResponse> createIdentity();
+
+	Listen<IdentityCreatedEventResponse> createIdentity(String recovery, String associate, List<String> providers, List<String> rssolvers);
 }

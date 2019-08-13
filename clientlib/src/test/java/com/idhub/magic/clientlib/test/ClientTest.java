@@ -9,10 +9,12 @@ public class ClientTest {
 
 	public static void main(String[] args) {
 		String addr = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
-		long ein = ApiFactory.getIdentityChainViewer().getEIN(addr,null);
-		System.out.println(ein);
-		Identity dd = ApiFactory.getIdentityChainViewer().getIdentity(1l, null);
-		System.out.println(dd.getRecoveryAddress());
+		ApiFactory.getIdentityChainLocal().createIdentity().listen(event->{
+			
+		});
+		//System.out.println(ein);
+	//	Identity dd = ApiFactory.getIdentityChainViewer().getIdentity(1l, null);
+	//	System.out.println(dd.getRecoveryAddress());
 	}
 
 }

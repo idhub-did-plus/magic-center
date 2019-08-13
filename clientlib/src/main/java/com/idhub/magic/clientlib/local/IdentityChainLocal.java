@@ -8,28 +8,17 @@ import java.util.concurrent.CompletableFuture;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tuples.generated.Tuple4;
 
+import com.idhub.magic.center.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
 import com.idhub.magic.center.service.DeployedContractAddress;
 import com.idhub.magic.clientlib.ProviderFactory;
 import com.idhub.magic.clientlib.interfaces.Identity;
 import com.idhub.magic.clientlib.interfaces.IdentityChain;
 import com.idhub.magic.clientlib.interfaces.IdentityChainViewer;
+import com.idhub.magic.clientlib.interfaces.Listen;
 import com.idhub.magic.clientlib.interfaces.ResultListener;
 
 public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
-	public boolean createIdentity(String recovery, String associate, List<String> providers, List<String> resolvers, ResultListener<Boolean> listener) {
 
-				 CompletableFuture<TransactionReceipt> data = ContractManager.getRegistry1484().createIdentity(recovery, providers, resolvers).sendAsync();
-				 data.thenAccept(transactionReceipt -> {
-
-					  	listener.result(true);
-
-					 }).exceptionally(transactionReceipt  -> {
-						 listener.result(false);
-						 return null;
-					 });
-				 return true;
-
-	}
 	
 	public long getEIN(String associate,ResultListener<Long> listener) {
 		if(listener == null) {
@@ -82,7 +71,7 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 	}
 
 	@Override
-	public boolean createIdentity(ResultListener<Boolean> listener) {
+	public Listen<IdentityCreatedEventResponse> createIdentity() {
 		String rec = ProviderFactory.getProvider().getRecoverCredentials().getAddress();
 		String asso = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
 		List<String> ps = new ArrayList<String>();
@@ -90,8 +79,32 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 		rs.add(DeployedContractAddress.IdentityRegistryInterface);
 		
 		
-		boolean rst = createIdentity(rec, asso, ps, rs, listener);
-		return rst;
+		return createIdentity(rec, asso, ps, rs);
+
 		
+	}
+
+	@Override
+	public Listen<IdentityCreatedEventResponse> createIdentity(String recovery, String associate, List<String> providers, List<String> resolvers) {
+		 CompletableFuture<TransactionReceipt> data = ContractManager.getRegistry1484().createIdentity(recovery, providers, resolvers).sendAsync();
+		 return new Listen<IdentityCreatedEventResponse>() {
+
+			@Override
+			public void listen(ResultListener listener) {
+				 data.thenAccept(transactionReceipt -> {
+					 List<IdentityCreatedEventResponse> es = ContractManager.getRegistry1484().getIdentityCreatedEvents(transactionReceipt);
+					  	listener.result(es.get(0));
+
+					 }).exceptionally(transactionReceipt  -> {
+						 listener.result(null);
+						 return null;
+					 });
+				
+			}
+			 
+		 };
+		 
+		
+
 	}
 }

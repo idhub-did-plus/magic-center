@@ -49,13 +49,12 @@ public class ChainEventListener {
 		EthFilter filter = new EthFilter(DefaultBlockParameterName.EARLIEST, DefaultBlockParameterName.LATEST,
 				DeployedContractAddress.IdentityRegistryInterface.substring(2));
 		filter.addSingleTopic(EventEncoder.encode(event));
-		String address = TypeEncoder.encode(new Address("0xC8Efc3D648862eDcad4e222bDc073DAEf0203409"));//ProviderFactory.getProvider().getDefaultCredentials().getAddress()));
-		String ein = TypeEncoder.encode(new Uint256(1));
-		ein = String.format("0x%064X", ein);
-		address= String.format("0x%064X", address);
+		String address = "0x" + TypeEncoder.encode(new Address("0xC8Efc3D648862eDcad4e222bDc073DAEf0203409"));//ProviderFactory.getProvider().getDefaultCredentials().getAddress()));
+		String ein = "0x" + TypeEncoder.encode(new Uint256(1));
+		
 		// optTopicAddress=null; optTopicHash=null; if you want not to filter on that
 		// optional topic
-		filter.addOptionalTopics(null, address);
+		filter.addOptionalTopics(ein, address);
 		Disposable dis = ProviderFactory.getProvider().web3j().ethLogFlowable(filter).subscribe(log -> {
 			
 			 EventValues eventValues = Contract.staticExtractEventParameters(event, log);

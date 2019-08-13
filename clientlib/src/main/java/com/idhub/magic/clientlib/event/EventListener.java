@@ -1,10 +1,10 @@
 package com.idhub.magic.clientlib.event;
 
-import com.idhub.magic.center.event.Event;
+import com.idhub.magic.center.event.EventWrapper;
 
 public interface EventListener {
-	boolean filt(Event e);
-	void onEvent(Event e);
+
+	void onEvent(EventWrapper e);
 	
 
 }
