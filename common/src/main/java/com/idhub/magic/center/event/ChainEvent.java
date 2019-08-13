@@ -1,6 +1,6 @@
 package com.idhub.magic.center.event;
 
-public class ChainEventWrapper {
+public class ChainEvent {
 	public String threadId;
 	public String className;
 	public Object event;
