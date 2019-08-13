@@ -13,6 +13,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import javax.xml.transform.ErrorListener;
+
 import org.apache.commons.io.IOUtils;
 
 import com.alibaba.fastjson.JSON;
@@ -20,6 +22,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.idhub.magic.center.event.ChainEvent;
 import com.idhub.magic.clientlib.ProviderFactory;
 import com.idhub.magic.clientlib.http.HttpAccessor;
+import com.idhub.magic.clientlib.interfaces.ExceptionListener;
 
 public class EventFetcher {
 	static EventFetcher instance = new EventFetcher();
@@ -30,6 +33,7 @@ public class EventFetcher {
 
 	static String url = "http://localhost:8080/chainevent/getChainEvent";
 	Map<String, EventListener> listeners = new HashMap<String, EventListener>();
+	Map<String, ExceptionListener> elisteners = new HashMap<String, ExceptionListener>();
 	ScheduledExecutorService pool;
 
 	private EventFetcher() {
@@ -59,14 +63,16 @@ public class EventFetcher {
 			if (temp.equals(e.threadId)) {
 				temp.get(t).onEvent(e);
 				listeners.remove(t);
+				elisteners.remove(t);
 			}
 
 		}
 	}
 
-	public void listen(EventListener l) {
+	public void listen(EventListener l, ExceptionListener el) {
 		String threadId = UUID.randomUUID().toString();
 		listeners.put(threadId, l);
+		elisteners.put(threadId, el);
 	}
 
 	static public void main(String[] ss) throws Exception {

@@ -14,6 +14,7 @@ import com.idhub.magic.clientlib.ProviderFactory;
 import com.idhub.magic.clientlib.event.EventFetcher;
 import com.idhub.magic.clientlib.event.EventListener;
 import com.idhub.magic.clientlib.http.HttpAccessor;
+import com.idhub.magic.clientlib.interfaces.ExceptionListener;
 import com.idhub.magic.clientlib.interfaces.IdentityChain;
 import com.idhub.magic.clientlib.interfaces.Listen;
 import com.idhub.magic.clientlib.interfaces.ResultListener;
@@ -37,11 +38,12 @@ public class IdentityChainDelegate implements IdentityChain{
 		return new Listen<IdentityCreatedEventResponse>() {
 
 			@Override
-			public void listen(ResultListener<IdentityCreatedEventResponse> l) {
+			public void listen(ResultListener<IdentityCreatedEventResponse> l, ExceptionListener el) {
 				EventFetcher.getInstance().listen(
 						(e)->{
 							l.result((IdentityCreatedEventResponse)e.event);
-						}
+						},
+						el
 				);
 				
 			}

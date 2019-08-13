@@ -11,6 +11,7 @@ import org.web3j.tuples.generated.Tuple4;
 import com.idhub.magic.center.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
 import com.idhub.magic.center.service.DeployedContractAddress;
 import com.idhub.magic.clientlib.ProviderFactory;
+import com.idhub.magic.clientlib.interfaces.ExceptionListener;
 import com.idhub.magic.clientlib.interfaces.Identity;
 import com.idhub.magic.clientlib.interfaces.IdentityChain;
 import com.idhub.magic.clientlib.interfaces.IdentityChainViewer;
@@ -25,11 +26,12 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 		return new Listen<Long>() {
 
 			@Override
-			public void listen(ResultListener<Long> l) {
+			public void listen(ResultListener<Long> l, ExceptionListener el) {
 				data.thenAccept(ein -> {
 					l.result(ein.longValue());
 				}).exceptionally(transactionReceipt -> {
-					l.result(0l);
+					el.error("error!");
+					
 					return null;
 				});
 
@@ -45,7 +47,7 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 		return new Listen<Identity>() {
 
 			@Override
-			public void listen(ResultListener<Identity> l) {
+			public void listen(ResultListener<Identity> l, ExceptionListener el) {
 				data.thenAccept(id -> {
 					Identity identity = new Identity(id.getValue1(), id.getValue2(), id.getValue3(), id.getValue4());
 					l.result(identity);
@@ -80,7 +82,7 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 		return new Listen<IdentityCreatedEventResponse>() {
 
 			@Override
-			public void listen(ResultListener listener) {
+			public void listen(ResultListener listener, ExceptionListener el) {
 				data.thenAccept(transactionReceipt -> {
 					List<IdentityCreatedEventResponse> es = ContractManager.getRegistry1484()
 							.getIdentityCreatedEvents(transactionReceipt);

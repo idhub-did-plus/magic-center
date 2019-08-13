@@ -11,7 +11,7 @@ public class ClientTest {
 		String addr = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
 		ApiFactory.getIdentityChainLocal().createIdentity().listen(event->{
 			
-		});
+		}, e->{});
 		//System.out.println(ein);
 	//	Identity dd = ApiFactory.getIdentityChainViewer().getIdentity(1l, null);
 	//	System.out.println(dd.getRecoveryAddress());
