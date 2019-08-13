@@ -28,7 +28,7 @@ public class AuthenticationUtils {
 		String s = Base64.getEncoder().encodeToString(signMessage.getS());
 		
 	
-		int v = signMessage.getV();
+		int v = signMessage.getV()[0];
 		return new Signature(r, s, v);
 	}
 	

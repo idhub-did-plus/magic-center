@@ -28,7 +28,7 @@ public class EventFetcher {
 		return instance;
 	}
 
-	static String url = "http://localhost:8000/chainevent/getChianEvents";
+	static String url = "http://localhost:8080/chainevent/getChainEvent";
 	Map<String, EventListener> listeners = new HashMap<String, EventListener>();
 	ScheduledExecutorService pool;
 
@@ -70,10 +70,10 @@ public class EventFetcher {
 	}
 
 	static public void main(String[] ss) throws Exception {
-		JSONObject data = (JSONObject) JSON.parse(IOUtils.toString(new FileInputStream("new-filter.json")));
+	/*	JSONObject data = (JSONObject) JSON.parse(IOUtils.toString(new FileInputStream("new-filter.json")));
 		Boolean suc = (Boolean) data.get("success");
 		if (!suc)
-			System.out.println(data);
+			System.out.println(data);*/
 	}
 
 }

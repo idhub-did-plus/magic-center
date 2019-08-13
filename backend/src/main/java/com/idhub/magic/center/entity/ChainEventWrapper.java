@@ -9,6 +9,13 @@ public class ChainEventWrapper {
 	@Id
 	String id;
 	String identity;
+	boolean sent = false;
+	public boolean isSent() {
+		return sent;
+	}
+	public void setSent(boolean sent) {
+		this.sent = sent;
+	}
 	ChainEvent event;
 	public ChainEventWrapper(String identity, ChainEvent event) {
 		super();

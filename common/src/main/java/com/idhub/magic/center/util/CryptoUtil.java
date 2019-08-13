@@ -154,7 +154,7 @@ public class CryptoUtil {
     public static byte[] signatureEncode(Sign.SignatureData signatureData) {
         Preconditions.checkArgument(signatureData.getR().length == 32);
         Preconditions.checkArgument(signatureData.getS().length == 32);
-        Preconditions.checkArgument(signatureData.getV() == 27 || signatureData.getV() == 28);
+        Preconditions.checkArgument(signatureData.getV()[0] == 27 || signatureData.getV()[0] == 28);
         ByteBuffer buffer = ByteBuffer.allocate(SIGNATURE_LENGTH);
         buffer.put(signatureData.getR());
         buffer.put(signatureData.getS());

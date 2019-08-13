@@ -87,7 +87,7 @@ public class LocalTest {
 		 */
 
 		registry1484.createIdentityDelegated(credentials.getAddress(), credentials.getAddress(), pss, rss,
-				BigInteger.valueOf(signMessage.getV()), signMessage.getR(), signMessage.getS(), tst).send();
+				BigInteger.valueOf(signMessage.getV()[0]), signMessage.getR(), signMessage.getS(), tst).send();
 
 	}
 
