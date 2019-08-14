@@ -2,7 +2,7 @@
 /backend/magic-contract/build
 /backend/magic-contract/node_modules
 !.mvn/wrapper/maven-wrapper.jar
-
+/node-modules
 ### STS ###
 .apt_generated
 .classpath
