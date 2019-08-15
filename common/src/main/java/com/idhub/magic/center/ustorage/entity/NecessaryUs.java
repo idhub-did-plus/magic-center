@@ -6,7 +6,6 @@ public class NecessaryUs {
 	手机号，手机号/Phone Number
 	纳税号，纳税号/TaxID
 	社保号，社保号 SSN*/
-	
 	String address;
 	String pofImage;
 	String email;
