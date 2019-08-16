@@ -16,10 +16,11 @@ import com.idhub.magic.clientlib.event.EventListener;
 import com.idhub.magic.clientlib.http.HttpAccessor;
 import com.idhub.magic.clientlib.interfaces.ExceptionListener;
 import com.idhub.magic.clientlib.interfaces.IdentityChain;
+import com.idhub.magic.clientlib.interfaces.IdentityChainDelegate;
 import com.idhub.magic.clientlib.interfaces.Listen;
 import com.idhub.magic.clientlib.interfaces.ResultListener;
 
-public class IdentityChainDelegate implements IdentityChain{
+public class IdentityChainDelegateImpl implements IdentityChainDelegate{
 
 	public Listen<IdentityCreatedEventResponse> createIdentity(String recovery, String associate, List<String> providers, List<String> resolvers) {
 
