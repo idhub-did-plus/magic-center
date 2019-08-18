@@ -82,6 +82,12 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
 		</dependency>
+<!-- https://mvnrepository.com/artifact/com.github.goodforgod/java-etherscan-api -->
+<dependency>
+    <groupId>com.github.goodforgod</groupId>
+    <artifactId>java-etherscan-api</artifactId>
+    <version>1.0.2</version>
+</dependency>
 
 	</dependencies>
 

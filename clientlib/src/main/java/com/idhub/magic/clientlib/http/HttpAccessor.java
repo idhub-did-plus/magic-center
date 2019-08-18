@@ -58,7 +58,35 @@ public class HttpAccessor {
 		}
 
 	}
+	static public String get(String url, Map<String, String> params) {
 
+		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+	
+		if (params != null) {
+
+			for (String key : params.keySet()) {
+				String k = key;
+
+				nvps.add(new BasicNameValuePair(k, params.get(key)));
+			}
+
+		}
+		HttpGet request = new HttpGet(url);
+
+		try {
+			URI uri = new URIBuilder(request.getURI()).addParameters(nvps).build();
+			request.setURI(uri);
+			CloseableHttpClient httpClient = HttpClients.createDefault();
+			CloseableHttpResponse resp = httpClient.execute(request);
+			String json = EntityUtils.toString(resp.getEntity());
+			return json;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+
+	}
 	static public String post(String identity, String url, String body) {
 		long ts = System.currentTimeMillis();
 		String sgt = authenticate(identity, ts);

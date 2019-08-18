@@ -8,4 +8,6 @@ public interface CredentialProvider {
 	Credentials getDefaultCredentials();
 	Credentials getRecoverCredentials();
 	Web3j web3j();
+	long getLastEndBlockNumber();
+	void storeLastEndBlockNumber(long lebn);
 }

@@ -39,4 +39,15 @@ public class MockProvider implements CredentialProvider {
 		return client;
 	}
 
+	@Override
+	public long getLastEndBlockNumber() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public void storeLastEndBlockNumber(long lebn) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
