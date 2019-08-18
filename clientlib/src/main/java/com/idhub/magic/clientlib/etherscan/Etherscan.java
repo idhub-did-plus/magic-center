@@ -2,6 +2,7 @@ package com.idhub.magic.clientlib.etherscan;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,14 +39,7 @@ public class Etherscan {
 		return instance;
 	}
 	static public void main(String[] ss) throws Exception {
-		SSLContext sc = SSLContext.getInstance("TLS");
-		sc.init(null, new TrustManager[] { new TrustAllX509TrustManager() }, new java.security.SecureRandom());
-		HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-		HttpsURLConnection.setDefaultHostnameVerifier( new HostnameVerifier(){
-		    public boolean verify(String string,SSLSession ssls) {
-		        return true;
-		    }
-		});
+	
 		   Etherscan scan = Etherscan.getInstance();
 		   List<String> accs = new ArrayList<String>();
 		   accs.add("0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a");
@@ -62,6 +56,12 @@ public class Etherscan {
     IncomingListener<Tx> txlistener;
     IncomingListener<Transfer> transferlistener;
     void init() {
+    	try {
+			disableSslCheck();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		pool = Executors.newScheduledThreadPool(1);
 		pool.scheduleAtFixedRate(() -> {
 			try {
@@ -75,7 +75,18 @@ public class Etherscan {
 		}, 0, 15, TimeUnit.SECONDS);
 	}
 
-    void once() throws Exception {
+    private void disableSslCheck() throws Exception {
+    	SSLContext sc = SSLContext.getInstance("TLS");
+		sc.init(null, new TrustManager[] { new TrustAllX509TrustManager() }, new java.security.SecureRandom());
+		HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+		HttpsURLConnection.setDefaultHostnameVerifier( new HostnameVerifier(){
+		    public boolean verify(String string,SSLSession ssls) {
+		        return true;
+		    }
+		});
+		
+	}
+	void once() throws Exception {
     	long start = 2l;//ProviderFactory.getProvider().getLastEndBlockNumber();
     	long end =99999999l;// ProviderFactory.getProvider().web3j().ethBlockNumber().send().getBlockNumber().longValue();
     	TransactionSession sess = new TransactionSession( accounts,txlistener,tokenContractAddresses,transferlistener, api,  start, end);
