@@ -28,6 +28,7 @@ import com.idhub.magic.clientlib.http.HttpAccessor;
 
 import io.api.etherscan.core.impl.EtherScanApi;
 import io.api.etherscan.model.Tx;
+import io.api.etherscan.model.TxToken;
 
 public class Etherscan {
 	static Etherscan instance;
@@ -44,17 +45,24 @@ public class Etherscan {
 		   List<String> accs = new ArrayList<String>();
 		   accs.add("0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a");
 		   scan.setAccounts(accs);
+		   scan.subscribeTransaction(txs->{
+			   System.out.println(txs);
+			   
+		   });
+		   scan.subscribeTransfer(txs->{
+			   System.out.println(txs);
+			   
+		   });
 	   }
 	
 	
 	
     ScheduledExecutorService pool;
     List<String> accounts = new ArrayList<String>();
-	List<String> tokenContractAddresses = new ArrayList<String>();
 
 	EtherScanApi api = new EtherScanApi();  
     IncomingListener<Tx> txlistener;
-    IncomingListener<Transfer> transferlistener;
+    IncomingListener<TxToken> transferlistener;
     void init() {
     	try {
 			disableSslCheck();
@@ -89,19 +97,23 @@ public class Etherscan {
 	void once() throws Exception {
     	long start = 2l;//ProviderFactory.getProvider().getLastEndBlockNumber();
     	long end =99999999l;// ProviderFactory.getProvider().web3j().ethBlockNumber().send().getBlockNumber().longValue();
-    	TransactionSession sess = new TransactionSession( accounts,txlistener,tokenContractAddresses,transferlistener, api,  start, end);
-    	sess.execute();
+    	TransactionSession sess = new TransactionSession( accounts,txlistener,transferlistener, api,  start, end);
+    	try {
+			sess.execute();
+			ProviderFactory.getProvider().storeLastEndBlockNumber(end);
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     public void setAccounts(List<String> accounts) {
 		this.accounts = accounts;
 	}
-    public void setTokenContractAddresses(List<String> tokenContractAddresses) {
-		this.tokenContractAddresses = tokenContractAddresses;
-	}
+ 
    void subscribeTransaction(IncomingListener<Tx> txl) {
 	txlistener = txl;
 }
-void subscribeTransfer(IncomingListener<Transfer> txl) {
+void subscribeTransfer(IncomingListener<TxToken> txl) {
 	transferlistener = txl;
 }
 
