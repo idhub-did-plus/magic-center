@@ -149,6 +149,32 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>info.weboftrust</groupId>
+			<artifactId>ld-signatures-java</artifactId>
+			<version>0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.jsonld-java</groupId>
+			<artifactId>jsonld-java</artifactId>
+			<version>0.12.0</version>
+			<scope>compile</scope>
+<!-- 			<exclusions>
+				<exclusion>
+					<artifactId>httpcore-osgi</artifactId>
+				</exclusion>
+				<exclusion>
+					<artifactId>httpclient-osgi</artifactId>
+				</exclusion>
+			</exclusions> -->
+		</dependency>
 
 	</dependencies>
 
