@@ -9,10 +9,10 @@
 	<version>0.1-SNAPSHOT</version>
 	<name>verclaim</name>
 	<repositories>
-		<repository>
+	<!-- 	<repository>
 			<id>sovrin</id>
 			<url>https://repo.sovrin.org/repository/maven-public</url>
-		</repository>
+		</repository> -->
 	</repositories>
 
 	<issueManagement>
@@ -116,12 +116,11 @@
 			<version>0.15.2</version>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.hyperledger</groupId>
-			<artifactId>indy</artifactId>
-			<version>1.8.2</version>
-			<scope>compile</scope>
-		</dependency>
+<!-- 	<dependency>
+    <groupId>org.hyperledger</groupId>
+    <artifactId>indy</artifactId>
+    <version>1.8.1-dev-985</version>
+</dependency> -->
 	
 		<dependency>
 			<groupId>org.web3j</groupId>
