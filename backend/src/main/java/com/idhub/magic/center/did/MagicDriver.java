@@ -10,7 +10,7 @@ public class MagicDriver implements Driver {
 
 	@Override
 	public ResolveResult resolve(String identifier) throws ResolutionException {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

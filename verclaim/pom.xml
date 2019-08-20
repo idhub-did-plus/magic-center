@@ -4,7 +4,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.idhub.magic.verclaim</groupId>
-	<artifactId>verclaim</artifactId>
+	<artifactId>magic-verclaim</artifactId>
 	<packaging>jar</packaging>
 	<version>0.1-SNAPSHOT</version>
 	<name>verclaim</name>
