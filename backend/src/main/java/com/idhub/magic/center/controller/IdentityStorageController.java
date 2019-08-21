@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.center.ustorage.IdentityStorage;
 import com.idhub.magic.center.ustorage.MaterialWrapper;
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
@@ -47,9 +48,9 @@ public class IdentityStorageController {
 		return new MagicResponse();
 	}
 	@GetMapping("/retrieveArchive")
-	public MagicResponse retrieveArchive(String identity) {
+	public MagicResponse<IdentityArchive> retrieveArchive(String identity) {
 		IdentityStorage st = store.find(IdentityStorage.class, "id", identity).get();
-		return new MagicResponse(st.getIdentityArchive());
+		return new MagicResponse<IdentityArchive>(st.getIdentityArchive());
 	}
 
 	@PostMapping("/upload_material")
@@ -68,12 +69,12 @@ public class IdentityStorageController {
 	}
 	@PostMapping("/retieve_materials")
 	@ResponseBody
-	public MagicResponse retrieveMaterials(String identity) {
+	public MagicResponse<List<Material>> retrieveMaterials(String identity) {
 		Query<MaterialWrapper> query = store.find(MaterialWrapper.class, "material.identity", identity);
 		List<MaterialWrapper> data = query.asList();
 		List<Material> mdata = data.stream().map(MaterialWrapper::getMaterial).collect(toList());
 
-		MagicResponse rst = new MagicResponse();
+		MagicResponse<List<Material>> rst = new MagicResponse<List<Material>>();
 		rst.setData(mdata);
 		return rst;
 	}

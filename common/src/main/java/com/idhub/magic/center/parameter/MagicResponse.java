@@ -1,16 +1,16 @@
-package com.idhub.magic.center.controller;
+package com.idhub.magic.center.parameter;
 
-public class MagicResponse {
+public class MagicResponse<T> {
 	
 	boolean success;
 	String message;
 	
-	Object data;
+	T data;
 	public MagicResponse(boolean suc, String msg) {
 		success = suc;
 		message = msg;
 	}
-	public MagicResponse(Object data) {
+	public MagicResponse(T data) {
 		success = true;
 		this.data = data;
 	}
@@ -33,7 +33,7 @@ public class MagicResponse {
 	public Object getData() {
 		return data;
 	}
-	public void setData(Object data) {
+	public void setData(T data) {
 		this.data = data;
 	}
 }

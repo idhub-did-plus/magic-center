@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.idhub.magic.center.event.ChainEvent;
+import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.center.service.ChainEventStore;
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
 
@@ -21,8 +22,7 @@ public class ChainEventController {
     @GetMapping("/getChainEvent")
 	public MagicResponse getChainEvent(String identity) {
     	List<ChainEvent> data = store.getEventsByIdentity(identity);
-		MagicResponse resp = new MagicResponse();
-		resp.setData(data);
+		MagicResponse<List<ChainEvent>> resp = new MagicResponse<List<ChainEvent>>(data);
 		return resp;
 	}
 
