@@ -1,27 +1,15 @@
 package com.idhub.magic.center.ustorage.entity;
 
-import java.util.Date;
-
 public class BasicInfo {
-/*	填入基本身份信息，包括
-	姓名，姓/Last Name 名/First Name，必填
-	生日，生日/Date of Birth （月）/ （日）/ （年），必填
-	国籍，国籍/ Nationality，必填
-	居住国，居住国/ Country of Residence，必填
-	身份证件号码，身份证件号码/ID Number
-	美国可选，若填写需上传身份证件照片（图片或PDF）
-	中国必填，需上传身份证件照片（图片或PDF）
-	护照号码，护照号码/Passport Number，可选
-	若填写需上传护照照片（图片或PDF）*/
-	
-	String firstName;
-	String lastName;
-	Date birthday;
-	String country;
-	String residenceCountry;
-	String idcardNumber;
-	String idcardImage;
-	String passportNumber;
-	String passportImage;
-	
+/*	地址，地址/Address，需上传住址证明照片Proof of Address（图片或PDF）
+	邮箱，邮箱/eMail
+	手机号，手机号/Phone Number
+	纳税号，纳税号/TaxID
+	社保号，社保号 SSN*/
+	String address;
+	String pofImage;
+	String email;
+	String taxId;
+	String ssn;
+
 }
