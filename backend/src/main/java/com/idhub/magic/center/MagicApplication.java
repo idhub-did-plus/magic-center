@@ -17,3 +17,4 @@ public class MagicApplication {
 	}
 
 }
+//mongodb+srv://baiyuqi:<password>@cluster0-4bfkb.gcp.mongodb.net/test?retryWrites=true&w=majority

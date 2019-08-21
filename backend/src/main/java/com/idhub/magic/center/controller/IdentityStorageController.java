@@ -31,7 +31,7 @@ import static java.util.stream.Collectors.toList;
 
 public class IdentityStorageController {
 	@Autowired Datastore store;
-	@PostMapping("/storeArchive")
+	@PostMapping("/store_archive")
 	public MagicResponse storeArchive(@RequestBody IdentityArchive archive,	String identity) {
 		Key<?> id = store.exists(identity);
 		if(id == null) {
@@ -47,7 +47,7 @@ public class IdentityStorageController {
 		store.update(query, up);
 		return new MagicResponse();
 	}
-	@GetMapping("/retrieveArchive")
+	@GetMapping("/retrieve_archive")
 	public MagicResponse<IdentityArchive> retrieveArchive(String identity) {
 		IdentityStorage st = store.find(IdentityStorage.class, "id", identity).get();
 		return new MagicResponse<IdentityArchive>(st.getIdentityArchive());
@@ -79,9 +79,9 @@ public class IdentityStorageController {
 		return rst;
 	}
 	
-	@PostMapping("/retieve_materials")
+	@PostMapping("/remove_material")
 	@ResponseBody
-	public MagicResponse remove(String identity, String type, String name) {
+	public MagicResponse removeMaterial(String identity, String type, String name) {
 		String id = identity + type + name;
 		Query<Material> query = store.find(Material.class, "id", id);
 		store.delete(query);

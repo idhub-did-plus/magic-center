@@ -4,12 +4,7 @@ server:
 spring:
   data:
     mongodb:
-      host: 127.0.0.1
-      port: 27017
-      database: MagicRepository
-      username: byq
-      password: 2218283
-      authentication-database: admin
+      uri: mongodb+srv://baiyuqi:byq2218283@cluster0-4bfkb.gcp.mongodb.net/test?retryWrites=true&w=majority
 web3j:
   client-address: http://localhost:7545
   admin-client: true

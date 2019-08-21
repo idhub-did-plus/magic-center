@@ -31,8 +31,9 @@ import io.reactivex.disposables.Disposable;
 public class DelegationService {
 	@Autowired
     private Web3j web3j;
-	@Autowired 
-	Admin admin;
+	/*
+	 * @Autowired Admin admin;
+	 */
 	@Autowired 
 	ContractManager contractManager;
     @PostConstruct
