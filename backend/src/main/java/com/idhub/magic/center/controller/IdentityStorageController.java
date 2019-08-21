@@ -2,6 +2,8 @@ package com.idhub.magic.center.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Stream;
 
 import org.apache.commons.io.IOUtils;
 import org.mongodb.morphia.Datastore;
@@ -19,9 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.idhub.magic.center.ustorage.IdentityStorage;
-import com.idhub.magic.center.ustorage.Material;
+import com.idhub.magic.center.ustorage.MaterialWrapper;
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
-
+import com.idhub.magic.center.ustorage.entity.Material;
+import static java.util.stream.Collectors.toList;
 @RestController
 @RequestMapping("/storage")
 
@@ -56,10 +59,9 @@ public class IdentityStorageController {
 			return new MagicResponse(false, "upload fail!");
 		}
 		byte[] data = IOUtils.toByteArray(file.getInputStream());
-		String id = identity + type + name;
-		
+	
 		Material mat = new Material( identity,  type,  name, data);
-		mat.setId(id);
+		MaterialWrapper wr = new MaterialWrapper(mat);
 		store.save(mat);
 		
 		return new MagicResponse();
@@ -67,12 +69,15 @@ public class IdentityStorageController {
 	@PostMapping("/retieve_materials")
 	@ResponseBody
 	public MagicResponse retrieveMaterials(String identity) {
-		Query<Material> query = store.find(Material.class, "identity", identity);
-		List<Material> data = query.asList();
+		Query<MaterialWrapper> query = store.find(MaterialWrapper.class, "material.identity", identity);
+		List<MaterialWrapper> data = query.asList();
+		List<Material> mdata = data.stream().map(MaterialWrapper::getMaterial).collect(toList());
+
 		MagicResponse rst = new MagicResponse();
-		rst.setData(data);
+		rst.setData(mdata);
 		return rst;
 	}
+	
 	@PostMapping("/retieve_materials")
 	@ResponseBody
 	public MagicResponse remove(String identity, String type, String name) {

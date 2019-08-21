@@ -1,6 +1,4 @@
-package com.idhub.magic.center.ustorage;
-
-import org.mongodb.morphia.annotations.Id;
+package com.idhub.magic.center.ustorage.entity;
 
 public class Material {
 
@@ -15,14 +13,8 @@ public class Material {
 	public Material() {
 		// TODO Auto-generated constructor stub
 	}
-	@Id
-	String id;
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
+
+
 	public String getIdentity() {
 		return identity;
 	}
