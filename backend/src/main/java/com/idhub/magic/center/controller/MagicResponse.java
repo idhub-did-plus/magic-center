@@ -10,6 +10,10 @@ public class MagicResponse {
 		success = suc;
 		message = msg;
 	}
+	public MagicResponse(Object data) {
+		success = true;
+		this.data = data;
+	}
 	public MagicResponse() {
 		success = true;
 		message = "success!";

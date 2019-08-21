@@ -9,6 +9,7 @@ import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +42,11 @@ public class IdentityStorageController {
 		UpdateOperations<IdentityStorage> up = store.createUpdateOperations(IdentityStorage.class).set("archive", archive);
 		store.update(query, up);
 		return new MagicResponse();
+	}
+	@GetMapping("/retrieveArchive")
+	public MagicResponse retrieveArchive(String identity) {
+		IdentityStorage st = store.find(IdentityStorage.class, "id", identity).get();
+		return new MagicResponse(st.getIdentityArchive());
 	}
 
 	@PostMapping("/upload_material")
