@@ -15,11 +15,11 @@ import com.idhub.magic.center.service.ChainEventStore;
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
 
 @RestController
-@RequestMapping("/chainevent")
+@RequestMapping("/event")
 
 public class ChainEventController {
 	@Autowired ChainEventStore store;
-    @GetMapping("/getChainEvent")
+    @GetMapping("/query_events")
 	public MagicResponse getChainEvent(String identity) {
     	List<ChainEvent> data = store.getEventsByIdentity(identity);
 		MagicResponse<List<ChainEvent>> resp = new MagicResponse<List<ChainEvent>>(data);

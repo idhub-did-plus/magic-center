@@ -13,6 +13,7 @@ import org.web3j.crypto.Credentials;
 import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.idhub.magic.center.event.ChainEvent;
 import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.center.ustorage.entity.FinancialProfile;
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
@@ -21,6 +22,7 @@ import com.idhub.magic.center.ustorage.entity.Material;
 import com.idhub.magic.center.util.AuthenticationUtils;
 import com.idhub.magic.center.util.Signature;
 import com.idhub.magic.clientlib.ProviderFactory;
+import com.idhub.magic.clientlib.interfaces.EventService;
 import com.idhub.magic.clientlib.interfaces.IdentityStorage;
 
 import okhttp3.HttpUrl;
@@ -42,6 +44,7 @@ public class RetrofitAccessor {
 		// TODO Auto-generated constructor stub
 	}
 	IdentityStorage identityStorage;
+	EventService eventService;
 	 public IdentityStorage getIdentityStorage() {
 		return identityStorage;
 	}
@@ -71,8 +74,12 @@ public class RetrofitAccessor {
 				.addConverterFactory(retrofit2.converter.gson.GsonConverterFactory.create(gson)).client(client).build();
 
 		identityStorage = retrofit.create(IdentityStorage.class);
+		eventService = retrofit.create(EventService.class);
 
+	}
 
+	public EventService getEventService() {
+		return eventService;
 	}
 
 	static private String authenticate(String identity, long ts) {
@@ -86,6 +93,12 @@ public class RetrofitAccessor {
 	static public void main(String[] ss) throws Exception {
 			RetrofitAccessor ra = new RetrofitAccessor();
 			String identity = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
+			
+			EventService ser = ra.getEventService();
+			List<ChainEvent> rst = ser.queryEvents(identity);
+			
+			
+			
 			IdentityArchive ida = new IdentityArchive();
 			IdentityInfo ii = new IdentityInfo();
 			ii.setBirthday(new Date());
