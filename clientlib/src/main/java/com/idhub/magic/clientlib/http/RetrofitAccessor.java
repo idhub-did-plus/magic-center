@@ -1,5 +1,6 @@
 package com.idhub.magic.clientlib.http;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +23,7 @@ import com.idhub.magic.clientlib.interfaces.IdentityStorage;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -87,10 +89,13 @@ public class RetrofitAccessor {
 			ii.setPassportNumber("ggggg");
 			ida.setIdentityInfo(ii);
 		    //   RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), ida);
-			  MagicResponse mss = ra.getIdentityStorage().storeArchive(ida, identity).execute().body();
+	//		  MagicResponse mss = ra.getIdentityStorage().storeArchive(ida, identity).execute().body();
 		//	  MagicResponse ms = ra.getIdentityStorage().removeMaterial(identity, "kkk", "lll").execute().body();
 			// MagicResponse<IdentityArchive> user = ra.getIdentityStorage().retrieveArchive(identity).execute().body();
 		//	 System.out.println(user);
+			  File file = new File("c:\\timg.jpg");
+			  MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+			  ra.getIdentityStorage().uploadMaterial(identity, "ddd", "ddd", filePart).execute().body();
 	
 	}
 }

@@ -1,8 +1,12 @@
 package com.idhub.magic.center.ustorage;
 
-import com.idhub.magic.center.ustorage.entity.Material;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
 
+import com.idhub.magic.center.ustorage.entity.Material;
+@Entity
 public class MaterialWrapper {
+	@Id
 	String id;
 	Material material;
 	public MaterialWrapper() {

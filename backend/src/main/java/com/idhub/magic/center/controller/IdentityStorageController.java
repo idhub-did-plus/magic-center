@@ -63,7 +63,7 @@ public class IdentityStorageController {
 	
 		Material mat = new Material( identity,  type,  name, data);
 		MaterialWrapper wr = new MaterialWrapper(mat);
-		store.save(mat);
+		store.save(wr);
 		
 		return new MagicResponse();
 	}

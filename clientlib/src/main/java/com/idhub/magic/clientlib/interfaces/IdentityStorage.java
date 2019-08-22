@@ -30,6 +30,6 @@ public interface IdentityStorage {
 	 Call<MagicResponse>  removeMaterial(@Query("identity")String identity, @Query("type")String type, @Query("name")String name);
      @POST("storage/upload_material")
      @Multipart
-     Call<MagicResponse> uploadMaterial(@Query("identity")String identity, @Part("name") RequestBody name, @Part("type") RequestBody type, @Part MultipartBody.Part file);
+     Call<MagicResponse> uploadMaterial(@Query("identity")String identity, @Query("type") String type, @Query("name") String name, @Part MultipartBody.Part file);
 
 }
