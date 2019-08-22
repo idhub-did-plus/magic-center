@@ -33,10 +33,10 @@ public class IdentityStorageController {
 	@Autowired Datastore store;
 	@PostMapping("/store_archive")
 	public MagicResponse storeArchive(@RequestBody IdentityArchive archive,	String identity) {
-		Key<?> id = store.exists(identity);
-		if(id == null) {
+		boolean notexists = store.createQuery(IdentityStorage.class).field("id").equal(identity).asList().isEmpty();
+		if(notexists) {
 			IdentityStorage st = new IdentityStorage();
-			st.setIdentity(identity);
+			st.setId(identity);
 			st.setIdentityArchive(archive);
 			store.save(st);
 			return new MagicResponse();
