@@ -11,6 +11,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.web3j.crypto.Credentials;
 
 import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.center.ustorage.entity.FinancialProfile;
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
@@ -46,7 +48,7 @@ public class RetrofitAccessor {
 
 	void init() {
 		OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
-
+			
 			@Override
 			public Response intercept(Chain chain) throws IOException {
 				Request request = chain.request();
@@ -61,9 +63,12 @@ public class RetrofitAccessor {
 				return chain.proceed(builder.build());
 			}
 		}).build();
+		Gson gson = new GsonBuilder()
+				.setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+				.create();
 
 		Retrofit retrofit = new Retrofit.Builder().baseUrl("http://localhost:8080")
-				.addConverterFactory(retrofit2.converter.gson.GsonConverterFactory.create()).client(client).build();
+				.addConverterFactory(retrofit2.converter.gson.GsonConverterFactory.create(gson)).client(client).build();
 
 		identityStorage = retrofit.create(IdentityStorage.class);
 
@@ -83,14 +88,15 @@ public class RetrofitAccessor {
 			String identity = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
 			IdentityArchive ida = new IdentityArchive();
 			IdentityInfo ii = new IdentityInfo();
-			//ii.setBirthday(new Date());
+			ii.setBirthday(new Date());
 			ii.setCountry("china");
 			ii.setFirstName("yuqi");
 			ii.setLastName("bai");
 			ii.setPassportNumber("ggggg");
 			ida.setIdentityInfo(ii);
 		    //   RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), ida);
-			  MagicResponse mss = ra.getIdentityStorage().storeFinancialProfile(new FinancialProfile(), identity).execute().body();
+			MagicResponse mss = ra.getIdentityStorage().storeArchive(ida, identity).execute().body();
+			   mss = ra.getIdentityStorage().storeFinancialProfile(new FinancialProfile(), identity).execute().body();
 		//	  MagicResponse ms = ra.getIdentityStorage().removeMaterial(identity, "kkk", "lll").execute().body();
 			// MagicResponse<IdentityArchive> user = ra.getIdentityStorage().retrieveArchive(identity).execute().body();
 		//	 System.out.println(user);
