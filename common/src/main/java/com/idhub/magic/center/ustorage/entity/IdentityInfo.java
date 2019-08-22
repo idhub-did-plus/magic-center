@@ -14,6 +14,60 @@ public class IdentityInfo {
 	护照号码，护照号码/Passport Number，可选
 	若填写需上传护照照片（图片或PDF）*/
 	
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public Date getBirthday() {
+		return birthday;
+	}
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	public String getResidenceCountry() {
+		return residenceCountry;
+	}
+	public void setResidenceCountry(String residenceCountry) {
+		this.residenceCountry = residenceCountry;
+	}
+	public String getIdcardNumber() {
+		return idcardNumber;
+	}
+	public void setIdcardNumber(String idcardNumber) {
+		this.idcardNumber = idcardNumber;
+	}
+	public String getIdcardImage() {
+		return idcardImage;
+	}
+	public void setIdcardImage(String idcardImage) {
+		this.idcardImage = idcardImage;
+	}
+	public String getPassportNumber() {
+		return passportNumber;
+	}
+	public void setPassportNumber(String passportNumber) {
+		this.passportNumber = passportNumber;
+	}
+	public String getPassportImage() {
+		return passportImage;
+	}
+	public void setPassportImage(String passportImage) {
+		this.passportImage = passportImage;
+	}
 	String firstName;
 	String lastName;
 	Date birthday;

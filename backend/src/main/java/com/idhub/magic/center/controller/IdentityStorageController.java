@@ -43,7 +43,7 @@ public class IdentityStorageController {
 		}
 		
 		Query<IdentityStorage> query = store.find(IdentityStorage.class, "id", identity);
-		UpdateOperations<IdentityStorage> up = store.createUpdateOperations(IdentityStorage.class).set("archive", archive);
+		UpdateOperations<IdentityStorage> up = store.createUpdateOperations(IdentityStorage.class).set("identityArchive", archive);
 		store.update(query, up);
 		return new MagicResponse();
 	}
@@ -79,11 +79,11 @@ public class IdentityStorageController {
 		return rst;
 	}
 	
-	@PostMapping("/remove_material")
+	@GetMapping("/remove_material")
 	@ResponseBody
 	public MagicResponse removeMaterial(String identity, String type, String name) {
 		String id = identity + type + name;
-		Query<Material> query = store.find(Material.class, "id", id);
+		Query<MaterialWrapper> query = store.find(MaterialWrapper.class, "id", id);
 		store.delete(query);
 		MagicResponse rst = new MagicResponse();
 
