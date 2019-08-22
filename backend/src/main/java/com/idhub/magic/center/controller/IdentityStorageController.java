@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.center.ustorage.IdentityStorage;
 import com.idhub.magic.center.ustorage.MaterialWrapper;
+import com.idhub.magic.center.ustorage.entity.FinancialProfile;
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
 import com.idhub.magic.center.ustorage.entity.Material;
 import static java.util.stream.Collectors.toList;
@@ -44,6 +45,13 @@ public class IdentityStorageController {
 		
 		Query<IdentityStorage> query = store.find(IdentityStorage.class, "id", identity);
 		UpdateOperations<IdentityStorage> up = store.createUpdateOperations(IdentityStorage.class).set("identityArchive", archive);
+		store.update(query, up);
+		return new MagicResponse();
+	}
+	@PostMapping("/store_financial_profile")
+	public MagicResponse storeFinancialProfile(@RequestBody FinancialProfile profile,	String identity) {
+		Query<IdentityStorage> query = store.find(IdentityStorage.class, "id", identity);
+		UpdateOperations<IdentityStorage> up = store.createUpdateOperations(IdentityStorage.class).set("identityArchive.financialProfile", profile);
 		store.update(query, up);
 		return new MagicResponse();
 	}

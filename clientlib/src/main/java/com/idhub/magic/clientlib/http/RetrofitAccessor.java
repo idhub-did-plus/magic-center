@@ -12,6 +12,7 @@ import org.web3j.crypto.Credentials;
 
 import com.alibaba.fastjson.JSON;
 import com.idhub.magic.center.parameter.MagicResponse;
+import com.idhub.magic.center.ustorage.entity.FinancialProfile;
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
 import com.idhub.magic.center.ustorage.entity.IdentityInfo;
 import com.idhub.magic.center.ustorage.entity.Material;
@@ -89,7 +90,7 @@ public class RetrofitAccessor {
 			ii.setPassportNumber("ggggg");
 			ida.setIdentityInfo(ii);
 		    //   RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), ida);
-	//		  MagicResponse mss = ra.getIdentityStorage().storeArchive(ida, identity).execute().body();
+			  MagicResponse mss = ra.getIdentityStorage().storeFinancialProfile(new FinancialProfile(), identity).execute().body();
 		//	  MagicResponse ms = ra.getIdentityStorage().removeMaterial(identity, "kkk", "lll").execute().body();
 			// MagicResponse<IdentityArchive> user = ra.getIdentityStorage().retrieveArchive(identity).execute().body();
 		//	 System.out.println(user);

@@ -3,6 +3,7 @@ package com.idhub.magic.clientlib.interfaces;
 import java.util.List;
 
 import com.idhub.magic.center.parameter.MagicResponse;
+import com.idhub.magic.center.ustorage.entity.FinancialProfile;
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
 import com.idhub.magic.center.ustorage.entity.Material;
 
@@ -22,6 +23,10 @@ public interface IdentityStorage {
 	 @Headers({"Content-Type: application/json", "Cache-Control: max-age=640000"})
 	 @POST("storage/store_archive")
      Call<MagicResponse> storeArchive(@Body IdentityArchive archive, @Query("identity")String identity);
+	 @Headers({"Content-Type: application/json", "Cache-Control: max-age=640000"})
+	 @POST("storage/store_financial_profile")
+     Call<MagicResponse> storeFinancialProfile(@Body FinancialProfile profile, @Query("identity")String identity);
+	 
 	 @GET("storage/retrieve_archive")
 	 Call<MagicResponse<IdentityArchive>>  retrieveArchive(@Query("identity")String identity);
 	 @GET("storage/retrieve_materials")
