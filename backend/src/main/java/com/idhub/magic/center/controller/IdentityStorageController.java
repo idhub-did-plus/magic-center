@@ -1,6 +1,7 @@
 package com.idhub.magic.center.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
@@ -26,6 +27,8 @@ import com.idhub.magic.center.ustorage.MaterialWrapper;
 import com.idhub.magic.center.ustorage.entity.FinancialProfile;
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
 import com.idhub.magic.center.ustorage.entity.Material;
+import com.idhub.magic.center.ustorage.entity.ext.ExtensionField;
+
 import static java.util.stream.Collectors.toList;
 @RestController
 @RequestMapping("/storage")
@@ -94,6 +97,14 @@ public class IdentityStorageController {
 		Query<MaterialWrapper> query = store.find(MaterialWrapper.class, "id", id);
 		store.delete(query);
 		MagicResponse rst = new MagicResponse();
+
+		return rst;
+	}
+	@GetMapping("/extension_meta")
+	@ResponseBody
+	public MagicResponse extentionMeta() {
+		List<ExtensionField> ext = new ArrayList<ExtensionField>();
+		MagicResponse rst = new MagicResponse(ext);
 
 		return rst;
 	}

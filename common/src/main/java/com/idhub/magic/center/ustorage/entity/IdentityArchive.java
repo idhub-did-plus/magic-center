@@ -1,10 +1,13 @@
 package com.idhub.magic.center.ustorage.entity;
 
+import java.util.Map;
+
 public class IdentityArchive {
 
 	IdentityInfo identityInfo;
 	BasicInfo basicInfo;
 	FinancialProfile financialProfile;
+	Map<String,Object> extension;
 	public BasicInfo getBasicInfo() {
 		return basicInfo;
 	}

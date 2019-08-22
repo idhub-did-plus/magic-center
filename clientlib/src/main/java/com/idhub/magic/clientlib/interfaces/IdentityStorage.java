@@ -6,6 +6,7 @@ import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.center.ustorage.entity.FinancialProfile;
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
 import com.idhub.magic.center.ustorage.entity.Material;
+import com.idhub.magic.center.ustorage.entity.ext.ExtensionField;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -32,9 +33,12 @@ public interface IdentityStorage {
 	 @GET("storage/retrieve_materials")
 	 Call<MagicResponse<List<Material>>>  retrieveMaterials(@Query("identity")String identity);
 	 @GET("storage/remove_material")
-	 Call<MagicResponse>  removeMaterial(@Query("identity")String identity, @Query("type")String type, @Query("name")String name);
+	 Call<MagicResponse<List<Material>>>  removeMaterial(@Query("identity")String identity, @Query("type")String type, @Query("name")String name);
      @POST("storage/upload_material")
      @Multipart
      Call<MagicResponse> uploadMaterial(@Query("identity")String identity, @Query("type") String type, @Query("name") String name, @Part MultipartBody.Part file);
+     @GET("storage/extension_meta")
+     Call<MagicResponse<List<ExtensionField>>>  extensionMeta(@Query("identity")String identity);
 
+     
 }
