@@ -67,7 +67,7 @@ public class IdentityStorageController {
 		
 		return new MagicResponse();
 	}
-	@PostMapping("/retieve_materials")
+	@GetMapping("/retrieve_materials")
 	@ResponseBody
 	public MagicResponse<List<Material>> retrieveMaterials(String identity) {
 		Query<MaterialWrapper> query = store.find(MaterialWrapper.class, "material.identity", identity);

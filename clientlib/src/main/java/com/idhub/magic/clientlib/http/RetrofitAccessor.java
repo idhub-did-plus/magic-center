@@ -11,6 +11,7 @@ import org.web3j.crypto.Credentials;
 import com.alibaba.fastjson.JSON;
 import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
+import com.idhub.magic.center.ustorage.entity.Material;
 import com.idhub.magic.center.util.AuthenticationUtils;
 import com.idhub.magic.center.util.Signature;
 import com.idhub.magic.clientlib.ProviderFactory;
@@ -73,8 +74,9 @@ public class RetrofitAccessor {
 	static public void main(String[] ss) throws Exception {
 			RetrofitAccessor ra = new RetrofitAccessor();
 			String identity = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
-			 MagicResponse user = ra.getIdentityStorage().storeArchive(new IdentityArchive(), identity).execute().body();
-			 System.out.println(user);
+			 MagicResponse<List<Material>> ms = ra.getIdentityStorage().retrieveMaterials(identity).execute().body();
+			// MagicResponse<IdentityArchive> user = ra.getIdentityStorage().retrieveArchive(identity).execute().body();
+		//	 System.out.println(user);
 	
 	}
 }

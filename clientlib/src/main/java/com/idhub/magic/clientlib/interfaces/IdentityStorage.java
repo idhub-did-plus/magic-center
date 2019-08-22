@@ -1,7 +1,10 @@
 package com.idhub.magic.clientlib.interfaces;
 
+import java.util.List;
+
 import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
+import com.idhub.magic.center.ustorage.entity.Material;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -19,7 +22,8 @@ public interface IdentityStorage {
      Call<MagicResponse> storeArchive(@Body IdentityArchive archive, @Query("identity")String identity);
 	 @GET("storage/retrieve_archive")
 	 Call<MagicResponse<IdentityArchive>>  retrieveArchive(@Query("identity")String identity);
-
+	 @GET("storage/retrieve_materials")
+	 Call<MagicResponse<List<Material>>>  retrieveMaterials(@Query("identity")String identity);
      @POST("storage/upload_material")
      @Multipart
      Call<MagicResponse> uploadMaterial(@Query("identity")String identity, @Part("name") RequestBody name, @Part("type") RequestBody type, @Part MultipartBody.Part file);
