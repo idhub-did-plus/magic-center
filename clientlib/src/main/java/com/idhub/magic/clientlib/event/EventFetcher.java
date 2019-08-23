@@ -12,9 +12,11 @@ import com.idhub.magic.center.event.MagicEvent;
 import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.clientlib.ProviderFactory;
 import com.idhub.magic.clientlib.http.RetrofitAccessor;
+import com.idhub.magic.clientlib.interfaces.EventListenerService;
 import com.idhub.magic.clientlib.interfaces.EventService;
 
-public class EventFetcher {
+
+public class EventFetcher implements EventListenerService {
 	static EventFetcher instance = new EventFetcher();
 
 	static public EventFetcher getInstance() {
@@ -50,8 +52,9 @@ public class EventFetcher {
 
 	
 
+	@Override
 	public void listen(EventListener l) {
-		
+		listener = l;
 	}
 
 	static public void main(String[] ss) throws Exception {
@@ -75,5 +78,7 @@ public class EventFetcher {
 			
 		});
 	}
+
+
 
 }

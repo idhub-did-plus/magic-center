@@ -10,21 +10,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.idhub.magic.center.event.MagicEvent;
+import com.idhub.magic.center.kvc.entity.KycOrder;
 import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.center.service.ChainEventStore;
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
 import com.idhub.magic.center.ustorage.entity.Material;
 
 @RestController
-@RequestMapping("/event")
+@RequestMapping("/kyc")
 
-public class ChainEventController {
+public class KycController {
 	@Autowired ChainEventStore store;
-    @GetMapping("/query_events")
-	public MagicResponse getChainEvent(String identity) {
-    	List<MagicEvent> data = store.getEventsByIdentity(identity);
-		MagicResponse<List<MagicEvent>> resp = new MagicResponse<List<MagicEvent>>(data);
-		return resp;
+    @GetMapping("/order")
+	public MagicResponse order(KycOrder order, String identity) {
+		return new MagicResponse();
 	}
 
 	
