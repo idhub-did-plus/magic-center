@@ -1,14 +1,8 @@
 package com.idhub.magic.clientlib.etherscan;
 
-import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -20,11 +14,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.idhub.magic.center.event.ChainEvent;
 import com.idhub.magic.clientlib.ProviderFactory;
-import com.idhub.magic.clientlib.http.HttpAccessor;
 
 import io.api.etherscan.core.impl.EtherScanApi;
 import io.api.etherscan.model.Tx;

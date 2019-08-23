@@ -6,22 +6,16 @@ import java.util.List;
 
 import org.web3j.utils.Numeric;
 
-import com.alibaba.fastjson.JSON;
-import com.idhub.magic.center.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.idhub.magic.center.parameter.CreateIdentityDelegatedParam;
 import com.idhub.magic.center.service.DeployedContractAddress;
 import com.idhub.magic.clientlib.ProviderFactory;
-import com.idhub.magic.clientlib.event.EventFetcher;
-import com.idhub.magic.clientlib.event.EventListener;
-import com.idhub.magic.clientlib.http.HttpAccessor;
-import com.idhub.magic.clientlib.interfaces.ExceptionListener;
-import com.idhub.magic.clientlib.interfaces.IdentityChain;
+import com.idhub.magic.clientlib.http.RetrofitAccessor;
 import com.idhub.magic.clientlib.interfaces.IdentityChainDelegate;
-import com.idhub.magic.clientlib.interfaces.Listen;
-import com.idhub.magic.clientlib.interfaces.ResultListener;
 
 public class IdentityChainDelegateImpl implements IdentityChainDelegate{
-
+	ObjectMapper mapper = new ObjectMapper();
 	public void createIdentity(String recovery, String associate, List<String> providers, List<String> resolvers) {
 
 		CreateIdentityDelegatedParam rst = new CreateIdentityDelegatedParam();
@@ -32,10 +26,8 @@ public class IdentityChainDelegateImpl implements IdentityChainDelegate{
 
 		rst.timestamp = Numeric.toHexString(BigInteger.valueOf(System.currentTimeMillis() / 1000).toByteArray());
 		rst = ClientEncoder.encode(rst);
-		String url = "http://localhost:8080/delegation/createIdentity";
-
-		String body = JSON.toJSONString(rst);
-		HttpAccessor.post(associate, url, body);
+		
+		RetrofitAccessor.getInstance().getDelegationService().createEntity(rst, associate);
 		
 
 

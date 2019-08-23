@@ -42,11 +42,6 @@
 		</dependency>
 
 
-		<dependency>
-			<groupId>org.web3j</groupId>
-			<artifactId>core</artifactId>
-			<version>4.4.0</version>
-		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit -->
 		<dependency>

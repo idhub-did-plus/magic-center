@@ -9,7 +9,6 @@ import org.web3j.crypto.Hash;
 import org.web3j.crypto.Keys;
 import org.web3j.crypto.Sign;
 
-import com.alibaba.fastjson.JSON;
 
 public class AuthenticationUtils {
 
@@ -32,8 +31,8 @@ public class AuthenticationUtils {
 		return new Signature(r, s, v);
 	}
 	
-	public static boolean authenticate(String signature, String original, String address) {
-		Signature sig = JSON.parseObject(signature, Signature.class);
+	public static boolean authenticate(Signature sig, String original, String address) {
+		
 		byte v = (byte) sig.v;
 		byte[] r = Base64.getDecoder().decode(sig.r);
 		

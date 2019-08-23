@@ -17,7 +17,7 @@ import com.idhub.magic.center.service.DelegationService;
 public class DelegationController {
 	@Autowired
 	DelegationService delegation;
-    @PostMapping("/createIdentity")
+    @PostMapping("/create_identity")
 	public MagicResponse createIdentity(@RequestBody String json) {
     	CreateIdentityDelegatedParam param = JSON.parseObject(json, CreateIdentityDelegatedParam.class);
     	this.delegation.createEntityDelegated(param);
