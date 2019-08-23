@@ -1,11 +1,13 @@
 package com.idhub.magic.clientlib.event;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.idhub.magic.center.event.MagicEvent;
 import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.clientlib.ProviderFactory;
@@ -53,10 +55,25 @@ public class EventFetcher {
 	}
 
 	static public void main(String[] ss) throws Exception {
-	/*	JSONObject data = (JSONObject) JSON.parse(IOUtils.toString(new FileInputStream("new-filter.json")));
-		Boolean suc = (Boolean) data.get("success");
-		if (!suc)
-			System.out.println(data);*/
+		ObjectMapper mapper = new ObjectMapper();
+		EventFetcher fetcher =  EventFetcher.getInstance();
+		fetcher.listen(e->{
+			try {
+				
+				Class type = Class.forName(e.className);
+				String encoded = e.event;
+				byte[] json = Base64.getDecoder().decode(encoded);
+				Object entity = mapper.readValue(json, type);
+		
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+		
+			
+			
+		});
 	}
 
 }
