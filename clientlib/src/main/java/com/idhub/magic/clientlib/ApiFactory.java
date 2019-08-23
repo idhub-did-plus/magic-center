@@ -12,7 +12,7 @@ public class ApiFactory {
 	static IdentityChainLocal local = new IdentityChainLocal();
 	static IdentityChainDelegate delegation = new IdentityChainDelegateImpl();
 
-	static RetrofitAccessor retrofitAccessor = new RetrofitAccessor();
+	static RetrofitAccessor retrofitAccessor = RetrofitAccessor.getInstance();
 	
 	public static IdentityStorage getArchiveStorage() {
 		return retrofitAccessor.getIdentityStorage();
