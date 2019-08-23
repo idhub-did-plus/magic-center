@@ -30,7 +30,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.idhub.magic.center.contracts.IdentityRegistryInterface;
 import com.idhub.magic.center.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
-import com.idhub.magic.center.event.ChainEvent;
+import com.idhub.magic.center.entity.EventWrapper;
+import com.idhub.magic.center.event.MagicEvent;
+import com.idhub.magic.center.event.MagicEventType;
 import com.idhub.magic.center.parameter.CreateIdentityDelegatedParam;
 
 import io.reactivex.Single;
@@ -60,8 +62,8 @@ public class DelegationService {
 			CompletableFuture<TransactionReceipt> tr = c1484.createIdentityDelegated(param.recoveryAddress, param.associatedAddress, param.providers, param.resolvers, V, r, s, ts).sendAsync();
 			
 			tr.thenAccept(ein -> {
-				ChainEvent e = new ChainEvent();
-				e.threadId = param.threadId;
+				MagicEvent e = new MagicEvent();
+				e.eventType = MagicEventType.chain_event.name();
 				List<IdentityCreatedEventResponse> evs = contractManager.registry1484.getIdentityCreatedEvents(ein);
 				IdentityCreatedEventResponse resp = evs.get(0);
 				byte[] value;
@@ -76,6 +78,7 @@ public class DelegationService {
 				
 				e.event = jsonEncoded;
 				e.className  = IdentityCreatedEventResponse.class.getName();
+				EventWrapper wr = new EventWrapper(param.associatedAddress, e);
 				store.save(e);
 			}).exceptionally(transactionReceipt -> {
 				

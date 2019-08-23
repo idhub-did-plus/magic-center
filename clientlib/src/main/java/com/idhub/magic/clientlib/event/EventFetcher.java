@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import com.idhub.magic.center.event.ChainEvent;
+import com.idhub.magic.center.event.MagicEvent;
 import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.clientlib.ProviderFactory;
 import com.idhub.magic.clientlib.http.RetrofitAccessor;
@@ -28,10 +28,10 @@ public class EventFetcher {
 		pool = Executors.newScheduledThreadPool(1);
 		pool.scheduleAtFixedRate(() -> {
 
-			MagicResponse<List<ChainEvent>> evs;
+			MagicResponse<List<MagicEvent>> evs;
 			try {
 				evs = eventService.queryEvents(identity).execute().body();
-				for (ChainEvent e : evs.getData()) {
+				for (MagicEvent e : evs.getData()) {
 					if(listener != null)
 						listener.onEvent(e);
 				}

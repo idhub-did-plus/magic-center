@@ -12,5 +12,4 @@ public class CreateIdentityDelegatedParam {
 	public String s;//hex
 	public String timestamp;//hex
 	public boolean async = true;
-	public String threadId;
 }

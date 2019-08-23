@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.idhub.magic.center.event.ChainEvent;
+import com.idhub.magic.center.event.MagicEvent;
 import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.center.ustorage.entity.FinancialProfile;
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
@@ -122,7 +122,7 @@ public class RetrofitAccessor {
 			String identity = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
 			
 			EventService ser = ra.getEventService();
-			MagicResponse<List<ChainEvent>> rst = ser.queryEvents(identity).execute().body();
+			MagicResponse<List<MagicEvent>> rst = ser.queryEvents(identity).execute().body();
 			
 			
 			

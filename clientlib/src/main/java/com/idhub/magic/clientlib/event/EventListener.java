@@ -1,10 +1,10 @@
 package com.idhub.magic.clientlib.event;
 
-import com.idhub.magic.center.event.ChainEvent;
+import com.idhub.magic.center.event.MagicEvent;
 
 public interface EventListener {
 
-	void onEvent(ChainEvent e);
+	void onEvent(MagicEvent e);
 	
 
 }

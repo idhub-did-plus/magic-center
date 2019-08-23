@@ -3,9 +3,9 @@ package com.idhub.magic.center.entity;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
-import com.idhub.magic.center.event.ChainEvent;
+import com.idhub.magic.center.event.MagicEvent;
 @Entity
-public class ChainEventWrapper {
+public class EventWrapper {
 	@Id
 	String id;
 	String identity;
@@ -16,18 +16,17 @@ public class ChainEventWrapper {
 	public void setSent(boolean sent) {
 		this.sent = sent;
 	}
-	ChainEvent event;
-	public ChainEventWrapper(String identity, ChainEvent event) {
+	MagicEvent event;
+	public EventWrapper(String identity, MagicEvent event) {
 		super();
-		this.id = event.threadId;
 		this.identity = identity;
 		this.event = event;
 	}
-	public ChainEventWrapper() {
+	public EventWrapper() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public ChainEvent getEvent() {
+	public MagicEvent getEvent() {
 		return event;
 	}
 	public String getId() {
@@ -36,7 +35,7 @@ public class ChainEventWrapper {
 	public String getIdentity() {
 		return identity;
 	}
-	public void setEvent(ChainEvent event) {
+	public void setEvent(MagicEvent event) {
 		this.event = event;
 	}
 	public void setId(String id) {
