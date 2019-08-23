@@ -42,7 +42,7 @@ public class IdentityChainDelegateImpl implements IdentityChainDelegate{
 			public void listen(ResultListener<IdentityCreatedEventResponse> l, ExceptionListener el) {
 				EventFetcher.getInstance().listen(
 						(e)->{
-							l.result((IdentityCreatedEventResponse)e.event);
+						//	l.result((IdentityCreatedEventResponse)e.event);
 						},
 						el
 				);

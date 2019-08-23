@@ -11,6 +11,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.web3j.crypto.Credentials;
 
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.idhub.magic.center.event.ChainEvent;
@@ -35,6 +38,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.Retrofit;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.http.GET;
 
 public class RetrofitAccessor {
@@ -66,12 +70,12 @@ public class RetrofitAccessor {
 				return chain.proceed(builder.build());
 			}
 		}).build();
-		Gson gson = new GsonBuilder()
-				.setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-				.create();
-
+		ObjectMapper mapper = new ObjectMapper();
+		//mapper.enableDefaultTyping(); 
+		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+		
 		Retrofit retrofit = new Retrofit.Builder().baseUrl("http://localhost:8080")
-				.addConverterFactory(retrofit2.converter.gson.GsonConverterFactory.create(gson)).client(client).build();
+				.addConverterFactory(JacksonConverterFactory.create(mapper)).client(client).build();
 
 		identityStorage = retrofit.create(IdentityStorage.class);
 		eventService = retrofit.create(EventService.class);
@@ -95,7 +99,7 @@ public class RetrofitAccessor {
 			String identity = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
 			
 			EventService ser = ra.getEventService();
-			List<ChainEvent> rst = ser.queryEvents(identity);
+			MagicResponse<List<ChainEvent>> rst = ser.queryEvents(identity).execute().body();
 			
 			
 			
@@ -107,9 +111,24 @@ public class RetrofitAccessor {
 			ii.setLastName("bai");
 			ii.setPassportNumber("ggggg");
 			ida.setIdentityInfo(ii);
+			ObjectMapper mapper = new ObjectMapper();
+			
+			mapper.enableDefaultTyping(); 
+			try {
+				ChainEvent e = new ChainEvent();
+				e.event = new Material();
+				String sss = mapper.writeValueAsString(e);
+				System.out.println(sss);
+				Object ob = mapper.readValue(sss, ChainEvent.class);
+				System.out.println(sss);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		    //   RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), ida);
 			MagicResponse mss = ra.getIdentityStorage().storeArchive(ida, identity).execute().body();
 			   mss = ra.getIdentityStorage().storeFinancialProfile(new FinancialProfile(), identity).execute().body();
+			   MagicResponse<List<Material>> ddd = ra.getIdentityStorage().retrieveMaterials(identity).execute().body();
 		//	  MagicResponse ms = ra.getIdentityStorage().removeMaterial(identity, "kkk", "lll").execute().body();
 			// MagicResponse<IdentityArchive> user = ra.getIdentityStorage().retrieveArchive(identity).execute().body();
 		//	 System.out.println(user);

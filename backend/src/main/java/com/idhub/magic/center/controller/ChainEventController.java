@@ -13,6 +13,7 @@ import com.idhub.magic.center.event.ChainEvent;
 import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.center.service.ChainEventStore;
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
+import com.idhub.magic.center.ustorage.entity.Material;
 
 @RestController
 @RequestMapping("/event")
@@ -22,6 +23,9 @@ public class ChainEventController {
     @GetMapping("/query_events")
 	public MagicResponse getChainEvent(String identity) {
     	List<ChainEvent> data = store.getEventsByIdentity(identity);
+    	ChainEvent e = new ChainEvent();
+    	e.event = new Material();
+    	data.add(e);
 		MagicResponse<List<ChainEvent>> resp = new MagicResponse<List<ChainEvent>>(data);
 		return resp;
 	}
