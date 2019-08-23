@@ -20,9 +20,14 @@ import org.apache.commons.io.IOUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.idhub.magic.center.event.ChainEvent;
+import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.clientlib.ProviderFactory;
 import com.idhub.magic.clientlib.http.HttpAccessor;
+import com.idhub.magic.clientlib.http.RetrofitAccessor;
+import com.idhub.magic.clientlib.interfaces.EventService;
 import com.idhub.magic.clientlib.interfaces.ExceptionListener;
+
+import retrofit2.Call;
 
 public class EventFetcher {
 	static EventFetcher instance = new EventFetcher();
@@ -32,47 +37,36 @@ public class EventFetcher {
 	}
 
 	static String url = "http://localhost:8080/chainevent/getChainEvent";
-	Map<String, EventListener> listeners = new HashMap<String, EventListener>();
-	Map<String, ExceptionListener> elisteners = new HashMap<String, ExceptionListener>();
 	ScheduledExecutorService pool;
-
+	EventListener listener;
 	private EventFetcher() {
 		final String identity = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
+		EventService eventService = RetrofitAccessor.getInstance().getEventService();
 		pool = Executors.newScheduledThreadPool(1);
 		pool.scheduleAtFixedRate(() -> {
 
-			String json = HttpAccessor.get(identity, url, null);
-			JSONObject data = (JSONObject) JSON.parse(json);
-			Boolean suc = (Boolean) data.get("success");
-			if (!suc)
-				return;
-			Object esdata = data.get("data");
-			String ess = esdata.toString();
-			List<ChainEvent> rst = JSON.parseArray(ess, ChainEvent.class);
-			for (ChainEvent e : rst)
-				processEvent(e);
+			MagicResponse<List<ChainEvent>> evs;
+			try {
+				evs = eventService.queryEvents(identity).execute().body();
+				for (ChainEvent e : evs.getData()) {
+					if(listener != null)
+						listener.onEvent(e);
+				}
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
 
 		}, 0, 15, TimeUnit.SECONDS);
 
 	}
 
-	void processEvent(ChainEvent e) {
+	
 
-		Map<String, EventListener> temp = new HashMap<String, EventListener>(listeners);
-		for (String t : temp.keySet()) {
-			if (temp.equals(e.threadId)) {
-				temp.get(t).onEvent(e);
-				listeners.remove(t);
-				elisteners.remove(t);
-			}
-
-		}
-	}
-
-	public void listen(EventListener l, ExceptionListener el) {
-		String threadId = UUID.randomUUID().toString();
-		listeners.put(threadId, l);
-		elisteners.put(threadId, el);
+	public void listen(EventListener l) {
+		
 	}
 
 	static public void main(String[] ss) throws Exception {

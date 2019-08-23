@@ -22,7 +22,7 @@ import com.idhub.magic.clientlib.interfaces.ResultListener;
 
 public class IdentityChainDelegateImpl implements IdentityChainDelegate{
 
-	public Listen<IdentityCreatedEventResponse> createIdentity(String recovery, String associate, List<String> providers, List<String> resolvers) {
+	public void createIdentity(String recovery, String associate, List<String> providers, List<String> resolvers) {
 
 		CreateIdentityDelegatedParam rst = new CreateIdentityDelegatedParam();
 		rst.associatedAddress = associate;
@@ -36,20 +36,6 @@ public class IdentityChainDelegateImpl implements IdentityChainDelegate{
 
 		String body = JSON.toJSONString(rst);
 		HttpAccessor.post(associate, url, body);
-		return new Listen<IdentityCreatedEventResponse>() {
-
-			@Override
-			public void listen(ResultListener<IdentityCreatedEventResponse> l, ExceptionListener el) {
-				EventFetcher.getInstance().listen(
-						(e)->{
-						//	l.result((IdentityCreatedEventResponse)e.event);
-						},
-						el
-				);
-				
-			}
-			
-		};
 		
 
 
@@ -69,14 +55,14 @@ public class IdentityChainDelegateImpl implements IdentityChainDelegate{
 	}
 
 	@Override
-	public Listen<IdentityCreatedEventResponse> createIdentity() {
+	public void createIdentity() {
 		String rec = ProviderFactory.getProvider().getRecoverCredentials().getAddress();
 		String asso = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
 		List<String> ps = new ArrayList<String>();
 		List<String> rs = new ArrayList<String>();
 		rs.add(DeployedContractAddress.IdentityRegistryInterface);
 		
-		return createIdentity(rec, asso, ps, rs);
+		createIdentity(rec, asso, ps, rs);
 	}
 
 }

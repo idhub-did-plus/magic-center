@@ -5,8 +5,8 @@ import java.util.List;
 import com.idhub.magic.center.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
 
 public interface IdentityChainDelegate {
-	Listen<IdentityCreatedEventResponse> createIdentity();
+	void createIdentity();
 
-	Listen<IdentityCreatedEventResponse> createIdentity(String recovery, String associate, List<String> providers, List<String> rssolvers);
+	void createIdentity(String recovery, String associate, List<String> providers, List<String> rssolvers);
 
 }

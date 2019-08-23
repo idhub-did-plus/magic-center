@@ -5,11 +5,15 @@ import java.math.BigInteger;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Base64;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 
+import org.mongodb.morphia.Datastore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +26,20 @@ import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.utils.Convert;
 import org.web3j.utils.Numeric;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.idhub.magic.center.contracts.IdentityRegistryInterface;
+import com.idhub.magic.center.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
+import com.idhub.magic.center.event.ChainEvent;
 import com.idhub.magic.center.parameter.CreateIdentityDelegatedParam;
 
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 @Service
 public class DelegationService {
+	@Autowired Datastore store;
 	@Autowired
+	ObjectMapper mapper = new ObjectMapper();
     private Web3j web3j;
 	/*
 	 * @Autowired Admin admin;
@@ -47,11 +57,33 @@ public class DelegationService {
     	BigInteger ts = Numeric.toBigInt(param.timestamp);
     	BigInteger V = Numeric.toBigInt(param.v);
     	try {
-			TransactionReceipt tr = c1484.createIdentityDelegated(param.recoveryAddress, param.associatedAddress, param.providers, param.resolvers, V, r, s, ts).send();
-			BigInteger b = c1484.getEIN(param.associatedAddress).send();
+			CompletableFuture<TransactionReceipt> tr = c1484.createIdentityDelegated(param.recoveryAddress, param.associatedAddress, param.providers, param.resolvers, V, r, s, ts).sendAsync();
 			
-			System.out.println(tr.getStatus());
-			System.out.println(b);
+			tr.thenAccept(ein -> {
+				ChainEvent e = new ChainEvent();
+				e.threadId = param.threadId;
+				List<IdentityCreatedEventResponse> evs = contractManager.registry1484.getIdentityCreatedEvents(ein);
+				IdentityCreatedEventResponse resp = evs.get(0);
+				byte[] value;
+				try {
+					value = mapper.writeValueAsBytes(resp);
+				} catch (JsonProcessingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					throw new RuntimeException();
+				}
+				String jsonEncoded = Base64.getEncoder().encodeToString(value);
+				
+				e.event = jsonEncoded;
+				e.className  = IdentityCreatedEventResponse.class.getName();
+				store.save(e);
+			}).exceptionally(transactionReceipt -> {
+				
+				
+				return null;
+			});
+			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

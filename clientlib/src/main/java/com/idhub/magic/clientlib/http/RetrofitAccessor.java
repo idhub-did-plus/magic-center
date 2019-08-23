@@ -42,7 +42,11 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.http.GET;
 
 public class RetrofitAccessor {
-	 public RetrofitAccessor() {
+	static RetrofitAccessor instance = new RetrofitAccessor();
+	static public RetrofitAccessor getInstance() {
+		return instance;
+	}
+	 RetrofitAccessor() {
 		super();
 		init();
 		// TODO Auto-generated constructor stub
@@ -111,20 +115,7 @@ public class RetrofitAccessor {
 			ii.setLastName("bai");
 			ii.setPassportNumber("ggggg");
 			ida.setIdentityInfo(ii);
-			ObjectMapper mapper = new ObjectMapper();
 			
-			mapper.enableDefaultTyping(); 
-			try {
-				ChainEvent e = new ChainEvent();
-				e.event = new Material();
-				String sss = mapper.writeValueAsString(e);
-				System.out.println(sss);
-				Object ob = mapper.readValue(sss, ChainEvent.class);
-				System.out.println(sss);
-			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		    //   RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), ida);
 			MagicResponse mss = ra.getIdentityStorage().storeArchive(ida, identity).execute().body();
 			   mss = ra.getIdentityStorage().storeFinancialProfile(new FinancialProfile(), identity).execute().body();
