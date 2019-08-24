@@ -58,7 +58,7 @@ class UserStorageTest {
 	}
 	@Test
 	void testuploadMaterial() throws Exception {
-		File file = new File("c:\\timg.jpg");
+		File file = new File("c:\\ff.jpg");
 		  MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
 
 		IdentityArchive ida = dummyArchive();

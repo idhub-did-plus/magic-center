@@ -1,8 +1,0 @@
-debug: true
-server:
-  port: 8080
-spring:
-  data:
-web3j:
-  client-address: http://localhost:7545
-  admin-client: true

@@ -1,5 +1,6 @@
 package com.idhub.magic.clientlib.http;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.web3j.crypto.Credentials;
@@ -7,6 +8,10 @@ import org.web3j.crypto.Credentials;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.idhub.magic.center.parameter.MagicResponse;
+import com.idhub.magic.center.ustorage.entity.FinancialProfile;
+import com.idhub.magic.center.ustorage.entity.IdentityArchive;
+import com.idhub.magic.center.ustorage.entity.IdentityInfo;
 import com.idhub.magic.center.util.AuthenticationUtils;
 import com.idhub.magic.center.util.Signature;
 import com.idhub.magic.clientlib.ProviderFactory;
@@ -17,8 +22,11 @@ import com.idhub.magic.clientlib.interfaces.KycService;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -100,5 +108,25 @@ public class RetrofitAccessor {
 		return null;
 		
 	}
-
+	 static public void main(String[] ss) throws Exception {
+			RetrofitAccessor ra = new RetrofitAccessor();
+			String identity = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
+			IdentityArchive ida = new IdentityArchive();
+			IdentityInfo ii = new IdentityInfo();
+			//ii.setBirthday(new Date());
+			ii.setCountry("china");
+			ii.setFirstName("yuqi");
+			ii.setLastName("bai");
+			ii.setPassportNumber("ggggg");
+			ida.setIdentityInfo(ii);
+		    //   RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), ida);
+			  MagicResponse mss = ra.getIdentityStorage().storeFinancialProfile(new FinancialProfile(), identity).execute().body();
+		//	  MagicResponse ms = ra.getIdentityStorage().removeMaterial(identity, "kkk", "lll").execute().body();
+			// MagicResponse<IdentityArchive> user = ra.getIdentityStorage().retrieveArchive(identity).execute().body();
+		//	 System.out.println(user);
+			  File file = new File("c:\\timg.jpg");
+			  MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+			  ra.getIdentityStorage().uploadMaterial(identity, "ddd", "ddd", filePart).execute().body();
+	
+	}
 }
