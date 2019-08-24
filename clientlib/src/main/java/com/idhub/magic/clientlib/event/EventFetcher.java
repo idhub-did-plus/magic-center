@@ -57,28 +57,5 @@ public class EventFetcher implements EventListenerService {
 		listener = l;
 	}
 
-	static public void main(String[] ss) throws Exception {
-		ObjectMapper mapper = new ObjectMapper();
-		EventFetcher fetcher =  EventFetcher.getInstance();
-		fetcher.listen(e->{
-			try {
-				
-				Class type = Class.forName(e.className);
-				String encoded = e.event;
-				byte[] json = Base64.getDecoder().decode(encoded);
-				Object entity = mapper.readValue(json, type);
-		
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-		
-			
-			
-		});
-	}
-
-
-
+	
 }

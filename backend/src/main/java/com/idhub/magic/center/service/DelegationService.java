@@ -42,6 +42,7 @@ public class DelegationService {
 	@Autowired Datastore store;
 	@Autowired
 	ObjectMapper mapper = new ObjectMapper();
+	@Autowired ChainEventStore eventStore;
     private Web3j web3j;
 	/*
 	 * @Autowired Admin admin;
@@ -62,24 +63,9 @@ public class DelegationService {
 			CompletableFuture<TransactionReceipt> tr = c1484.createIdentityDelegated(param.recoveryAddress, param.associatedAddress, param.providers, param.resolvers, V, r, s, ts).sendAsync();
 			
 			tr.thenAccept(ein -> {
-				MagicEvent e = new MagicEvent();
-				e.eventType = MagicEventType.chain_event.name();
 				List<IdentityCreatedEventResponse> evs = contractManager.registry1484.getIdentityCreatedEvents(ein);
 				IdentityCreatedEventResponse resp = evs.get(0);
-				byte[] value;
-				try {
-					value = mapper.writeValueAsBytes(resp);
-				} catch (JsonProcessingException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-					throw new RuntimeException();
-				}
-				String jsonEncoded = Base64.getEncoder().encodeToString(value);
-				
-				e.event = jsonEncoded;
-				e.className  = IdentityCreatedEventResponse.class.getName();
-				EventWrapper wr = new EventWrapper(param.associatedAddress, e);
-				store.save(e);
+				eventStore.store(MagicEventType.chain_event, param.associatedAddress, resp);
 			}).exceptionally(transactionReceipt -> {
 				
 				

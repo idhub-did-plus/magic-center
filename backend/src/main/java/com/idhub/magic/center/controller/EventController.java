@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.idhub.magic.center.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
 import com.idhub.magic.center.event.MagicEvent;
+import com.idhub.magic.center.event.MagicEventType;
 import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.center.service.ChainEventStore;
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
@@ -27,5 +29,12 @@ public class EventController {
 		return resp;
 	}
 
-	
+    @GetMapping("/dummy_event")
+	public MagicResponse dummyEvent(String identity) {
+    	
+    	IdentityCreatedEventResponse e = new IdentityCreatedEventResponse();
+    	store.store(MagicEventType.chain_event, identity, e);
+		return new MagicResponse();
+	}
+
 }

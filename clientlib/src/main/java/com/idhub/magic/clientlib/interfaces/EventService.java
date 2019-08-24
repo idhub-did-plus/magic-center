@@ -12,4 +12,6 @@ import retrofit2.http.Query;
 public interface EventService {
 	@GET("event/query_events")
 	Call<MagicResponse<List<MagicEvent>>> queryEvents(@Query("identity") String identity);
+	@GET("event/dummy_event")
+	Call<MagicResponse> dummyEvent(@Query("identity") String identity);
 }
