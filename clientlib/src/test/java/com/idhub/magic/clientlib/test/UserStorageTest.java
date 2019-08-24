@@ -80,4 +80,9 @@ class UserStorageTest {
 		MagicResponse ms = storage.removeMaterial(identity, "kkk", "lll").execute().body();
 
 	}
+	@Test
+	void testExtensionMeta() throws Exception {
+		MagicResponse ms = storage.extensionMeta(identity).execute().body();
+
+	}
 }
