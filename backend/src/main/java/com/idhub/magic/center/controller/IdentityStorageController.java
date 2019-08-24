@@ -11,6 +11,7 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
+import org.mongodb.morphia.query.UpdateResults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,7 +56,7 @@ public class IdentityStorageController {
 	public MagicResponse storeFinancialProfile(@RequestBody FinancialProfile profile,	String identity) {
 		Query<IdentityStorage> query = store.find(IdentityStorage.class, "id", identity);
 		UpdateOperations<IdentityStorage> up = store.createUpdateOperations(IdentityStorage.class).set("identityArchive.financialProfile", profile);
-		store.update(query, up);
+		UpdateResults rst = store.update(query, up);
 		return new MagicResponse();
 	}
 	@GetMapping("/retrieve_archive")
