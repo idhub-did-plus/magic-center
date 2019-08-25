@@ -23,6 +23,7 @@ public class KycController {
 	@Autowired ChainEventStore store;
     @GetMapping("/order")
 	public MagicResponse order(KycOrder order, String identity) {
+    	
 		return new MagicResponse();
 	}
 
