@@ -79,15 +79,20 @@ public class Etherscan implements IncomingService {
 		}
 		
 		pool = Executors.newScheduledThreadPool(1);
-		pool.scheduleAtFixedRate(() -> {
-			try {
-				once();
-			} catch (Throwable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		pool.scheduleAtFixedRate(new Runnable() {
 
-		}, 0, 15, TimeUnit.SECONDS);
+			@Override
+			public void run() {
+				
+					try {
+						once();
+					} catch (Throwable e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				
+			}}, 0, 15, TimeUnit.SECONDS);
 	}
 
 	private void disableSslCheck() throws Exception {
