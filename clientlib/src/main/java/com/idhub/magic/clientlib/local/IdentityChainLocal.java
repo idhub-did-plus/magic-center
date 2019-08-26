@@ -64,7 +64,7 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 
 	@Override
 	public Listen<IdentityCreatedEventResponse> createIdentity() {
-		String rec = ProviderFactory.getProvider().getRecoverCredentials().getAddress();
+		String rec = ProviderFactory.getProvider().getRecoverAddress();
 		String asso = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
 		List<String> ps = new ArrayList<String>();
 		List<String> rs = new ArrayList<String>();

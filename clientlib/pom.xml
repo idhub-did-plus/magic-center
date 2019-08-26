@@ -80,6 +80,7 @@
 					<showWarnings>true</showWarnings>
 				</configuration>
 			</plugin>
+
 		</plugins>
 	</build>
 

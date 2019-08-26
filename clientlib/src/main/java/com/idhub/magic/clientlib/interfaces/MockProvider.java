@@ -34,9 +34,9 @@ public class MockProvider implements CredentialProvider {
 		return web3j;
 	}
 	@Override
-	public Credentials getRecoverCredentials() {
+	public String getRecoverAddress() {
 		// TODO Auto-generated method stub
-		return client;
+		return client.getAddress();
 	}
 
 	@Override

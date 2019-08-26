@@ -48,7 +48,7 @@ public class IdentityChainDelegateImpl implements IdentityChainDelegate{
 
 	@Override
 	public void createIdentity() {
-		String rec = ProviderFactory.getProvider().getRecoverCredentials().getAddress();
+		String rec = ProviderFactory.getProvider().getRecoverAddress();
 		String asso = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
 		List<String> ps = new ArrayList<String>();
 		List<String> rs = new ArrayList<String>();

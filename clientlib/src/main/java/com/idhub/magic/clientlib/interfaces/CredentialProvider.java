@@ -6,7 +6,7 @@ import org.web3j.protocol.Web3j;
 public interface CredentialProvider {
 	Credentials getByAddress(String address);
 	Credentials getDefaultCredentials();
-	Credentials getRecoverCredentials();
+	String getRecoverAddress();
 	Web3j web3j();
 	long getLastEndBlockNumber();
 	void storeLastEndBlockNumber(long lebn);
