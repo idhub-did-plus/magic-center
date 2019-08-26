@@ -1,4 +1,4 @@
-package com.idhub.magic.clientlib.etherscan;
+package com.idhub.magic.clientlib.interfaces;
 
 import java.util.List;
 

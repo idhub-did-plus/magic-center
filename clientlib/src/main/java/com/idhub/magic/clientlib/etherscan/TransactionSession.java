@@ -3,6 +3,8 @@ package com.idhub.magic.clientlib.etherscan;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.idhub.magic.clientlib.interfaces.IncomingListener;
+
 import io.api.etherscan.core.impl.EtherScanApi;
 import io.api.etherscan.model.Tx;
 import io.api.etherscan.model.TxToken;

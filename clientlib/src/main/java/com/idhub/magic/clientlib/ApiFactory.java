@@ -1,6 +1,7 @@
 package com.idhub.magic.clientlib;
 
 import com.idhub.magic.clientlib.delegatiton.IdentityChainDelegateImpl;
+import com.idhub.magic.clientlib.etherscan.Etherscan;
 import com.idhub.magic.clientlib.event.EventFetcher;
 import com.idhub.magic.clientlib.http.RetrofitAccessor;
 import com.idhub.magic.clientlib.interfaces.EventListenerService;
@@ -8,6 +9,7 @@ import com.idhub.magic.clientlib.interfaces.IdentityChain;
 import com.idhub.magic.clientlib.interfaces.IdentityChainDelegate;
 import com.idhub.magic.clientlib.interfaces.IdentityChainViewer;
 import com.idhub.magic.clientlib.interfaces.IdentityStorage;
+import com.idhub.magic.clientlib.interfaces.IncomingService;
 import com.idhub.magic.clientlib.interfaces.KycService;
 import com.idhub.magic.clientlib.local.IdentityChainLocal;
 
@@ -16,7 +18,10 @@ public class ApiFactory {
 	static IdentityChainDelegate delegation = new IdentityChainDelegateImpl();
 
 	static RetrofitAccessor retrofitAccessor = RetrofitAccessor.getInstance();
-	
+	static IncomingService incomingService =  Etherscan.getInstance();
+	public static IncomingService getIncomingService() {
+		return incomingService;
+	}
 	public static IdentityStorage getArchiveStorage() {
 		return retrofitAccessor.getIdentityStorage();
 	}
