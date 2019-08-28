@@ -6,6 +6,7 @@ import com.idhub.magic.center.ustorage.entity.IdentityArchive;
 public class Converter {
 	CustomerKycRequest archve2request(IdentityArchive archive){
 		CustomerKycRequest req = new CustomerKycRequest();
+		
 		return req;
 	}
 

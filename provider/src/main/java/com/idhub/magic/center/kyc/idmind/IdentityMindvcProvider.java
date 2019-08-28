@@ -28,10 +28,12 @@ GET https://edna.identitymind.com/im/account/consumer/<merchant_api_name>/<trans
 Upload a document as part of document verification:
 GET https://edna.identitymind.com/im/account/consumer/<application_id>/addDocument
 */public class IdentityMindvcProvider {
+	static public String baseurl = "https://sandbox.identitymind.com/im/account";
+			static public String customer = "/consumer";
 	ObjectMapper mapper = new ObjectMapper();
-	IdentityMindService service;
-	String password;
-	String username;
+	CustomerService service;
+	String password = "6bbbc50e3ce66e667998331e7f577967c2412e44";
+	String username = "magicexchange";
 
 	void init() {
 		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
@@ -49,10 +51,10 @@ GET https://edna.identitymind.com/im/account/consumer/<application_id>/addDocume
 			}
 		}).build();
 
-		Retrofit retrofit = new Retrofit.Builder().baseUrl("\"https://edna.identitymind.com/im/account/consumer")
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(baseurl+ customer)
 				.addConverterFactory(JacksonConverterFactory.create(mapper)).client(client).build();
 
-		service = retrofit.create(IdentityMindService.class);
+		service = retrofit.create(CustomerService.class);
 	}
 
 	String basicAuthentication() {
