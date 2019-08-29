@@ -5,4 +5,5 @@ public class ExternalizedEvaluationResult {
 	/*List[ExternalizedRule]	The complete set of rules that fired for this transaction*/
 	public ExternalizedRule reportedRule;
 	/*ExternalizedRule*/
+	String profile;
 }

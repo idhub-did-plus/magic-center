@@ -4,6 +4,7 @@ import com.idhub.magic.center.kyc.idmind.entity.DocumentVerification;
 import com.idhub.magic.center.kyc.idmind.entity.EDNAPolicyResult;
 import com.idhub.magic.center.kyc.idmind.entity.ExternalizedTransactionScorecard;
 import com.idhub.magic.center.kyc.idmind.entity.FraudPolicyResult;
+import com.idhub.magic.center.kyc.idmind.entity.GraphScore;
 import com.idhub.magic.center.kyc.idmind.entity.QuestionsWrapper;
 
 public class MerchantKycResponse {
@@ -96,4 +97,6 @@ public class MerchantKycResponse {
 	optional	User seen count*/
 	public String tid;
 	//string	The transaction ID.
+	
+	GraphScore	graphScore;
 }

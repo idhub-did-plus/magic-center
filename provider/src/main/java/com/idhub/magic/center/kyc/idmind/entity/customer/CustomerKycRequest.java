@@ -1,6 +1,7 @@
 package com.idhub.magic.center.kyc.idmind.entity.customer;
 
 import java.util.Date;
+import java.util.List;
 
 public class CustomerKycRequest {
 	public  String dob;
@@ -72,13 +73,7 @@ public class CustomerKycRequest {
 	/*string
 	optional	Device fingerprint blob*/
 	public String dft;
-	/*string
-	optional	Device fingerprint type:*/
-	public String AU;// - Augur
-	public String IO;// - Iovation
-	public String CB;// - ThreatMetrix
-	public String IA;// - InAuth
-	/*Augur has full Security Test support, the other types are for device matching purposes only.*/
+
 	public Date tti;
 	/*Object
 	optional	Transaction time in UTC. Encoded as a Unix time stamp or ISO 8601 string. Data containing milliseconds will not be accepted.*/
@@ -105,12 +100,7 @@ public class CustomerKycRequest {
 
 	Maximum length is 64 characters*/
 	public String pcty;
-	/*string
-	optional	The card type. Possible values are:*/
-	public String CREDIT;
-	public String DEBIT;
-	public String PREPAID;
-	//UNKNOWN
+
 	public String phash;
 	/*string
 	optional	Generic payment account unique identifier (hash). This is used when IdentityMind does not natively support the payment type.
@@ -250,4 +240,58 @@ public class CustomerKycRequest {
 	memo and memo1-memo40 are available for use as custom fields. These custom fields are viewable, searchable, sortable, and can be labelled using the IdentityMind UI.
 
 	For example, you can send SKU through memo1, Quantity through memo2, and Region through memo3.*/
+	
+	
+	
+	
+	
+
+	public String bmn;
+	//Billing Middle Name
+
+
+	public String bgd;
+	//Billing Gender. M, F or Empty
+
+	public String bnbh;
+	//Billing Neighborhood
+
+	public List<String> sdcad;
+	//List of Source Digital Currency Addresses
+
+
+	public List<String> ddcad;
+	//List of Destination Digital Currency Addresses
+
+
+	public String dcth;
+	//Digital Currency Transaction Hash
+
+	public String timezone;
+	//The timezone in which the transaction was initiated. The value should be a valid Java TimeZone ID.
+
+	public List<String> tags;
+	//An array of tags to be applied to the transaction
+
+
+
+	public List<String> faceImages;
+	//If using Document Verification, a serialized JSON array of face image data, Base64 encoded. 5MB maximum size.
+
+
+	public String docCountry;
+	//Required if using Document Verification, the country in which the document was issued in.
+
+	public String docType;
+	//Required if using Document Verification, the Type of the Document - Passport (PP) | Driver's Licence (DL) | Government issued Identity Card (ID) |Residence Permit (RP) | Utility Bill (UB)
+
+	public String assn1;
+	//The applicant's additional social security number or national identification number. It has the same format as assn
+
+	public String assn2;
+	//The applicant's additional social security number or national identification number. It has the same format as assn
+
+	public String avs_result;
+	//AVS Result value from the Gateway.
+
 }

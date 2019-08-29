@@ -1,6 +1,7 @@
 package com.idhub.magic.center.kyc.idmind.entity.merchant;
 
 import java.util.Date;
+import java.util.List;
 
 public class MerchantKycRequest {
 	public String ataxid;
@@ -318,4 +319,66 @@ public class MerchantKycRequest {
 	memo and memo1-memo40 are available for use as custom fields. These custom fields are viewable, searchable, sortable, and can be labelled using the IdentityMind UI.
 
 	For example, you can send SKU through memo1, Quantity through memo2, and Region through memo3.*/
+	
+	
+
+
+	public String bmn;
+	//Billing Middle Name
+;
+
+	public String bgd;
+	//Billing Gender. M, F or Empty
+
+	public String bnbh;
+	//Billing Neighborhood
+;
+	public String sdcad;
+	//List of Source Digital Currency Addresses
+
+
+	public String ddcad;
+	//List of Destination Digital Currency Addresses
+
+
+	public String dcth;
+	//Digital Currency T;ransaction Hash
+
+	public String timezone;
+	//The timezone in which the transaction was initiated. The value should be a valid Java TimeZone ID.
+
+	public String tags;
+	//An array of tags to be applied to the transaction
+
+
+
+	public List<String> faceImages;
+	//If using Document Verification, a serialized JSON array of face image data, Base64 encoded. 5MB maximum size.
+
+
+
+	public String docCountry;
+	//Required if using Document Verification, the country in which the document was issued in.
+
+	public String docType;
+	//Required if using Document Verification, the Type of the Document - Passport (PP) | Driver's Licence (DL) | Government issued Identity Card (ID) |Residence Permit (RP) | Utility Bill (UB)
+
+;
+	public String aamn;
+	//The middle name of the contact person for the business
+
+
+	//The applicant's social security number or national identification number. It is a structed string defined as [ISO-3166-1 (alpha-2)]:[national id].For example "US:123456789" represents a United States Social Security Number. For backwards compatibility if no country code is provided then the identifier is assumed to be a US SSN.
+
+	public String assn1;
+	//The applicant's additional social security number or national identification number. It has the same format as assn
+
+	public String assn2;
+	//The applicant's additional social security number or national identification number. It has the same format as assn
+
+
+	public String avs_result;
+	//AVS Result value from the Gateway.
+
+
 }

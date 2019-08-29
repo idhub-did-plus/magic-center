@@ -13,4 +13,7 @@ public class ConditionResult {
 	public String details;
 	/*string
 	optional	Te*/
+	public int[] ts;
+	public String[] stage;
+	public Object additional;
 }
