@@ -4,80 +4,80 @@ package com.idhub.magic.center.kyc.idmind.entity;
 
 public class Graph {
 
-	Integer	entities;
+	public Integer	entities;
 	//The total number of entities in the graph
 
-	Integer	blacklistedByClient;
+	public Integer	blacklistedByClient;
 	//The number of entities in the graph that are blacklisted by this client
 
-	Integer	depth;
+	public Integer	depth;
 	//The maximum depth of the graph; note that this may be limited by the depth parameter used while retrieving
 
-	Object	entitiesByType;
+	public Object	entitiesByType;
 	//The number of entities broken down by Type
 
-	Object	entitiesByReputation;
+	public Object	entitiesByReputation;
 	//The number of entities broken down by Reputation
 
-	Object	entitiesByReputationAndType;
+	public Object	entitiesByReputationAndType;
 	//The number of entities broken down by Type and Reputation
 
-	Object	entityTags;
+	public Object	entityTags;
 	//The count of entities with specific tags in the graph
 
-	Integer	uniqueClientCount;
+	public Integer	uniqueClientCount;
 	//The number of unique clients that have seen entities in the graph
 
-	Integer	entitiesWithFraudEvents;
+	public Integer	entitiesWithFraudEvents;
 	//The number of entities in the graph that have at least one chargeback or fraudulent refund
 
-	Integer	overLinkedCount;
+	public Integer	overLinkedCount;
 	//The number of entities in the graph that have an excessive number of linked entities
 
-	Integer	breadth;
+	public Integer	breadth;
 	//The maximum breadth, that is, the maximum number of related entities, in the graph
 
-	Number	score;
+	public Number	score;
 	//The risk score of the graph, in the range 0..100 where a lower score represents higher risk
 
-	Integer	maxEntities;
+	public Integer	maxEntities;
 	//The maximum number of entities retrieved to generate the metrics
 
-	Integer	chargeBackAndFraudRefundCount;
+	public Integer	chargeBackAndFraudRefundCount;
 	//The total number of chargebacks and fraudulent refunds recorded within the entity graph
 
-	Integer	queryDepth;
+	public Integer	queryDepth;
 	//The depth (degrees of seperation to which the graph was queried to generate the metrics
 
-	String	recentCutoffDate;
+	public String	recentCutoffDate;
 	//The java timestamp (milliseconds) after which entities are considered as being recent
 
-	Integer	recentEntities;
+	public Integer	recentEntities;
 	//The total number of recent entities in the graph
 
-	Integer	recentEntitiesByType;
+	public Integer	recentEntitiesByType;
 	//The number of recent entities broken down by Type
 
-	Integer	recentEntitiesByReputation;
+	public Integer	recentEntitiesByReputation;
 	//The number of recent entities broken down by Reputation
 
-	Integer	recentEntitiesByReputationAndType;
+	public Integer	recentEntitiesByReputationAndType;
 	//The number of recent entities broken down by Type and Reputation
 
-	Integer	merchantEntities;
+	public Integer	merchantEntities;
 	//The total number of entities in the graph that have been seen by the current client
 
-	Integer	merchantEntitiesByType;
+	public Integer	merchantEntitiesByType;
 	//The number of entities in the graph that have been seen by the current client broken down by Type
 
-	Integer	merchantEntitiesByReputation;
+	public Integer	merchantEntitiesByReputation;
 	//The number of entities in the graph that have been seen by the current client broken down by Reputation
 
-	Integer	merchantEntitiesByReputationAndType;
+	public Integer	merchantEntitiesByReputationAndType;
 	//The number of entities in the graph that have been seen by the current client broken down by Type and Reputation
 
-	Integer	merchantChargeBackAndFraudRefundCount;
+	public Integer	merchantChargeBackAndFraudRefundCount;
 	//The number of chargeback and fraudulent refund in the graph that are associated with entities seen by the current client
 
-	String	scoreModel;
+	public String	scoreModel;
 }

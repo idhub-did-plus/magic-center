@@ -4,76 +4,76 @@ package com.idhub.magic.center.kyc.idmind.entity;
 
 public class Identity {
 
-	String	id;
+	public String	id;
 	//The id for the identity
 
-	Integer	entityCount;
+	public Integer	entityCount;
 	//The total number of entities within this Identity
 
-	Boolean	active;
+	public Boolean	active;
 	//Whether this identity has been active recently
 
-	Object	entityTags;
+	public Object	entityTags;
 	//A break down of the entity tags for the Identity
 
-	Integer	deviceCount;
+	public Integer	deviceCount;
 	//The total number of Devices within this Identity
 
-	Integer	paymentInstrumentCount;
+	public Integer	paymentInstrumentCount;
 	//The total number of Payment Instruments within this Identity
 
-	Number	score;
+	public Number	score;
 	//A risk score for the Identity, in the range 0..100 where a lower score represents higher risk
 
-	Boolean	tdi;
+	public Boolean	tdi;
 	//Whether this identity qualifies as a Trusted Digital Identity
 
-	Boolean	richIdentity;
+	public Boolean	richIdentity;
 	//Whether this identity qualifies as a Rich Identity
 
-	String	preferredAuthenticationMechanism;
+	public String	preferredAuthenticationMechanism;
 	//The preferred authentication mechanism for this Identity
 
-	String	preferredAuthenticationDetails;
+	public String	preferredAuthenticationDetails;
 	//The details of the preferred authentication service to use, for example, the name of the identity protection service to use
 
-	Integer	addressCount;
+	public Integer	addressCount;
 	//The total number of Addresses within this Identity
 
-	Integer	userAccountCount;
+	public Integer	userAccountCount;
 	//The total number of User Accounts within this Identity
 
-	Integer	emailAddressCount;
+	public Integer	emailAddressCount;
 	//The total number of email addresses within this Identity
 
-	String	scoreModel;
+	public String	scoreModel;
 	//The name of the model that was used to calculate the risk score for the Identity
 
-	Integer	phoneCount;
+	public Integer	phoneCount;
 	//The total number of phone numbers within this Identity
 
-	Integer	nationalIdCount;
+	public Integer	nationalIdCount;
 	//The total number of national ids (e.g SSN, passport number) within this Identity
 
-	Boolean	externallyProofed;
+	public Boolean	externallyProofed;
 	//Whether this identity has been proofed by a third party
 
-	Boolean	longlived;
+	public Boolean	longlived;
 	//Whether this identity has existed for a reasonable period of time
 
-	Object	ratings;
+	public String 	ratings;
 	//A break down of the number of reputations for the Identity
 
-	Integer	age;
+	public Integer	age;
 	//The number of days this Identity has existed
 
-	Integer	frequency;
+	public Integer	frequency;
 	//The number of transactions that have been seen from this Identity
 
-	Integer	recency;
+	public Integer	recency;
 	//The number of days since this Identity was last seen
 
-	Integer	clientCount;
+	public Integer	clientCount;
 	//The number of clients that have seen aspects of this Identity
 
 }

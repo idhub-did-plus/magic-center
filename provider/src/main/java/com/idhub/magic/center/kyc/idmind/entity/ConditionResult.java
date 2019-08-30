@@ -13,7 +13,13 @@ public class ConditionResult {
 	public String details;
 	/*string
 	optional	Te*/
-	public int[] ts;
-	public String[] stage;
+	public Number ts;
+	public String stage;
 	public Object additional;
+	public Condition condition;
+}
+class Condition{
+	public String left;
+	public Boolean right;
+	public String operator;
 }
