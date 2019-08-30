@@ -31,7 +31,7 @@ GET https://edna.identitymind.com/im/account/consumer/<application_id>/addDocume
 	static public String baseurl = "https://sandbox.identitymind.com";
 	
 	ObjectMapper mapper = new ObjectMapper();
-	CustomerService customerService;
+	ConsumerService customerService;
 	String password = "6bbbc50e3ce66e667998331e7f577967c2412e44";
 	String username = "magicexchange";
 
@@ -54,10 +54,10 @@ GET https://edna.identitymind.com/im/account/consumer/<application_id>/addDocume
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(baseurl)
 				.addConverterFactory(JacksonConverterFactory.create(mapper)).client(client).build();
 
-		customerService = retrofit.create(CustomerService.class);
+		customerService = retrofit.create(ConsumerService.class);
 	}
 
-	public CustomerService getCustomerService() {
+	public ConsumerService getCustomerService() {
 		return customerService;
 	}
 

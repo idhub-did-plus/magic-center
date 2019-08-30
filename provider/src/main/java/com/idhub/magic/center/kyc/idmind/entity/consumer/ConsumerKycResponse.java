@@ -1,4 +1,4 @@
-package com.idhub.magic.center.kyc.idmind.entity.customer;
+package com.idhub.magic.center.kyc.idmind.entity.consumer;
 
 import com.idhub.magic.center.kyc.idmind.entity.DocumentVerification;
 import com.idhub.magic.center.kyc.idmind.entity.EDNAPolicyResult;
@@ -7,7 +7,7 @@ import com.idhub.magic.center.kyc.idmind.entity.FraudPolicyResult;
 import com.idhub.magic.center.kyc.idmind.entity.GraphScore;
 import com.idhub.magic.center.kyc.idmind.entity.QuestionsWrapper;
 
-public class CustomerKycResponse {
+public class ConsumerKycResponse {
 	public String mtid;
 	/*string
 	optional	The transaction ID for this KYC. This ID should be provided on subsequent updates to the KYC.*/

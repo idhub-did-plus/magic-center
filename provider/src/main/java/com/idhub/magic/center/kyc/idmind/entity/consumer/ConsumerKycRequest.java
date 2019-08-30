@@ -1,9 +1,9 @@
-package com.idhub.magic.center.kyc.idmind.entity.customer;
+package com.idhub.magic.center.kyc.idmind.entity.consumer;
 
 import java.util.Date;
 import java.util.List;
 
-public class CustomerKycRequest {
+public class ConsumerKycRequest {
 	public  String dob;
 	/*string
 	optional	Applicant’s date of birth encoded as an ISO 8601 string (YYYY-MM-DD)*/

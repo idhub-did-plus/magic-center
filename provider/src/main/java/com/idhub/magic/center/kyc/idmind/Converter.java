@@ -1,17 +1,17 @@
 package com.idhub.magic.center.kyc.idmind;
 
-import com.idhub.magic.center.kyc.idmind.entity.customer.CustomerKycRequest;
+import com.idhub.magic.center.kyc.idmind.entity.consumer.ConsumerKycRequest;
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
 
 public class Converter {
-	static public CustomerKycRequest archve2request(IdentityArchive archive){
-		CustomerKycRequest req = new CustomerKycRequest();
+	static public ConsumerKycRequest archve2request(IdentityArchive archive){
+		ConsumerKycRequest req = new ConsumerKycRequest();
 		//req.man = "req.
 		return dummy();
 	}
 
-	static public CustomerKycRequest dummy() {
-		CustomerKycRequest req = new CustomerKycRequest();
+	static public ConsumerKycRequest dummy() {
+		ConsumerKycRequest req = new ConsumerKycRequest();
 		req.man = "jdoe";
 		req.soc = "facebook";
 		req.tea = "jdoe1964@gmail.com";
