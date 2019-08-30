@@ -7,11 +7,11 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 
 @SpringBootApplication
-@EnableAspectJAutoProxy
-public class MagicApplication {
+//@EnableAspectJAutoProxy
+public class ProviderApplication {
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext ctx = SpringApplication.run(MagicApplication.class, args);
+		ConfigurableApplicationContext ctx = SpringApplication.run(ProviderApplication.class, args);
 
 		
 	}
