@@ -39,7 +39,11 @@
 
 
 	<dependencies>
-
+		<dependency>
+			<groupId>com.idhub.magic.kyprividerlib</groupId>
+			<artifactId>magic-providerlib</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>com.idhub.magic.common</groupId>
 			<artifactId>magic-common</artifactId>
