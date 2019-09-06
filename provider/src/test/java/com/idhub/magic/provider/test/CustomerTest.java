@@ -9,10 +9,10 @@ import org.junit.Test;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.idhub.magic.center.kyc.idmind.Converter;
-import com.idhub.magic.center.kyc.idmind.ConsumerService;
-import com.idhub.magic.center.kyc.idmind.IdentityMindProvider;
-import com.idhub.magic.center.kyc.idmind.entity.consumer.ConsumerKycResponse;
+import com.idhub.magic.provider.kyc.idmind.ConsumerService;
+import com.idhub.magic.provider.kyc.idmind.Converter;
+import com.idhub.magic.provider.kyc.idmind.IdentityMindProvider;
+import com.idhub.magic.provider.kyc.idmind.entity.consumer.ConsumerKycResponse;
 
 import okhttp3.ResponseBody;
 

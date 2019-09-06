@@ -3,26 +3,12 @@ package com.idhub.magic.provider.agent;
 import java.util.List;
 
 import com.idhub.magic.provider.Order;
-import com.idhub.magic.provider.interfaces.OrderBook;
 
-public class OrderBookAgent implements OrderBook{
+public interface OrderBookAgent{
+	
+	public List<Order> tome(String providerIdentity) ;
 
-	@Override
-	public List<Order> tome(String providerIdentity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public boolean receive(String orderId);
 
-	@Override
-	public boolean receive(String orderId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public List<Order> listAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	public List<Order> listAll();
 }
