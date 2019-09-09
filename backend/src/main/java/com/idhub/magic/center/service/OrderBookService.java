@@ -5,6 +5,9 @@ import static java.util.stream.Collectors.toList;
 import java.util.List;
 
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
+import org.mongodb.morphia.query.UpdateResults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +26,13 @@ public class OrderBookService implements OrderBook{
 	}
 
 	@Override
-	public boolean receive(String orderId) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean receive(String identity, String orderId) {
+		 Query<OrderEntity> query = ds.createQuery(OrderEntity.class).field("id").equal(orderId).field("provider").doesNotExist();
+		 UpdateOperations<OrderEntity> op = ds.createUpdateOperations(OrderEntity.class).set("provider", identity);
+		 UpdateResults n = ds.update(query, op);
+		 if(n.getUpdatedCount() == 0)
+			 return false;
+		 return true;
 	}
 
 	@Override

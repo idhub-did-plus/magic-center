@@ -15,22 +15,22 @@ import com.idhub.magic.provider.interfaces.OrderBook;
 @RequestMapping("/orderbook")
 public class OrderBookController implements OrderBook {
 	@Autowired OrderBookService store;
-    @GetMapping("/order")
+    @GetMapping("/directed")
 	@Override
-	public List<Order> tome(String providerIdentity) {
-		return null;
+	public List<Order> tome(String identity) {
+		return store.tome(identity);
 	}
-
+    @GetMapping("/receive")
 	@Override
-	public boolean receive(String orderId) {
+	public boolean receive(String identity, String orderId) {
 		// TODO Auto-generated method stub
-		return false;
+    	return store.receive(identity,orderId);
 	}
-
+    @GetMapping("/list-all")
 	@Override
 	public List<Order> listAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return store.listAll();
 	}
 
 }
