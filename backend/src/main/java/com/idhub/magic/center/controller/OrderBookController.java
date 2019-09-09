@@ -11,6 +11,7 @@ import com.idhub.magic.center.service.ChainEventStore;
 import com.idhub.magic.center.service.OrderBookService;
 import com.idhub.magic.provider.Order;
 import com.idhub.magic.provider.interfaces.OrderBook;
+import com.idhub.magic.verifiablecredentials.VerifiableCredential;
 @RestController
 @RequestMapping("/orderbook")
 public class OrderBookController implements OrderBook {
@@ -33,7 +34,7 @@ public class OrderBookController implements OrderBook {
 		return store.listAll();
 	}
 	@Override
-	public void issueClaim() {
+	public void issueClaim(VerifiableCredential credential) {
 		// TODO Auto-generated method stub
 		
 	}

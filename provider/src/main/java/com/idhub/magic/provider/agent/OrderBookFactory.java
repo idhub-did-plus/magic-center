@@ -22,7 +22,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class OrderBookFactory {
-static public String baseurl = "https://sandbox.identitymind.com";
+static public String baseurl = "http://localhost:8080";
 	
 	ObjectMapper mapper = new ObjectMapper();
 	OrderBookAgent orderBook;
@@ -30,7 +30,7 @@ static public String baseurl = "https://sandbox.identitymind.com";
 
 	public void init() {
 		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
+		OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
 			
 			@Override
 			public Response intercept(Chain chain) throws IOException {

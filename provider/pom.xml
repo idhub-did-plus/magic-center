@@ -39,6 +39,7 @@
 
 
 	<dependencies>
+
 		<dependency>
 			<groupId>com.idhub.magic.kyprividerlib</groupId>
 			<artifactId>magic-providerlib</artifactId>

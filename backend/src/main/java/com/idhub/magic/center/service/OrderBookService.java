@@ -16,6 +16,7 @@ import com.idhub.magic.center.entity.OrderState;
 import com.idhub.magic.center.ustorage.entity.Material;
 import com.idhub.magic.provider.Order;
 import com.idhub.magic.provider.interfaces.OrderBook;
+import com.idhub.magic.verifiablecredentials.VerifiableCredential;
 @Service
 public class OrderBookService implements OrderBook{
 	@Autowired Datastore ds;
@@ -44,7 +45,7 @@ public class OrderBookService implements OrderBook{
 	}
 
 	@Override
-	public void issueClaim() {
+	public void issueClaim(VerifiableCredential credential) {
 		
 	}
 
