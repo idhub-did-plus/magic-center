@@ -1,10 +1,13 @@
 package com.idhub.magic.provider.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +25,21 @@ public class DirectedOrderFecher {
 	@Autowired OrderBookFactory fac;
 	@Autowired OrderRepository rep;
 	ScheduledExecutorService pool;
-	void init() {
+	@PostConstruct
+	void start() {
 		pool = Executors.newScheduledThreadPool(1);
 		pool.scheduleAtFixedRate(() -> {
 			try {
-				List<Order> my = fac.getOrderBook().directed(AccountManager.getMyAccount().getAddress()).execute().body();
-				rep.store(my);
+				String identity = AccountManager.getMyAccount().getAddress();
+				List<Order> my = fac.getOrderBook().directed(identity).execute().body();
+				List<Order> suc = new ArrayList<Order>();
+				for(Order o : my) {
+					boolean b = fac.getOrderBook().receive(identity, o.id);
+					if(b)
+						suc.add(o);
+				}
+				
+				rep.store(suc);
 				
 				
 			} catch (Throwable e) {
@@ -36,7 +48,7 @@ public class DirectedOrderFecher {
 			}
 			
 
-		}, 0, 15, TimeUnit.SECONDS);
+		}, 0, 150, TimeUnit.SECONDS);
 	}
 
 }
