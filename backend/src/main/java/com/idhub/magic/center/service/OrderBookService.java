@@ -44,8 +44,7 @@ public class OrderBookService implements OrderBook{
 	}
 
 	@Override
-	public void issueclaim() {
-		// TODO Auto-generated method stub
+	public void issueClaim() {
 		
 	}
 

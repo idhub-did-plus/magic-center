@@ -8,5 +8,5 @@ public interface OrderBook {
 	List<Order> tome(String identity);
 	boolean receive(String identity, String orderId);
 	List<Order> listAll();
-	void issueclaim();
+	void issueClaim();
 }

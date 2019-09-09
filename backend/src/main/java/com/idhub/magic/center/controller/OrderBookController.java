@@ -33,7 +33,7 @@ public class OrderBookController implements OrderBook {
 		return store.listAll();
 	}
 	@Override
-	public void issueclaim() {
+	public void issueClaim() {
 		// TODO Auto-generated method stub
 		
 	}
