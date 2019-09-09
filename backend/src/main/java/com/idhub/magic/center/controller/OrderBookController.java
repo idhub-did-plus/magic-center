@@ -37,7 +37,7 @@ public class OrderBookController implements OrderBook {
 	}
     @GetMapping("/issue-claim")
 	@Override
-	public void issueClaim(VerifiableCredential credential) {
+	public void issueClaim(String identity,VerifiableCredential credential) {
 		vcService.store(credential);
 		
 	}

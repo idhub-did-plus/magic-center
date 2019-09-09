@@ -45,7 +45,7 @@ public class OrderBookService implements OrderBook{
 	}
 
 	@Override
-	public void issueClaim(VerifiableCredential credential) {
+	public void issueClaim(String identity,VerifiableCredential credential) {
 		
 	}
 

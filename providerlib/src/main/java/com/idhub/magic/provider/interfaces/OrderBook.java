@@ -9,5 +9,5 @@ public interface OrderBook {
 	List<Order> tome(String identity);
 	boolean receive(String identity, String orderId);
 	List<Order> listAll();
-	void issueClaim(VerifiableCredential credential);
+	void issueClaim(String identity,VerifiableCredential credential);
 }
