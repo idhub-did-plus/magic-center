@@ -1,7 +1,9 @@
 package com.idhub.magic.center.entity;
 
-import com.idhub.magic.verifiablecredentials.VerifiableCredential;
+import org.mongodb.morphia.annotations.Entity;
 
+import com.idhub.magic.verifiablecredentials.VerifiableCredential;
+@Entity
 public class VerifiableCredentialEntity {
 	String id;
 	
