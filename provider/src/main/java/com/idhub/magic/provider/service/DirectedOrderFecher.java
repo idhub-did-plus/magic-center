@@ -32,6 +32,8 @@ public class DirectedOrderFecher {
 			try {
 				String identity = AccountManager.getMyAccount().getAddress();
 				List<Order> my = fac.getOrderBook().directed(identity).execute().body();
+				if(my == null)
+					return;
 				List<Order> suc = new ArrayList<Order>();
 				for(Order o : my) {
 					boolean b = fac.getOrderBook().receive(identity, o.id);
