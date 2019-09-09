@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.idhub.magic.center.service.ChainEventStore;
 import com.idhub.magic.center.service.OrderBookService;
+import com.idhub.magic.center.service.VerifiableCredentialService;
 import com.idhub.magic.provider.Order;
 import com.idhub.magic.provider.interfaces.OrderBook;
 import com.idhub.magic.verifiablecredentials.VerifiableCredential;
@@ -16,6 +17,7 @@ import com.idhub.magic.verifiablecredentials.VerifiableCredential;
 @RequestMapping("/orderbook")
 public class OrderBookController implements OrderBook {
 	@Autowired OrderBookService store;
+	@Autowired VerifiableCredentialService vcService;
     @GetMapping("/directed")
 	@Override
 	public List<Order> tome(String identity) {
@@ -35,7 +37,7 @@ public class OrderBookController implements OrderBook {
 	}
 	@Override
 	public void issueClaim(VerifiableCredential credential) {
-		// TODO Auto-generated method stub
+		vcService.store(credential);
 		
 	}
 
