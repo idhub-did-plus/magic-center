@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.idhub.magic.center.entity.OrderEntity;
 import com.idhub.magic.center.entity.OrderState;
 import com.idhub.magic.center.ustorage.entity.Material;
+import com.idhub.magic.provider.IdentityData;
 import com.idhub.magic.provider.Order;
 import com.idhub.magic.provider.interfaces.OrderBook;
 import com.idhub.magic.verifiablecredentials.VerifiableCredential;
@@ -47,6 +48,12 @@ public class OrderBookService implements OrderBook{
 	@Override
 	public void issueClaim(String identity,VerifiableCredential credential) {
 		
+	}
+
+	@Override
+	public IdentityData getIdentityInformation(String targetIdentity) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

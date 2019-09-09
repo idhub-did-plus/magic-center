@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.idhub.magic.center.service.ChainEventStore;
 import com.idhub.magic.center.service.OrderBookService;
 import com.idhub.magic.center.service.VerifiableCredentialService;
+import com.idhub.magic.provider.IdentityData;
 import com.idhub.magic.provider.Order;
 import com.idhub.magic.provider.interfaces.OrderBook;
 import com.idhub.magic.verifiablecredentials.VerifiableCredential;
@@ -40,6 +41,12 @@ public class OrderBookController implements OrderBook {
 	public void issueClaim(String identity,VerifiableCredential credential) {
 		vcService.store(credential);
 		
+	}
+    @GetMapping("/get-identity-information")
+	@Override
+	public IdentityData getIdentityInformation(String targetIdentity) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
