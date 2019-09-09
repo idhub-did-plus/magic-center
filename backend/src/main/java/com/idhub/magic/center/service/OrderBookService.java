@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.idhub.magic.center.entity.OrderEntity;
+import com.idhub.magic.center.entity.OrderState;
 import com.idhub.magic.center.ustorage.entity.Material;
 import com.idhub.magic.provider.Order;
 import com.idhub.magic.provider.interfaces.OrderBook;
@@ -28,7 +29,7 @@ public class OrderBookService implements OrderBook{
 	@Override
 	public boolean receive(String identity, String orderId) {
 		 Query<OrderEntity> query = ds.createQuery(OrderEntity.class).field("id").equal(orderId).field("provider").doesNotExist();
-		 UpdateOperations<OrderEntity> op = ds.createUpdateOperations(OrderEntity.class).set("provider", identity);
+		 UpdateOperations<OrderEntity> op = ds.createUpdateOperations(OrderEntity.class).set("provider", identity).set("state", OrderState.relayed.name());
 		 UpdateResults n = ds.update(query, op);
 		 if(n.getUpdatedCount() == 0)
 			 return false;
