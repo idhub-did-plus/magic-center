@@ -35,6 +35,7 @@ public class OrderBookController implements OrderBook {
 		// TODO Auto-generated method stub
 		return store.listAll();
 	}
+    @GetMapping("/issue-claim")
 	@Override
 	public void issueClaim(VerifiableCredential credential) {
 		vcService.store(credential);
