@@ -22,7 +22,7 @@ public class OrderBookService implements OrderBook{
 	@Autowired Datastore ds;
 	@Override
 	public List<Order> tome(String providerIdentity) {
-		List<OrderEntity> es = ds.createQuery(OrderEntity.class).field("directTo").equal(providerIdentity).asList();
+		List<OrderEntity> es = ds.createQuery(OrderEntity.class).field("order.directTo").equal(providerIdentity).asList();
 		List<Order> rst = es.stream().map(OrderEntity::getOrder).collect(toList());
 		return rst;
 	}
