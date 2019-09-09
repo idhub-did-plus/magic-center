@@ -46,7 +46,7 @@ class ClaimServiceTest {
 		identity = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
 	}
 	@Test
-	void testOrder() throws Exception
+	void testOrder() throws Exception 
 	{
 		
 		ClaimOrder order = new ClaimOrder();

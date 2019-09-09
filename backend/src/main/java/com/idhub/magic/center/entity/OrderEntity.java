@@ -1,5 +1,7 @@
 package com.idhub.magic.center.entity;
 
+import java.util.Date;
+
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
@@ -14,6 +16,11 @@ public class OrderEntity {
 	String provider;
 	Order order;
 	String directTo;
+	Date createTime;
+	Date receiveTime;
+	Date completeTime;
+	Boolean issued = false;
+	
 	public String getDirectTo() {
 		return directTo;
 	}
@@ -22,7 +29,32 @@ public class OrderEntity {
 	}
 	public OrderEntity(Order o) {
 		this.state = OrderState.waiting.name();
+		createTime = new Date();
 		
+	}
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	public Date getReceiveTime() {
+		return receiveTime;
+	}
+	public void setReceiveTime(Date receiveTime) {
+		this.receiveTime = receiveTime;
+	}
+	public Date getCompleteTime() {
+		return completeTime;
+	}
+	public void setCompleteTime(Date completeTime) {
+		this.completeTime = completeTime;
+	}
+	public Boolean getIssued() {
+		return issued;
+	}
+	public void setIssued(Boolean issued) {
+		this.issued = issued;
 	}
 	public OrderEntity() {
 		super();
