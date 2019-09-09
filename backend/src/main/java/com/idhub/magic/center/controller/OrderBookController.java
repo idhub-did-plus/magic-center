@@ -32,5 +32,10 @@ public class OrderBookController implements OrderBook {
 		// TODO Auto-generated method stub
 		return store.listAll();
 	}
+	@Override
+	public void issueclaim() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

@@ -43,4 +43,10 @@ public class OrderBookService implements OrderBook{
 		return rst;
 	}
 
+	@Override
+	public void issueclaim() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
