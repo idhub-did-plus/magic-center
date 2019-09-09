@@ -33,7 +33,7 @@ public class DirectedOrderFecher {
 					return;
 				List<Order> suc = new ArrayList<Order>();
 				for(Order o : my) {
-					boolean b = fac.getOrderBook().receive(identity, o.id);
+					boolean b = fac.getOrderBook().receive(identity, o.id).execute().body();
 					if(b)
 						suc.add(o);
 				}
