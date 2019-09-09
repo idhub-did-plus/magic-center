@@ -18,7 +18,7 @@ import com.idhub.magic.clientlib.ProviderFactory;
 import com.idhub.magic.clientlib.interfaces.DelegationService;
 import com.idhub.magic.clientlib.interfaces.EventService;
 import com.idhub.magic.clientlib.interfaces.IdentityStorage;
-import com.idhub.magic.clientlib.interfaces.KycService;
+import com.idhub.magic.clientlib.interfaces.ClaimService;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -46,7 +46,7 @@ public class RetrofitAccessor {
 	IdentityStorage identityStorage;
 	EventService eventService;
 	DelegationService delegationService;
-	KycService kycService;
+	ClaimService kycService;
 	ObjectMapper mapper = new ObjectMapper();
  
 	
@@ -79,10 +79,10 @@ public class RetrofitAccessor {
 		identityStorage = retrofit.create(IdentityStorage.class);
 		eventService = retrofit.create(EventService.class);
 		delegationService = retrofit.create(DelegationService.class);
-		kycService =  retrofit.create(KycService.class);
+		kycService =  retrofit.create(ClaimService.class);
 	}
 
-	public KycService getKycService() {
+	public ClaimService getKycService() {
 		return kycService;
 	}
 	public DelegationService getDelegationService() {

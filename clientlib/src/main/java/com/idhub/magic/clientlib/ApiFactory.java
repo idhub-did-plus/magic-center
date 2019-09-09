@@ -10,7 +10,7 @@ import com.idhub.magic.clientlib.interfaces.IdentityChainDelegate;
 import com.idhub.magic.clientlib.interfaces.IdentityChainViewer;
 import com.idhub.magic.clientlib.interfaces.IdentityStorage;
 import com.idhub.magic.clientlib.interfaces.IncomingService;
-import com.idhub.magic.clientlib.interfaces.KycService;
+import com.idhub.magic.clientlib.interfaces.ClaimService;
 import com.idhub.magic.clientlib.local.IdentityChainLocal;
 
 public class ApiFactory {
@@ -32,7 +32,7 @@ public class ApiFactory {
 		return EventFetcher.getInstance();
 	}
 	
-	static public KycService getKycService() {
+	static public ClaimService getKycService() {
 		return retrofitAccessor.getKycService();
 	}
 	//上面是跟后端访问接口

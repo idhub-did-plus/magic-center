@@ -24,5 +24,8 @@ public class AccountManager {
 	public static Credentials getMyAccount() {
 		return myAccount;
 	}
-
+	static public void main(String[] ss) {
+		Credentials dd = getMyAccount() ;
+		System.out.println(dd.getAddress());
+	}
 }

@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.idhub.magic.center.event.MagicEvent;
+import com.idhub.magic.center.kvc.entity.ClaimType;
+import com.idhub.magic.center.kvc.entity.ClaimOrder;
 import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.center.ustorage.entity.FinancialProfile;
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
@@ -25,17 +27,17 @@ import com.idhub.magic.clientlib.http.RetrofitAccessor;
 import com.idhub.magic.clientlib.interfaces.EventService;
 import com.idhub.magic.clientlib.interfaces.IdentityChainDelegate;
 import com.idhub.magic.clientlib.interfaces.IdentityStorage;
-import com.idhub.magic.clientlib.interfaces.KycService;
+import com.idhub.magic.clientlib.interfaces.ClaimService;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 
-class KycServiceTest {
+class ClaimServiceTest {
 	ObjectMapper mapper = new ObjectMapper();
 	String identity;
-	KycService service;
+	ClaimService service;
 	@BeforeEach
 	void setUp() throws Exception {
 		EventFetcher.getInstance();
@@ -44,10 +46,13 @@ class KycServiceTest {
 		identity = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
 	}
 	@Test
-	void testDummyEvent() throws Exception
+	void testOrder() throws Exception
 	{
-
-			
+		
+		ClaimOrder order = new ClaimOrder();
+		order.identity = identity;
+		order.requestedClaimType = ClaimType.qualified_buyer.name();
+		service.order(order, identity);
 
 	}
 }
