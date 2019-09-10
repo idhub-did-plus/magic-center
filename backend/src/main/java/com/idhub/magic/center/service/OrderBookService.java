@@ -2,6 +2,7 @@ package com.idhub.magic.center.service;
 
 import static java.util.stream.Collectors.toList;
 
+import java.util.Date;
 import java.util.List;
 
 import org.mongodb.morphia.Datastore;
@@ -23,7 +24,7 @@ public class OrderBookService implements OrderBook{
 	@Autowired Datastore ds;
 	@Override
 	public List<Order> tome(String providerIdentity) {
-		List<OrderEntity> es = ds.createQuery(OrderEntity.class).field("directTo").equal(providerIdentity).asList();
+		List<OrderEntity> es = ds.createQuery(OrderEntity.class).field("directTo").equal(providerIdentity).field("state").equal(OrderState.waiting).asList();
 		List<Order> rst = es.stream().map(OrderEntity::getOrder).collect(toList());
 		return rst;
 	}
@@ -31,7 +32,7 @@ public class OrderBookService implements OrderBook{
 	@Override
 	public boolean receive(String identity, String orderId) {
 		 Query<OrderEntity> query = ds.createQuery(OrderEntity.class).field("id").equal(orderId).field("state").equal(OrderState.waiting);
-		 UpdateOperations<OrderEntity> op = ds.createUpdateOperations(OrderEntity.class).set("provider", identity).set("state", OrderState.relayed.name());
+		 UpdateOperations<OrderEntity> op = ds.createUpdateOperations(OrderEntity.class).set("provider", identity).set("state", OrderState.relayed.name()).set("receiveTime", new Date());;
 		 UpdateResults n = ds.update(query, op);
 		 if(n.getUpdatedCount() == 0)
 			 return false;
