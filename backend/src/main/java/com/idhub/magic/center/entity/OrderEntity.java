@@ -28,6 +28,7 @@ public class OrderEntity {
 		this.directTo = directTo;
 	}
 	public OrderEntity(Order o) {
+		this.id = o.id;
 		this.state = OrderState.waiting.name();
 		createTime = new Date();
 		this.order = o;

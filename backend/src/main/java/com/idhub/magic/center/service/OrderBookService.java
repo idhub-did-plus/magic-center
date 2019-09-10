@@ -30,7 +30,7 @@ public class OrderBookService implements OrderBook{
 
 	@Override
 	public boolean receive(String identity, String orderId) {
-		 Query<OrderEntity> query = ds.createQuery(OrderEntity.class).field("id").equal(orderId).field("provider").doesNotExist();
+		 Query<OrderEntity> query = ds.createQuery(OrderEntity.class).field("id").equal(orderId).field("state").equal(OrderState.waiting);
 		 UpdateOperations<OrderEntity> op = ds.createUpdateOperations(OrderEntity.class).set("provider", identity).set("state", OrderState.relayed.name());
 		 UpdateResults n = ds.update(query, op);
 		 if(n.getUpdatedCount() == 0)

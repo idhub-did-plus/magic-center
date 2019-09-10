@@ -16,7 +16,7 @@ public interface OrderBookAgent{
 	@GET("orderbook/directed")
 	public  Call<List<Order>> directed(@Query("identity") String providerIdentity) ;
 	@GET("orderbook/receive")
-	public Call<Boolean> receive(@Query("identity") String providerIdentity, String orderId);
+	public Call<Boolean> receive(@Query("identity") String providerIdentity, @Query("orderId") String orderId);
 	@GET("orderbook/list-all")
 	public Call<List<Order>> listAll(@Query("identity") String providerIdentity);
 	@POST("orderbook/issue-claim")
