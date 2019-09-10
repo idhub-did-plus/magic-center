@@ -30,6 +30,7 @@ public class OrderEntity {
 	public OrderEntity(Order o) {
 		this.state = OrderState.waiting.name();
 		createTime = new Date();
+		this.order = o;
 		
 	}
 	public Date getCreateTime() {

@@ -13,17 +13,18 @@ import com.idhub.magic.center.event.MagicEvent;
 import com.idhub.magic.center.kvc.entity.ClaimOrder;
 import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.center.service.ChainEventStore;
+import com.idhub.magic.center.service.ClaimOrderService;
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
 import com.idhub.magic.center.ustorage.entity.Material;
 
 @RestController
 @RequestMapping("/claim")
-
 public class ClaimController {
-	@Autowired ChainEventStore store;
-    @GetMapping("/order")
-	public MagicResponse order(ClaimOrder order, String identity) {
-    	
+	@Autowired ClaimOrderService store;
+	
+    @PostMapping("/order")
+	public MagicResponse order(@RequestBody ClaimOrder order, String identity) {
+    	store.relay(order);
 		return new MagicResponse();
 	}
 

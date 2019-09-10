@@ -52,7 +52,7 @@ class ClaimServiceTest {
 		ClaimOrder order = new ClaimOrder();
 		order.identity = identity;
 		order.requestedClaimType = ClaimType.qualified_buyer.name();
-		service.order(order, identity);
+		service.order(order, identity).execute().body();
 
 	}
 }
