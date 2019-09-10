@@ -47,7 +47,7 @@ public class DirectedOrderFecher {
 			}
 			
 
-		}, 0, 150, TimeUnit.SECONDS);
+		}, 0, 15, TimeUnit.SECONDS);
 	}
 
 }

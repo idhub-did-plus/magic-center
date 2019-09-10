@@ -24,14 +24,14 @@ public class OrderBookService implements OrderBook{
 	@Autowired Datastore ds;
 	@Override
 	public List<Order> tome(String providerIdentity) {
-		List<OrderEntity> es = ds.createQuery(OrderEntity.class).field("directTo").equal(providerIdentity).field("state").equal(OrderState.waiting).asList();
+		List<OrderEntity> es = ds.createQuery(OrderEntity.class).field("directTo").equal(providerIdentity).field("state").equal(OrderState.waiting.name()).asList();
 		List<Order> rst = es.stream().map(OrderEntity::getOrder).collect(toList());
 		return rst;
 	}
 
 	@Override
 	public boolean receive(String identity, String orderId) {
-		 Query<OrderEntity> query = ds.createQuery(OrderEntity.class).field("id").equal(orderId).field("state").equal(OrderState.waiting);
+		 Query<OrderEntity> query = ds.createQuery(OrderEntity.class).field("id").equal(orderId).field("state").equal(OrderState.waiting.name());
 		 UpdateOperations<OrderEntity> op = ds.createUpdateOperations(OrderEntity.class).set("provider", identity).set("state", OrderState.relayed.name()).set("receiveTime", new Date());;
 		 UpdateResults n = ds.update(query, op);
 		 if(n.getUpdatedCount() == 0)
