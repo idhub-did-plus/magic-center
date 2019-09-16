@@ -3,6 +3,10 @@ package com.idhub.magic.provider.kyc.idmind;
 import java.io.IOException;
 import java.util.Base64;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.stereotype.Service;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -27,14 +31,16 @@ GET https://edna.identitymind.com/im/account/consumer/<merchant_api_name>/<trans
 
 Upload a document as part of document verification:
 GET https://edna.identitymind.com/im/account/consumer/<application_id>/addDocument
-*/public class IdentityMindProvider {
+*/
+@Service
+public class IdentityMindProvider {
 	static public String baseurl = "https://sandbox.identitymind.com";
 	
 	ObjectMapper mapper = new ObjectMapper();
 	ConsumerService customerService;
 	String password = "6bbbc50e3ce66e667998331e7f577967c2412e44";
 	String username = "magicexchange";
-
+	@PostConstruct
 	public void init() {
 		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
