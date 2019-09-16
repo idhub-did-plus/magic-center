@@ -2,6 +2,7 @@ package com.idhub.magic.provider.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -9,8 +10,11 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 
+import org.mongodb.morphia.Datastore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.idhub.magic.provider.IdentityData;
 import com.idhub.magic.provider.Order;
 import com.idhub.magic.provider.agent.AccountManager;
 import com.idhub.magic.provider.agent.OrderBookFactory;
@@ -21,6 +25,7 @@ import retrofit2.Call;
 public class DirectedOrderFecher {
 	@Autowired OrderBookFactory fac;
 	@Autowired OrderRepository rep;
+	@Autowired Datastore ds;
 	ScheduledExecutorService pool;
 	@PostConstruct
 	void start() {
@@ -34,12 +39,19 @@ public class DirectedOrderFecher {
 				List<Order> suc = new ArrayList<Order>();
 				for(Order o : my) {
 					boolean b = fac.getOrderBook().receive(identity, o.id).execute().body();
-					if(b)
+					if(b) {
 						suc.add(o);
+					}
 				}
 				
 				rep.store(suc);
-				
+				List<IdentityEntity> es = new LinkedList<IdentityEntity>(); 
+				for(Order o : suc) {
+					IdentityData ia = fac.getOrderBook().getIdentityInformation(identity, o.identity).execute().body();
+					IdentityEntity id = new IdentityEntity(ia);
+					es.add(id);
+				}
+				ds.save(es);
 				
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block

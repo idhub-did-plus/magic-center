@@ -20,4 +20,13 @@ public class IdentityEntity{
 	@Id
 	String id;
 	IdentityData data;
+	public IdentityEntity(IdentityData data) {
+		super();
+		this.data = data;
+		id = data.getIdentity();
+	}
+	public IdentityEntity() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 }
