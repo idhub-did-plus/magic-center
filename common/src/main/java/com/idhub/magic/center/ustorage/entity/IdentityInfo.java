@@ -2,6 +2,9 @@ package com.idhub.magic.center.ustorage.entity;
 
 import java.util.Date;
 
+import com.idhub.magic.center.ustorage.entity.component.Address;
+import com.idhub.magic.center.ustorage.entity.component.Name;
+
 public class IdentityInfo {
 /*	填入基本身份信息，包括
 	姓名，姓/Last Name 名/First Name，必填
@@ -14,68 +17,73 @@ public class IdentityInfo {
 	护照号码，护照号码/Passport Number，可选
 	若填写需上传护照照片（图片或PDF）*/
 	
-	public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	public Date getBirthday() {
-		return birthday;
-	}
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
-	public String getCountry() {
-		return country;
-	}
-	public void setCountry(String country) {
-		this.country = country;
-	}
-	public String getResidenceCountry() {
-		return residenceCountry;
-	}
-	public void setResidenceCountry(String residenceCountry) {
-		this.residenceCountry = residenceCountry;
-	}
-	public String getIdcardNumber() {
-		return idcardNumber;
-	}
-	public void setIdcardNumber(String idcardNumber) {
-		this.idcardNumber = idcardNumber;
-	}
-	public String getIdcardImage() {
-		return idcardImage;
-	}
-	public void setIdcardImage(String idcardImage) {
-		this.idcardImage = idcardImage;
-	}
-	public String getPassportNumber() {
-		return passportNumber;
-	}
-	public void setPassportNumber(String passportNumber) {
-		this.passportNumber = passportNumber;
-	}
-	public String getPassportImage() {
-		return passportImage;
-	}
-	public void setPassportImage(String passportImage) {
-		this.passportImage = passportImage;
-	}
-	String firstName;
-	String lastName;
+	Name name;
+	Address address;
 	Date birthday;
 	String country;
 	String residenceCountry;
+	
 	String idcardNumber;
 	String idcardImage;
 	String passportNumber;
 	String passportImage;
+	public Date getBirthday() {
+		return birthday;
+	}
+	public String getCountry() {
+		return country;
+	}
+	
+	public String getIdcardImage() {
+		return idcardImage;
+	}
+	public String getIdcardNumber() {
+		return idcardNumber;
+	}
+	
+	public String getPassportImage() {
+		return passportImage;
+	}
+	public String getPassportNumber() {
+		return passportNumber;
+	}
+	public String getResidenceCountry() {
+		return residenceCountry;
+	}
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	
+	public void setIdcardImage(String idcardImage) {
+		this.idcardImage = idcardImage;
+	}
+	public void setIdcardNumber(String idcardNumber) {
+		this.idcardNumber = idcardNumber;
+	}
+	
+	public Name getName() {
+		return name;
+	}
+	public void setName(Name name) {
+		this.name = name;
+	}
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	public void setPassportImage(String passportImage) {
+		this.passportImage = passportImage;
+	}
+	public void setPassportNumber(String passportNumber) {
+		this.passportNumber = passportNumber;
+	}
+	public void setResidenceCountry(String residenceCountry) {
+		this.residenceCountry = residenceCountry;
+	}
 	
 }
