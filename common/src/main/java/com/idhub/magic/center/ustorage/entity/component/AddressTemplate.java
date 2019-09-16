@@ -10,7 +10,7 @@ public class AddressTemplate {
 	static {
 		templates.put("default", create("state","city","neighbourhood","streetNumber", "houseNumber", "apartmentNumber"));
 		templates.put("us", create("state","city","neighbourhood","streetNumber", "houseNumber", "apartmentNumber"));
-		templates.put("us", create("province","city","county","street", "residence","menpaihao"));
+		templates.put("china", create("province","city","county","street", "residence","menpaihao"));
 	}
 	static public List<AddressElement> template(String country){
 		List<AddressElement> temp = templates.get(country);
