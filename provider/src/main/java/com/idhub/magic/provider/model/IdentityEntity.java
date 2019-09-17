@@ -1,4 +1,4 @@
-package com.idhub.magic.provider.service;
+package com.idhub.magic.provider.model;
 
 import org.mongodb.morphia.annotations.Id;
 

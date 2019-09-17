@@ -19,7 +19,8 @@ import com.idhub.magic.provider.kyc.idmind.IdentityMindProvider;
 import com.idhub.magic.provider.kyc.idmind.Interaction;
 import com.idhub.magic.provider.kyc.idmind.entity.consumer.ConsumerKycRequest;
 import com.idhub.magic.provider.kyc.idmind.entity.consumer.ConsumerKycResponse;
-import com.idhub.magic.provider.service.IdentityEntity;
+import com.idhub.magic.provider.model.IdentityEntity;
+
 
 @RestController
 @RequestMapping("/idm")

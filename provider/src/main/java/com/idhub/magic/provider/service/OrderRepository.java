@@ -3,11 +3,13 @@ package com.idhub.magic.provider.service;
 import java.util.List;
 
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.idhub.magic.provider.Order;
-
+import com.idhub.magic.provider.model.ProviderOrder;
+import com.idhub.magic.provider.model.ProviderOrderState;
 @Service
 public class OrderRepository {
 	@Autowired Datastore ds;
@@ -17,7 +19,12 @@ public class OrderRepository {
 			ProviderOrder po = new ProviderOrder(o);
 			ds.save(po);
 		}
+	}
 		
+
+	public List<ProviderOrder> list(ProviderOrderState state){
+		Query<ProviderOrder> query = ds.createQuery(ProviderOrder.class);
+		return query.asList();
 	}
 	
 }

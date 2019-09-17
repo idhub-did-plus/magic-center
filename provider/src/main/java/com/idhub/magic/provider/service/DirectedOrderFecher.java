@@ -18,6 +18,7 @@ import com.idhub.magic.provider.IdentityData;
 import com.idhub.magic.provider.Order;
 import com.idhub.magic.provider.agent.AccountManager;
 import com.idhub.magic.provider.agent.OrderBookFactory;
+import com.idhub.magic.provider.model.IdentityEntity;
 
 import retrofit2.Call;
 
