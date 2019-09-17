@@ -10,6 +10,7 @@ import com.idhub.magic.clientlib.interfaces.IdentityChainDelegate;
 import com.idhub.magic.clientlib.interfaces.IdentityChainViewer;
 import com.idhub.magic.clientlib.interfaces.IdentityStorage;
 import com.idhub.magic.clientlib.interfaces.IncomingService;
+import com.idhub.magic.clientlib.interfaces.TemplateService;
 import com.idhub.magic.clientlib.interfaces.ClaimService;
 import com.idhub.magic.clientlib.local.IdentityChainLocal;
 
@@ -43,6 +44,8 @@ public class ApiFactory {
 	static public IdentityChainViewer getIdentityChainViewer() {
 		return local;
 	}
-
+	static public TemplateService getTemplateService() {
+		return retrofitAccessor.getTemplateService();
+	}
 	
 }

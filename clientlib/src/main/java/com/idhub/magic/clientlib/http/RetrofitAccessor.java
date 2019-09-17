@@ -18,6 +18,7 @@ import com.idhub.magic.clientlib.ProviderFactory;
 import com.idhub.magic.clientlib.interfaces.DelegationService;
 import com.idhub.magic.clientlib.interfaces.EventService;
 import com.idhub.magic.clientlib.interfaces.IdentityStorage;
+import com.idhub.magic.clientlib.interfaces.TemplateService;
 import com.idhub.magic.clientlib.interfaces.ClaimService;
 
 import okhttp3.HttpUrl;
@@ -48,9 +49,12 @@ public class RetrofitAccessor {
 	DelegationService delegationService;
 	ClaimService kycService;
 	ObjectMapper mapper = new ObjectMapper();
- 
+	TemplateService templateService;
 	
-	 public IdentityStorage getIdentityStorage() {
+	 public TemplateService getTemplateService() {
+		return templateService;
+	}
+	public IdentityStorage getIdentityStorage() {
 		return identityStorage;
 	}
 
@@ -115,8 +119,8 @@ public class RetrofitAccessor {
 			IdentityInfo ii = new IdentityInfo();
 			//ii.setBirthday(new Date());
 			ii.setCountry("china");
-			ii.setFirstName("yuqi");
-			ii.setLastName("bai");
+		//	ii.setFirstName("yuqi");
+		//	ii.setLastName("bai");
 			ii.setPassportNumber("ggggg");
 			ida.setIdentityInfo(ii);
 		    //   RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), ida);
