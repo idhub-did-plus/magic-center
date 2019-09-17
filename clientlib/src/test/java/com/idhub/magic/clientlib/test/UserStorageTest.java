@@ -37,8 +37,8 @@ class UserStorageTest {
 		IdentityInfo ii = new IdentityInfo();
 		ii.setBirthday(new Date());
 		ii.setCountry("china");
-		ii.setFirstName("yuqi");
-		ii.setLastName("bai");
+		//ii.setFirstName("yuqi");
+		//ii.setLastName("bai");
 		ii.setPassportNumber("ggggg");
 		ida.setIdentityInfo(ii);
 		return ida;
