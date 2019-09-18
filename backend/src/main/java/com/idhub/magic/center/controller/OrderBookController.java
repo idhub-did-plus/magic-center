@@ -18,7 +18,7 @@ import com.idhub.magic.verifiablecredentials.VerifiableCredential;
 @RequestMapping("/orderbook")
 public class OrderBookController implements OrderBook {
 	@Autowired OrderBookService store;
-	@Autowired VerifiableCredentialService vcService;
+
     @GetMapping("/directed")
 	@Override
 	public List<Order> tome(String identity) {
@@ -38,15 +38,20 @@ public class OrderBookController implements OrderBook {
 	}
     @GetMapping("/issue-claim")
 	@Override
-	public void issueClaim(String identity,VerifiableCredential credential) {
-		vcService.store(credential);
+	public void issueClaim(String identity,String orderId, VerifiableCredential credential) {
+		store.issueClaim(identity, orderId, credential);
 		
 	}
     @GetMapping("/get-identity-information")
 	@Override
 	public IdentityData getIdentityInformation(String targetIdentity) {
 		// TODO Auto-generated method stub
-		return null;
+		return store.getIdentityInformation(targetIdentity);
+	}
+	@Override
+	public void refuseClaim(String identity, String orderId) {
+		store.refuseClaim(identity, orderId);
+		
 	}
 
 }

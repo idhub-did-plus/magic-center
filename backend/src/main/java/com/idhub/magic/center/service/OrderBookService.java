@@ -22,6 +22,7 @@ import com.idhub.magic.verifiablecredentials.VerifiableCredential;
 @Service
 public class OrderBookService implements OrderBook{
 	@Autowired Datastore ds;
+	@Autowired VerifiableCredentialService vcService;
 	@Override
 	public List<Order> tome(String providerIdentity) {
 		List<OrderEntity> es = ds.createQuery(OrderEntity.class).field("directTo").equal(providerIdentity).field("state").equal(OrderState.waiting.name()).asList();
@@ -47,14 +48,20 @@ public class OrderBookService implements OrderBook{
 	}
 
 	@Override
-	public void issueClaim(String identity,VerifiableCredential credential) {
-		
+	public void issueClaim(String identity,String orderId, VerifiableCredential credential) {
+		vcService.store(credential);
 	}
 
 	@Override
 	public IdentityData getIdentityInformation(String targetIdentity) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void refuseClaim(String identity, String orderId) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
