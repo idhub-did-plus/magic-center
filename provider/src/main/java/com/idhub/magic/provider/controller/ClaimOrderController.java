@@ -66,11 +66,20 @@ public class ClaimOrderController {
 		return new MagicResponse();
 		
 	}
-	@GetMapping("/refuseClaim")
+	@GetMapping("/refuse_claim")
 	public MagicResponse refuseClaim(String orderId) {
 		
 		
 		rep.refuseClaim(orderId);
+		
+		return new MagicResponse();
+		
+	}
+	@GetMapping("/issue_claim")
+	public MagicResponse issueClaim(String orderId) {
+		
+		
+		rep.issueClaim(orderId);
 		
 		return new MagicResponse();
 		

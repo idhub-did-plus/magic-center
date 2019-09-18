@@ -80,5 +80,10 @@ public class OrderRepository {
 		  ds.update(q, operations);
 		
 	}
+
+	public void issueClaim(String orderId) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
