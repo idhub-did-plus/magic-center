@@ -1,5 +1,5 @@
 # magic-provider
-	provider是一个web应用，使用者是律所等claim证书颁发机构，基本功能：
+	provider是一个web应用，而不是dapp，它是一个使用者是律所等投资claim证书颁发机构。一个provider持有一个数字身份，以这个身份签发证书。这个证书存在于web服务器中，而不是dapp的钱包中。基本功能：
 	
  1. 账号登陆
  2. 显示claim订单列表，显示申请的claim类型，是否已接受等信息，按照收单日期排序
