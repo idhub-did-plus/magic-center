@@ -5,6 +5,9 @@ public class Order {
 	public String identity;
 	public String claimType;
 	
+	public String country;
+	public String jurisdiction;
+	
 	
 	
 

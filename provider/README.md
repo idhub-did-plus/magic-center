@@ -14,6 +14,7 @@
  
  除ui交互功能，provider是由后台逻辑轮询backend的orderbook api，自动将订单接入。但真正接受需要receive动作（ui接单），并且有失败可能（已被别的provider接受）
  directTo订单是定向发送给某个provider，但也需要接受动作
+ 只有接单之后才有权限获取用户档案，因此订单信息中应有国家、司法区等信息，便于provider判断决定是否接单
 
 
 
