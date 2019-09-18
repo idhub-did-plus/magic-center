@@ -3,23 +3,17 @@ package com.idhub.magic.provider.controller;
 import java.util.List;
 
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.idhub.magic.center.parameter.MagicResponse;
-import com.idhub.magic.provider.IdentityData;
-import com.idhub.magic.provider.agent.AccountManager;
-import com.idhub.magic.provider.agent.OrderBookFactory;
 import com.idhub.magic.provider.kyc.idmind.Interaction;
 import com.idhub.magic.provider.model.IdentityEntity;
 import com.idhub.magic.provider.model.ProviderOrder;
 import com.idhub.magic.provider.model.ProviderOrderState;
 import com.idhub.magic.provider.service.OrderRepository;
-
-import retrofit2.Call;
 
 
 @RestController

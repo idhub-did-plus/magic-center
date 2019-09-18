@@ -9,7 +9,6 @@ import org.mongodb.morphia.query.UpdateOperations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.provider.IdentityData;
 import com.idhub.magic.provider.Order;
 import com.idhub.magic.provider.agent.AccountManager;

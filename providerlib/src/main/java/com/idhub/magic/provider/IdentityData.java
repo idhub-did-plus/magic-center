@@ -2,8 +2,6 @@ package com.idhub.magic.provider;
 
 import java.util.List;
 
-import org.mongodb.morphia.annotations.Id;
-
 import com.idhub.magic.center.ustorage.entity.IdentityArchive;
 import com.idhub.magic.center.ustorage.entity.Material;
 

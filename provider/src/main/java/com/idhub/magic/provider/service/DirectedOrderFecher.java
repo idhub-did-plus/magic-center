@@ -1,6 +1,5 @@
 package com.idhub.magic.provider.service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +12,6 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 
 import org.mongodb.morphia.Datastore;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +20,6 @@ import com.idhub.magic.provider.Order;
 import com.idhub.magic.provider.agent.AccountManager;
 import com.idhub.magic.provider.agent.OrderBookFactory;
 import com.idhub.magic.provider.model.IdentityEntity;
-
-import retrofit2.Call;
 
 @Service
 public class DirectedOrderFecher {
