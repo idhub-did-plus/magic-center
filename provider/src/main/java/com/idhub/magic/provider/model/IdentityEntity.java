@@ -9,8 +9,15 @@ import com.idhub.magic.provider.IdentityData;
 public class IdentityEntity{
 	@Id
 	String id;
+	String transactionId;
 	IdentityData data;
 	Date updateTime;
+	public String getTransactionId() {
+		return transactionId;
+	}
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
+	}
 	public Date getUpdateTime() {
 		return updateTime;
 	}

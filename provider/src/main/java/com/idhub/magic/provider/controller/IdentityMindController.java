@@ -20,36 +20,21 @@ import com.idhub.magic.provider.kyc.idmind.Interaction;
 import com.idhub.magic.provider.kyc.idmind.entity.consumer.ConsumerKycRequest;
 import com.idhub.magic.provider.kyc.idmind.entity.consumer.ConsumerKycResponse;
 import com.idhub.magic.provider.model.IdentityEntity;
+import com.idhub.magic.provider.service.IdentityMindService;
 
 
 @RestController
 @RequestMapping("/idm")
 public class IdentityMindController {
 	@Autowired
-	IdentityMindProvider idm;
+	IdentityMindService service;
 	@Autowired
 	Datastore ds;
 
 	@GetMapping("/evaluate")
-	public MagicResponse evaluate(String orderId) {
-		Order order = ds.find(Order.class, "id", orderId).get();
-		IdentityEntity ie = ds.find(IdentityEntity.class, "id", order.identity).get();
-		ConsumerService service = idm.getCustomerService();
-		try {
-			ConsumerKycRequest req = Converter.archve2request(ie.getData().getArchive());
-			ConsumerKycResponse resp = service.customer(req, false).execute().body();
-			Interaction inteaction = new Interaction();
-			inteaction.setOrderId(orderId);
-			inteaction.setRequest(req);
-			inteaction.setResponse(resp);
-			ds.save(inteaction);
-			return new MagicResponse(inteaction);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-		
+	public MagicResponse<Interaction> evaluate(String orderId) {
+		Interaction inter = service.evaluate(orderId);
+			
+		return new MagicResponse(inter);
 	}
-
 }
