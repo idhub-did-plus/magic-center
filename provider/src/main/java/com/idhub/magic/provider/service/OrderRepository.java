@@ -22,8 +22,8 @@ public class OrderRepository {
 	}
 		
 
-	public List<ProviderOrder> list(ProviderOrderState state){
-		Query<ProviderOrder> query = ds.createQuery(ProviderOrder.class);
+	public List<ProviderOrder> list(ProviderOrderState state, int startPage, int pageSize){
+		Query<ProviderOrder> query = ds.createQuery(ProviderOrder.class).field("state").equal(state.name()).offset(startPage * pageSize).limit(pageSize).order("createTime");
 		return query.asList();
 	}
 	

@@ -1,5 +1,7 @@
 package com.idhub.magic.provider.model;
 
+import java.util.Date;
+
 import org.mongodb.morphia.annotations.Id;
 
 import com.idhub.magic.provider.IdentityData;
@@ -8,6 +10,13 @@ public class IdentityEntity{
 	@Id
 	String id;
 	IdentityData data;
+	Date updateTime;
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 	public IdentityEntity() {
 		super();
 		// TODO Auto-generated constructor stub

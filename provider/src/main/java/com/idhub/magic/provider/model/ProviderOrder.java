@@ -1,5 +1,7 @@
 package com.idhub.magic.provider.model;
 
+import java.util.Date;
+
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
@@ -9,6 +11,7 @@ public class ProviderOrder {
 	@Id
 	String id;
 	String state;
+	Date createTime;
 	public String getState() {
 		return state;
 	}
@@ -24,6 +27,13 @@ public class ProviderOrder {
 		super();
 		this.order = order;
 		id = order.id;
+		createTime = new Date();
+	}
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 	public String getId() {
 		return id;
