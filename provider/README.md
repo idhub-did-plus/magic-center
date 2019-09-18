@@ -12,9 +12,14 @@
  8. 历史查询等功能
  9. 账号管理
  
- 除ui交互功能，provider是由后台逻辑轮询backend的orderbook api，自动将订单接入。但真正接受需要receive动作（ui接单），并且有失败可能（已被别的provider接受）
+#  几点说明
+ 1. 除ui交互功能，provider是由后台逻辑轮询backend的orderbook api，自动将订单接入。但真正接受需要receive动作（ui接单），并且有失败可能（已被别的provider接受）
  directTo订单是定向发送给某个provider，但也需要接受动作
  只有接单之后才有权限获取用户档案，因此订单信息中应有国家、司法区等信息，便于provider判断决定是否接单
+ 2. provider模板项目概念上支持一个机构的claim订单处理活动，但可以进一步开发支持类似saas模式，支持多个律所，维护多个颁发机构的数字身份。
+ 3. 在演进方向上，provider应适应可能的去中心化、弱中心化，发展为dapp，由dapp数字身份进行投票。provider的saas平台模式更多是对claim颁发领域的现状的适应。
+ 
+ 
 
 
 
