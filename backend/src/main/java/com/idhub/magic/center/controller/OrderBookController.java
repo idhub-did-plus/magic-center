@@ -30,25 +30,26 @@ public class OrderBookController implements OrderBook {
 		// TODO Auto-generated method stub
     	return store.receive(identity,orderId);
 	}
-    @GetMapping("/list-all")
+    @GetMapping("/list_all")
 	@Override
 	public List<Order> listAll() {
 		// TODO Auto-generated method stub
 		return store.listAll();
 	}
-    @GetMapping("/issue-claim")
+    @GetMapping("/issue_claim")
 	@Override
 	public void issueClaim(String identity,String orderId, VerifiableCredential credential) {
 		store.issueClaim(identity, orderId, credential);
 		
 	}
-    @GetMapping("/get-identity-information")
+    @GetMapping("/get_identity_information")
 	@Override
 	public IdentityData getIdentityInformation(String targetIdentity) {
 		// TODO Auto-generated method stub
 		return store.getIdentityInformation(targetIdentity);
 	}
-	@Override
+    @GetMapping("/refuse_claim")
+   	@Override
 	public void refuseClaim(String identity, String orderId) {
 		store.refuseClaim(identity, orderId);
 		

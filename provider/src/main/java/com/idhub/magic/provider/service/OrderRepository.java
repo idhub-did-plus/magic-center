@@ -61,7 +61,22 @@ public class OrderRepository {
 
 	public void drop(String orderId) {
 		  Query<ProviderOrder> q = ds.find(ProviderOrder.class, "id", orderId);
+		  ProviderOrder order = q.get();
+		  if(!order.getState().equals(ProviderOrderState.unreceived))
+			  throw new RuntimeException("order cant be dropped after receiption");
 		  UpdateOperations<ProviderOrder> operations = ds.createUpdateOperations(ProviderOrder.class).set("state", ProviderOrderState.dropped);
+		  ds.update(q, operations);
+		
+	}
+
+	public void refuseClaim(String orderId) {
+		 Query<ProviderOrder> q = ds.find(ProviderOrder.class, "id", orderId);
+		  ProviderOrder order = q.get();
+		  if(!order.getState().equals(ProviderOrderState.processing))
+			  throw new RuntimeException("Invalid order state!");
+		  String providerIdentity = AccountManager.getMyAccount().getAddress();
+		  fac.getOrderBook().refuseClaim(providerIdentity, orderId);
+		  UpdateOperations<ProviderOrder> operations = ds.createUpdateOperations(ProviderOrder.class).set("state", ProviderOrderState.refused);
 		  ds.update(q, operations);
 		
 	}
