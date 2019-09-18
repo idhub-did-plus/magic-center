@@ -82,8 +82,7 @@ public class OrderRepository {
 	}
 
 	public void issueClaim(String orderId) {
-		// TODO Auto-generated method stub
-		
+				
 	}
 	
 }
