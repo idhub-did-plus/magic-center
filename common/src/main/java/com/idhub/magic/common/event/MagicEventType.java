@@ -1,4 +1,4 @@
-package com.idhub.magic.center.event;
+package com.idhub.magic.common.event;
 
 public enum MagicEventType {
 	chain_event,

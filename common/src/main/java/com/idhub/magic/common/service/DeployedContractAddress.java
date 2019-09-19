@@ -1,4 +1,4 @@
-package com.idhub.magic.center.service;
+package com.idhub.magic.common.service;
 
 public interface DeployedContractAddress {
 	static public  final String IdentityRegistryInterface = "0xcba0524dd4391588091E57A64F6d145D92016e6F";

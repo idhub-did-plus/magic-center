@@ -10,14 +10,14 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.idhub.magic.center.parameter.MagicResponse;
-import com.idhub.magic.center.ustorage.entity.FinancialProfile;
-import com.idhub.magic.center.ustorage.entity.IdentityArchive;
-import com.idhub.magic.center.ustorage.entity.IdentityInfo;
-import com.idhub.magic.center.ustorage.entity.Material;
 import com.idhub.magic.clientlib.ApiFactory;
 import com.idhub.magic.clientlib.ProviderFactory;
 import com.idhub.magic.clientlib.interfaces.IdentityStorage;
+import com.idhub.magic.common.parameter.MagicResponse;
+import com.idhub.magic.common.ustorage.entity.FinancialProfile;
+import com.idhub.magic.common.ustorage.entity.IdentityArchive;
+import com.idhub.magic.common.ustorage.entity.IdentityInfo;
+import com.idhub.magic.common.ustorage.entity.Material;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;

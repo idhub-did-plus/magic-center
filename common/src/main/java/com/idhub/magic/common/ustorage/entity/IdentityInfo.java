@@ -1,9 +1,9 @@
-package com.idhub.magic.center.ustorage.entity;
+package com.idhub.magic.common.ustorage.entity;
 
 import java.util.Date;
 
-import com.idhub.magic.center.ustorage.entity.component.Address;
-import com.idhub.magic.center.ustorage.entity.component.Name;
+import com.idhub.magic.common.ustorage.entity.component.Address;
+import com.idhub.magic.common.ustorage.entity.component.Name;
 
 public class IdentityInfo {
 /*	填入基本身份信息，包括

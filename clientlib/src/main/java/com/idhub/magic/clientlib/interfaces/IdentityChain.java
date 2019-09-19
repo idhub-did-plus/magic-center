@@ -2,7 +2,7 @@ package com.idhub.magic.clientlib.interfaces;
 
 import java.util.List;
 
-import com.idhub.magic.center.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
+import com.idhub.magic.common.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
 
 public interface IdentityChain {
 	Listen<IdentityCreatedEventResponse> createIdentity();

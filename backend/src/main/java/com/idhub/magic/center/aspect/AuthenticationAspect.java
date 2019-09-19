@@ -13,8 +13,8 @@ import org.springframework.context.annotation.Configuration;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.idhub.magic.center.util.AuthenticationUtils;
-import com.idhub.magic.center.util.Signature;
+import com.idhub.magic.common.util.AuthenticationUtils;
+import com.idhub.magic.common.util.Signature;
 
 @Aspect
 @Configuration

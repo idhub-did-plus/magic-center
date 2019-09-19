@@ -1,4 +1,4 @@
-package com.idhub.magic.center.util;
+package com.idhub.magic.common.util;
 
 public class Signature {
 	public Signature() {

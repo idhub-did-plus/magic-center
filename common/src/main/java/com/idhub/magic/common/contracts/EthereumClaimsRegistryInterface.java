@@ -1,4 +1,4 @@
-package com.idhub.magic.center.contracts;
+package com.idhub.magic.common.contracts;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

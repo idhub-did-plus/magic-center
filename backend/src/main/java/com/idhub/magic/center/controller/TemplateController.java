@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.idhub.magic.center.parameter.MagicResponse;
-import com.idhub.magic.center.service.TemplateData;
-import com.idhub.magic.center.ustorage.entity.component.AddressElement;
+import com.idhub.magic.common.parameter.MagicResponse;
+import com.idhub.magic.common.service.TemplateData;
+import com.idhub.magic.common.ustorage.entity.component.AddressElement;
 
 @RestController
 @RequestMapping("/template")

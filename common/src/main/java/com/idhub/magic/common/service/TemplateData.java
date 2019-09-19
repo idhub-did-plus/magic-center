@@ -1,10 +1,10 @@
-package com.idhub.magic.center.service;
+package com.idhub.magic.common.service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.idhub.magic.center.ustorage.entity.component.AddressElement;
+import com.idhub.magic.common.ustorage.entity.component.AddressElement;
 
 public class TemplateData {
 	

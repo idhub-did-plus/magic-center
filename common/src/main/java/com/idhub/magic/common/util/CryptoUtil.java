@@ -1,4 +1,4 @@
-package com.idhub.magic.center.util;
+package com.idhub.magic.common.util;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;

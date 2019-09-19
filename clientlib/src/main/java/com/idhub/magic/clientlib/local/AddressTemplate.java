@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.idhub.magic.center.service.TemplateData;
-import com.idhub.magic.center.ustorage.entity.component.AddressElement;
 import com.idhub.magic.clientlib.ApiFactory;
 import com.idhub.magic.clientlib.ProviderFactory;
+import com.idhub.magic.common.service.TemplateData;
+import com.idhub.magic.common.ustorage.entity.component.AddressElement;
 
 public class AddressTemplate {
 	static TemplateData data;

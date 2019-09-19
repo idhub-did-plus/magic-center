@@ -1,4 +1,4 @@
-package com.idhub.magic.center.ustorage.entity.component;
+package com.idhub.magic.common.ustorage.entity.component;
 
 public class Name {
 	String firstName;

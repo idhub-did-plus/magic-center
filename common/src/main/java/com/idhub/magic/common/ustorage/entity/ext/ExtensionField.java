@@ -1,4 +1,4 @@
-package com.idhub.magic.center.ustorage.entity.ext;
+package com.idhub.magic.common.ustorage.entity.ext;
 
 public class ExtensionField {
 	public String name;

@@ -10,8 +10,8 @@ import org.web3j.crypto.Credentials;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.idhub.magic.center.util.AuthenticationUtils;
-import com.idhub.magic.center.util.Signature;
+import com.idhub.magic.common.util.AuthenticationUtils;
+import com.idhub.magic.common.util.Signature;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;

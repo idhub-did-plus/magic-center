@@ -8,8 +8,6 @@ import java.util.concurrent.CompletableFuture;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tuples.generated.Tuple4;
 
-import com.idhub.magic.center.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
-import com.idhub.magic.center.service.DeployedContractAddress;
 import com.idhub.magic.clientlib.ProviderFactory;
 import com.idhub.magic.clientlib.interfaces.ExceptionListener;
 import com.idhub.magic.clientlib.interfaces.Identity;
@@ -17,6 +15,8 @@ import com.idhub.magic.clientlib.interfaces.IdentityChain;
 import com.idhub.magic.clientlib.interfaces.IdentityChainViewer;
 import com.idhub.magic.clientlib.interfaces.Listen;
 import com.idhub.magic.clientlib.interfaces.ResultListener;
+import com.idhub.magic.common.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
+import com.idhub.magic.common.service.DeployedContractAddress;
 
 public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 

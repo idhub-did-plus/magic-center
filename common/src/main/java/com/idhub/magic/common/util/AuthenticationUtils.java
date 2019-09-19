@@ -1,4 +1,4 @@
-package com.idhub.magic.center.util;
+package com.idhub.magic.common.util;
 
 import java.security.SignatureException;
 import java.util.Base64;

@@ -1,4 +1,4 @@
-package com.idhub.magic.center.parameter;
+package com.idhub.magic.common.parameter;
 
 public class MagicResponse<T> {
 	

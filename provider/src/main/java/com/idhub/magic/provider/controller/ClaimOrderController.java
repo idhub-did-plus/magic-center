@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.idhub.magic.center.parameter.MagicResponse;
+import com.idhub.magic.common.parameter.MagicResponse;
 import com.idhub.magic.provider.kyc.idmind.Interaction;
 import com.idhub.magic.provider.model.IdentityEntity;
 import com.idhub.magic.provider.model.ProviderOrder;

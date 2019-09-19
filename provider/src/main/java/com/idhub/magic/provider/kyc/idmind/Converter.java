@@ -1,6 +1,6 @@
 package com.idhub.magic.provider.kyc.idmind;
 
-import com.idhub.magic.center.ustorage.entity.IdentityArchive;
+import com.idhub.magic.common.ustorage.entity.IdentityArchive;
 import com.idhub.magic.provider.kyc.idmind.entity.consumer.ConsumerKycRequest;
 
 public class Converter {

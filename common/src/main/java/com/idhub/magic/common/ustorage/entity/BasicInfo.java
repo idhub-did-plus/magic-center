@@ -1,4 +1,4 @@
-package com.idhub.magic.center.ustorage.entity;
+package com.idhub.magic.common.ustorage.entity;
 
 public class BasicInfo {
 /*	地址，地址/Address，需上传住址证明照片Proof of Address（图片或PDF）

@@ -2,8 +2,8 @@ package com.idhub.magic.provider;
 
 import java.util.List;
 
-import com.idhub.magic.center.ustorage.entity.IdentityArchive;
-import com.idhub.magic.center.ustorage.entity.Material;
+import com.idhub.magic.common.ustorage.entity.IdentityArchive;
+import com.idhub.magic.common.ustorage.entity.Material;
 
 public class IdentityData {
 

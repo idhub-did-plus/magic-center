@@ -22,10 +22,11 @@ import org.web3j.tx.gas.DefaultGasProvider;
 import org.web3j.utils.Convert;
 
 import com.idhub.magic.center.account.AccountManager;
-import com.idhub.magic.center.contracts.ERC1056ResolverInterface;
-import com.idhub.magic.center.contracts.EthereumClaimsRegistryInterface;
-import com.idhub.magic.center.contracts.EthereumDIDRegistryInterface;
-import com.idhub.magic.center.contracts.IdentityRegistryInterface;
+import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
+import com.idhub.magic.common.contracts.EthereumClaimsRegistryInterface;
+import com.idhub.magic.common.contracts.EthereumDIDRegistryInterface;
+import com.idhub.magic.common.contracts.IdentityRegistryInterface;
+import com.idhub.magic.common.service.DeployedContractAddress;
 
 @Service
 public class ContractManager {
