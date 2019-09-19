@@ -6,12 +6,13 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-import com.idhub.magic.center.contracts.ERC1056ResolverInterface;
-import com.idhub.magic.center.contracts.IdentityRegistryInterface;
+
 import com.idhub.magic.clientlib.parameter.AddAssociatedAddressParam;
 import com.idhub.magic.clientlib.parameter.InitializeIdentityParam;
 import com.idhub.magic.clientlib.parameter.RecoveryIdentityParam;
 import com.idhub.magic.clientlib.parameter.ResetIdentityParam;
+import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
+import com.idhub.magic.common.contracts.IdentityRegistryInterface;
 import io.reactivex.Observable;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tuples.generated.Tuple4;
@@ -123,7 +124,7 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
     }
 
     @Override
-    public Listen<IdentityRegistryInterface.RecoveryTriggeredEventResponse> recoveryIdentity(String ein,String newAssociationAddress) {
+    public Listen<IdentityRegistryInterface.RecoveryTriggeredEventResponse> recoveryIdentity(String ein, String newAssociationAddress) {
         RecoveryIdentityParam recoveryIdentityParam = new RecoveryIdentityParam();
         recoveryIdentityParam.ein = new BigInteger(ein);
         recoveryIdentityParam.newAssociationAddress = newAssociationAddress;

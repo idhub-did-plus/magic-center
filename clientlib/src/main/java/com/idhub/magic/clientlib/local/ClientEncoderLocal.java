@@ -1,12 +1,12 @@
 package com.idhub.magic.clientlib.local;
 
-import com.idhub.magic.center.service.DeployedContractAddress;
-import com.idhub.magic.center.util.CryptoUtil;
 import com.idhub.magic.clientlib.ProviderFactory;
 import com.idhub.magic.clientlib.parameter.AddAssociatedAddressParam;
 import com.idhub.magic.clientlib.parameter.InitializeIdentityParam;
 import com.idhub.magic.clientlib.parameter.RecoveryIdentityParam;
 import com.idhub.magic.clientlib.parameter.ResetIdentityParam;
+import com.idhub.magic.common.service.DeployedContractAddress;
+import com.idhub.magic.common.util.CryptoUtil;
 import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.Uint;
 import org.web3j.crypto.Credentials;
