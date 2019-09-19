@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.idhub.magic.center.entity.OrderEntity;
 import com.idhub.magic.center.entity.OrderState;
-import com.idhub.magic.center.ustorage.entity.Material;
+import com.idhub.magic.common.ustorage.entity.Material;
 import com.idhub.magic.provider.IdentityData;
 import com.idhub.magic.provider.Order;
 import com.idhub.magic.provider.interfaces.OrderBook;
@@ -22,6 +22,7 @@ import com.idhub.magic.verifiablecredentials.VerifiableCredential;
 @Service
 public class OrderBookService implements OrderBook{
 	@Autowired Datastore ds;
+	@Autowired VerifiableCredentialService vcService;
 	@Override
 	public List<Order> tome(String providerIdentity) {
 		List<OrderEntity> es = ds.createQuery(OrderEntity.class).field("directTo").equal(providerIdentity).field("state").equal(OrderState.waiting.name()).asList();
@@ -47,14 +48,20 @@ public class OrderBookService implements OrderBook{
 	}
 
 	@Override
-	public void issueClaim(String identity,VerifiableCredential credential) {
-		
+	public void issueClaim(String identity,String orderId, VerifiableCredential credential) {
+		vcService.store(credential);
 	}
 
 	@Override
 	public IdentityData getIdentityInformation(String targetIdentity) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void refuseClaim(String identity, String orderId) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

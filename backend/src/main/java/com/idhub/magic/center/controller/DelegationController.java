@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
-import com.idhub.magic.center.parameter.CreateIdentityDelegatedParam;
-import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.center.service.DelegationService;
+import com.idhub.magic.common.parameter.CreateIdentityDelegatedParam;
+import com.idhub.magic.common.parameter.MagicResponse;
 
 @RestController
 @RequestMapping("/delegation")

@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.idhub.magic.center.entity.EventWrapper;
-import com.idhub.magic.center.event.MagicEvent;
-import com.idhub.magic.center.event.MagicEventType;
+import com.idhub.magic.common.event.MagicEvent;
+import com.idhub.magic.common.event.MagicEventType;
 
 @Service
 public class ChainEventStore {

@@ -1,13 +1,8 @@
 package com.idhub.magic.provider.agent;
 
-import java.io.File;
-import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.web3j.crypto.CipherException;
 import org.web3j.crypto.Credentials;
-import org.web3j.crypto.WalletUtils;
 
 public class AccountManager {
 	 private static final Logger log = LoggerFactory.getLogger(AccountManager.class);

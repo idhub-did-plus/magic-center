@@ -1,12 +1,13 @@
 package com.idhub.magic.provider.service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 
@@ -18,8 +19,7 @@ import com.idhub.magic.provider.IdentityData;
 import com.idhub.magic.provider.Order;
 import com.idhub.magic.provider.agent.AccountManager;
 import com.idhub.magic.provider.agent.OrderBookFactory;
-
-import retrofit2.Call;
+import com.idhub.magic.provider.model.IdentityEntity;
 
 @Service
 public class DirectedOrderFecher {
@@ -27,6 +27,7 @@ public class DirectedOrderFecher {
 	@Autowired OrderRepository rep;
 	@Autowired Datastore ds;
 	ScheduledExecutorService pool;
+	Logger logger = Logger.getLogger(DirectedOrderFecher.class.getSimpleName());
 	@PostConstruct
 	void start() {
 		pool = Executors.newScheduledThreadPool(1);
@@ -55,7 +56,8 @@ public class DirectedOrderFecher {
 				
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				logger.log(Level.SEVERE, e.getMessage());
 			}
 			
 

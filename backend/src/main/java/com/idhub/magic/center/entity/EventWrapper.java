@@ -3,7 +3,7 @@ package com.idhub.magic.center.entity;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
-import com.idhub.magic.center.event.MagicEvent;
+import com.idhub.magic.common.event.MagicEvent;
 @Entity
 public class EventWrapper {
 	@Id

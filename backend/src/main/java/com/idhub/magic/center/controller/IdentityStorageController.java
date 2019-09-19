@@ -22,13 +22,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.center.ustorage.IdentityStorage;
 import com.idhub.magic.center.ustorage.MaterialWrapper;
-import com.idhub.magic.center.ustorage.entity.FinancialProfile;
-import com.idhub.magic.center.ustorage.entity.IdentityArchive;
-import com.idhub.magic.center.ustorage.entity.Material;
-import com.idhub.magic.center.ustorage.entity.ext.ExtensionField;
+import com.idhub.magic.common.parameter.MagicResponse;
+import com.idhub.magic.common.ustorage.entity.FinancialProfile;
+import com.idhub.magic.common.ustorage.entity.IdentityArchive;
+import com.idhub.magic.common.ustorage.entity.Material;
+import com.idhub.magic.common.ustorage.entity.ext.ExtensionField;
 
 import static java.util.stream.Collectors.toList;
 @RestController

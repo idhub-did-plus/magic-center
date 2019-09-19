@@ -28,12 +28,12 @@ import org.web3j.utils.Numeric;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.idhub.magic.center.contracts.IdentityRegistryInterface;
-import com.idhub.magic.center.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
 import com.idhub.magic.center.entity.EventWrapper;
-import com.idhub.magic.center.event.MagicEvent;
-import com.idhub.magic.center.event.MagicEventType;
-import com.idhub.magic.center.parameter.CreateIdentityDelegatedParam;
+import com.idhub.magic.common.contracts.IdentityRegistryInterface;
+import com.idhub.magic.common.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
+import com.idhub.magic.common.event.MagicEvent;
+import com.idhub.magic.common.event.MagicEventType;
+import com.idhub.magic.common.parameter.CreateIdentityDelegatedParam;
 
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;

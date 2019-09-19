@@ -1,7 +1,6 @@
 package com.idhub.magic.provider.agent;
 
 import java.io.IOException;
-import java.util.Base64;
 
 import javax.annotation.PostConstruct;
 
@@ -11,16 +10,14 @@ import org.web3j.crypto.Credentials;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.idhub.magic.center.util.AuthenticationUtils;
-import com.idhub.magic.center.util.Signature;
-import com.idhub.magic.provider.kyc.idmind.ConsumerService;
+import com.idhub.magic.common.util.AuthenticationUtils;
+import com.idhub.magic.common.util.Signature;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.Interceptor.Chain;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 @Service

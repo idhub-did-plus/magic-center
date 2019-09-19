@@ -35,12 +35,12 @@ import org.assertj.core.util.Preconditions;
 
 import com.alibaba.fastjson.JSON;
 import com.idhub.magic.center.account.AccountManager;
-import com.idhub.magic.center.contracts.IdentityRegistryInterface;
-import com.idhub.magic.center.parameter.CreateIdentityDelegatedParam;
-import com.idhub.magic.center.service.DeployedContractAddress;
-import com.idhub.magic.center.util.AuthenticationUtils;
-import com.idhub.magic.center.util.CryptoUtil;
-import com.idhub.magic.center.util.Signature;
+import com.idhub.magic.common.contracts.IdentityRegistryInterface;
+import com.idhub.magic.common.parameter.CreateIdentityDelegatedParam;
+import com.idhub.magic.common.service.DeployedContractAddress;
+import com.idhub.magic.common.util.AuthenticationUtils;
+import com.idhub.magic.common.util.CryptoUtil;
+import com.idhub.magic.common.util.Signature;
 
 public class LocalTest {
 

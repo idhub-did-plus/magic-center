@@ -3,11 +3,11 @@ package com.idhub.magic.clientlib.interfaces;
 import java.math.BigInteger;
 import java.util.List;
 
-import com.idhub.magic.center.contracts.ERC1056ResolverInterface;
-import com.idhub.magic.center.contracts.IdentityRegistryInterface;
-import com.idhub.magic.center.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
+
+import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
+import com.idhub.magic.common.contracts.IdentityRegistryInterface;
+import com.idhub.magic.common.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
 import io.reactivex.Observable;
-import org.web3j.protocol.core.methods.response.TransactionReceipt;
 
 public interface IdentityChain {
 	Listen<IdentityCreatedEventResponse> createIdentity();

@@ -3,7 +3,7 @@ package com.idhub.magic.center.ustorage;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
-import com.idhub.magic.center.ustorage.entity.IdentityArchive;
+import com.idhub.magic.common.ustorage.entity.IdentityArchive;
 @Entity
 public class IdentityStorage {
 	@Id

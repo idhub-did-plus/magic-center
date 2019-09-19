@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.idhub.magic.center.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
-import com.idhub.magic.center.event.MagicEvent;
-import com.idhub.magic.center.event.MagicEventType;
-import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.center.service.ChainEventStore;
-import com.idhub.magic.center.ustorage.entity.IdentityArchive;
-import com.idhub.magic.center.ustorage.entity.Material;
+import com.idhub.magic.common.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
+import com.idhub.magic.common.event.MagicEvent;
+import com.idhub.magic.common.event.MagicEventType;
+import com.idhub.magic.common.parameter.MagicResponse;
+import com.idhub.magic.common.ustorage.entity.IdentityArchive;
+import com.idhub.magic.common.ustorage.entity.Material;
 
 @RestController
 @RequestMapping("/event")

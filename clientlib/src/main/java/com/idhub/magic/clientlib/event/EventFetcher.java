@@ -8,12 +8,12 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.idhub.magic.center.event.MagicEvent;
-import com.idhub.magic.center.parameter.MagicResponse;
 import com.idhub.magic.clientlib.ProviderFactory;
 import com.idhub.magic.clientlib.http.RetrofitAccessor;
 import com.idhub.magic.clientlib.interfaces.EventListenerService;
 import com.idhub.magic.clientlib.interfaces.EventService;
+import com.idhub.magic.common.event.MagicEvent;
+import com.idhub.magic.common.parameter.MagicResponse;
 
 
 public class EventFetcher implements EventListenerService {
