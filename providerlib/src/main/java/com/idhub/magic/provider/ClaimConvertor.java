@@ -1,6 +1,5 @@
 package com.idhub.magic.provider;
 
-import static org.junit.Assert.assertEquals;
 
 import java.net.URI;
 import java.net.URISyntaxException;
