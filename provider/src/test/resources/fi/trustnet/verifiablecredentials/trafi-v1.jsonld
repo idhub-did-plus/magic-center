@@ -1,0 +1,9 @@
+{
+  "@context": {
+    "id": "@id",
+    "type": "@type",
+
+    "trafi": "https://trafi.fi/credentials#",
+    "claimType": "trafi:claimType"
+  }
+}

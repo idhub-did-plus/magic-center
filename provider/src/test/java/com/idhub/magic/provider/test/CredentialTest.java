@@ -29,8 +29,8 @@ import com.idhub.magic.verifiablecredentials.VerifiableCredential;
 public class CredentialTest {
 	static public void main(String[] ss) throws Exception {
 		VerifiableClaim claim = new VerifiableClaim();
-		//String[] cs = new String[] {"https://trafi.fi/credentials/v1"};
-		//claim.getContext().addAll(Arrays.asList(cs));
+		String[] cs = new String[] {"https://trafi.fi/credentials/v1"};
+		claim.getContext().addAll(Arrays.asList(cs));
 		claim.getClaim().setId("did:sov:21tDAKCERh95uGgKbJNHYp");
 		claim.getClaim().setClaimType("driver");
 		claim.setIssued("2018-01-01");
