@@ -16,26 +16,24 @@ import org.web3j.utils.Numeric;
 
 import java.math.BigInteger;
 
-public class ClientLocalEncoder {
+public class ClientEncoderLocal {
 
     public static RecoveryIdentityParam recoveryIdentityEncoder(RecoveryIdentityParam param) {
 
         Address contract = new Address(DeployedContractAddress.IdentityRegistryInterface);
-        Uint ein = new Uint(param.ein);
-        Uint timestamp = new Uint(param.timestamp);
         Address newAssociatedAddress = new Address(param.newAssociationAddress);
 
         byte[] hexMessage = CryptoUtil.encodePacked(
                 (byte) 0x19, (byte) 0, contract,
                 "I authorize being added to this Identity via recovery.",
-                ein, newAssociatedAddress, timestamp);
+                param.ein, newAssociatedAddress, param.timestamp);
 
         Credentials credentials = ProviderFactory.getProvider().getDefaultCredentials();
         ECKeyPair pair = credentials.getEcKeyPair();
         Sign.SignatureData sm = Sign.signMessage(hexMessage, pair);
         param.r = sm.getR();
         param.s = sm.getS();
-        param.v = new BigInteger(sm.getV());
+        param.v =new BigInteger(String.valueOf(sm.getV()));
         return param;
     }
 
@@ -43,21 +41,19 @@ public class ClientLocalEncoder {
     public static AddAssociatedAddressParam addAssociatedAddressEncoder(AddAssociatedAddressParam addAssociatedAddressParam) {
 
         Address contract = new Address(DeployedContractAddress.IdentityRegistryInterface);
-        Uint ein = new Uint(addAssociatedAddressParam.ein);
-        Uint timestamp = new Uint(addAssociatedAddressParam.timestamp);
         Address addressToAdd = new Address(addAssociatedAddressParam.addressToAdd);
 
         byte[] encodeMessage = CryptoUtil.encodePacked(
                 (byte) 0x19, (byte) 0, contract,
                 "I authorize being added to this Identity.",
-                ein, addressToAdd, timestamp);
+                addAssociatedAddressParam.ein, addressToAdd, addAssociatedAddressParam.timestamp);
 
         Credentials credentials = ProviderFactory.getProvider().getDefaultCredentials();
         ECKeyPair pair = credentials.getEcKeyPair();
         Sign.SignatureData sm = Sign.signMessage(encodeMessage, pair);
         addAssociatedAddressParam.r = sm.getR();
         addAssociatedAddressParam.s = sm.getS();
-        addAssociatedAddressParam.v = new BigInteger(sm.getV());
+        addAssociatedAddressParam.v = new BigInteger(String.valueOf(sm.getV()));
         return addAssociatedAddressParam;
     }
 
@@ -73,7 +69,7 @@ public class ClientLocalEncoder {
         Sign.SignatureData sm = Sign.signMessage(encodeMessage, pair);
         initializeIdentityParam.r = sm.getR();
         initializeIdentityParam.s = sm.getS();
-        initializeIdentityParam.v = new BigInteger(sm.getV());
+        initializeIdentityParam.v = new BigInteger(String.valueOf(sm.getV()));
         return initializeIdentityParam;
     }
 
@@ -89,7 +85,7 @@ public class ClientLocalEncoder {
         Sign.SignatureData sm = Sign.signMessage(encodeMessage, pair);
         resetIdentityParam.r = sm.getR();
         resetIdentityParam.s = sm.getS();
-        resetIdentityParam.v = new BigInteger(sm.getV());
+        resetIdentityParam.v = new BigInteger(String.valueOf(sm.getV()));
         return resetIdentityParam;
     }
 

@@ -2,7 +2,7 @@ package com.idhub.magic.clientlib.parameter;
 
 import java.math.BigInteger;
 
-public class InitializeIdentityParam {
+public class ResetIdentityParam {
 
     public String identity;
     public BigInteger noce;
