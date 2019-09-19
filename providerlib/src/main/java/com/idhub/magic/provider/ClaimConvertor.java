@@ -2,22 +2,13 @@ package com.idhub.magic.provider;
 
 
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.security.KeyFactory;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import com.github.jsonldjava.utils.JsonUtils;
 import com.idhub.magic.common.claim.Claim;
 import com.idhub.magic.common.claim.Signature;
 import com.idhub.magic.common.claim.VerifiableClaim;
-
 import com.idhub.magic.ldsignatures.LdSignature;
-import com.idhub.magic.ldsignatures.signer.EcdsaKoblitzSignature2016LdSigner;
-import com.idhub.magic.ldsignatures.signer.RsaSignature2018LdSigner;
-import com.idhub.magic.ldsignatures.suites.SignatureSuites;
 import com.idhub.magic.verifiablecredentials.VerifiableCredential;
 
 
