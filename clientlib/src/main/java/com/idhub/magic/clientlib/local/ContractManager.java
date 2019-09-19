@@ -61,7 +61,12 @@ public class ContractManager {
         );
     
     }
-    
+
+    static public EthereumDIDRegistryInterface getRegistry1056() {
+        return registry1056;
+    }
+
+
     static public EthereumClaimsRegistryInterface getRegistry780() {
 		return registry780;
 	}

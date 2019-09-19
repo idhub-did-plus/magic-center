@@ -64,28 +64,28 @@ public class TransactionSession {
 		List<Tx> incomingTxs(String address){
 	    	 
 	    	   List<Tx> txs = api.account().txs(address,start, end);
-	    	   List<Tx> rst = new ArrayList<Tx>();
-	    	  
-	    	   for(Tx t : txs) {
-	    		 
-	    		  if( t.getTo().equals(address)){
-	    			   rst.add(t);
-	    		   }
-	    	   }
-	    	   return rst;
+//	    	   List<Tx> rst = new ArrayList<Tx>();
+//
+//	    	   for(Tx t : txs) {
+//
+//	    		  if( t.getTo().equals(address)){
+//	    			   rst.add(t);
+//	    		   }
+//	    	   }
+	    	   return txs;
 	      }
 		List<TxToken> incomingTokens(String address){
 	    	 
 	    	    List<TxToken> es = api.account().txsToken(address, start, end);
-	    	   List<TxToken> rst = new ArrayList<TxToken>();
-	    	  
-	    	   for(TxToken t : es) {
-	    		 
-	    		  if( t.getTo().equals(address)){
-	    			   rst.add(t);
-	    		   }
-	    	   }
-	    	   return rst;
+//	    	   List<TxToken> rst = new ArrayList<TxToken>();
+//
+//	    	   for(TxToken t : es) {
+//
+//	    		  if( t.getTo().equals(address)){
+//	    			   rst.add(t);
+//	    		   }
+//	    	   }
+	    	   return es;
 	      }
 		
 }
