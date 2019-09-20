@@ -124,11 +124,12 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
     }
 
     @Override
-    public Listen<IdentityRegistryInterface.RecoveryTriggeredEventResponse> recoveryIdentity(String ein, String newAssociationAddress) {
+    public Listen<IdentityRegistryInterface.RecoveryTriggeredEventResponse> recoveryIdentity(String ein, String newAssociationAddress, String privateKey) {
         RecoveryIdentityParam recoveryIdentityParam = new RecoveryIdentityParam();
         recoveryIdentityParam.ein = new BigInteger(ein);
+        recoveryIdentityParam.privateKey = privateKey;
         recoveryIdentityParam.newAssociationAddress = newAssociationAddress;
-        recoveryIdentityParam.timestamp =  BigInteger.valueOf(System.currentTimeMillis() / 1000);
+        recoveryIdentityParam.timestamp = BigInteger.valueOf(System.currentTimeMillis() / 1000);
         RecoveryIdentityParam param = ClientEncoderLocal.recoveryIdentityEncoder(recoveryIdentityParam);
         CompletableFuture<TransactionReceipt> future = ContractManager.getRegistry1484().triggerRecovery(param.ein, param.newAssociationAddress, param.v, param.r, param.s, param.timestamp).sendAsync();
 
@@ -148,12 +149,13 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
     }
 
     @Override
-    public Listen<IdentityRegistryInterface.AssociatedAddressAddedEventResponse> addAssociatedAddress(BigInteger ein, String approvingAddress, String addressToAdd) {
+    public Listen<IdentityRegistryInterface.AssociatedAddressAddedEventResponse> addAssociatedAddress(BigInteger ein, String approvingAddress, String addressToAdd, String privateKey) {
         AddAssociatedAddressParam addAssociatedAddressParam = new AddAssociatedAddressParam();
         addAssociatedAddressParam.addressToAdd = addressToAdd;
         addAssociatedAddressParam.ein = ein;
+        addAssociatedAddressParam.privateKey = privateKey;
         addAssociatedAddressParam.approvingAddress = approvingAddress;
-        addAssociatedAddressParam.timestamp =  BigInteger.valueOf(System.currentTimeMillis() / 1000);
+        addAssociatedAddressParam.timestamp = BigInteger.valueOf(System.currentTimeMillis() / 1000);
         AddAssociatedAddressParam param = ClientEncoderLocal.addAssociatedAddressEncoder(addAssociatedAddressParam);
 
         CompletableFuture<TransactionReceipt> future = ContractManager.getRegistry1484().addAssociatedAddress(param.approvingAddress, param.addressToAdd, param.v, param.r, param.s, param.timestamp).sendAsync();
@@ -174,9 +176,10 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
     }
 
     @Override
-    public Observable<ERC1056ResolverInterface.IdentityResetedEventResponse> reset(String newIdentity) {
-      return  Observable.create(observableEmitter -> {
+    public Observable<ERC1056ResolverInterface.IdentityResetedEventResponse> reset(String newIdentity, String privateKey) {
+        return Observable.create(observableEmitter -> {
             ResetIdentityParam resetIdentityParam = new ResetIdentityParam();
+            resetIdentityParam.privateKey = privateKey;
             resetIdentityParam.identity = newIdentity;
             String identityOwner = ContractManager.getRegistry1056().identityOwner(newIdentity).send();
             resetIdentityParam.noce = ContractManager.getRegistry1056().nonce(identityOwner).send();

@@ -4,6 +4,7 @@ import java.math.BigInteger;
 
 public class RecoveryIdentityParam {
     public BigInteger ein;
+    public String privateKey;
     public String newAssociationAddress;
     public BigInteger v;
     public byte[] r;

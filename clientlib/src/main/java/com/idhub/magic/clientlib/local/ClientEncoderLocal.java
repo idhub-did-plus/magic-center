@@ -28,7 +28,7 @@ public class ClientEncoderLocal {
                 "I authorize being added to this Identity via recovery.",
                 param.ein, newAssociatedAddress, param.timestamp);
 
-        Credentials credentials = ProviderFactory.getProvider().getDefaultCredentials();
+        Credentials credentials =Credentials.create(param.privateKey);
         ECKeyPair pair = credentials.getEcKeyPair();
         Sign.SignatureData sm = Sign.signMessage(hexMessage, pair);
         param.r = sm.getR();
@@ -48,7 +48,7 @@ public class ClientEncoderLocal {
                 "I authorize being added to this Identity.",
                 addAssociatedAddressParam.ein, addressToAdd, addAssociatedAddressParam.timestamp);
 
-        Credentials credentials = ProviderFactory.getProvider().getDefaultCredentials();
+        Credentials credentials = Credentials.create(addAssociatedAddressParam.privateKey);
         ECKeyPair pair = credentials.getEcKeyPair();
         Sign.SignatureData sm = Sign.signMessage(encodeMessage, pair);
         addAssociatedAddressParam.r = sm.getR();
@@ -80,7 +80,7 @@ public class ClientEncoderLocal {
         byte[] encodeMessage = CryptoUtil.encodePacked(
                 (byte) 0x19, (byte) 0, ethereumDIDRegistryContract, resetIdentityParam.noce, identityAddress, "changeOwner", contract);
 
-        Credentials credentials = ProviderFactory.getProvider().getDefaultCredentials();
+        Credentials credentials = Credentials.create(resetIdentityParam.privateKey);
         ECKeyPair pair = credentials.getEcKeyPair();
         Sign.SignatureData sm = Sign.signMessage(encodeMessage, pair);
         resetIdentityParam.r = sm.getR();
