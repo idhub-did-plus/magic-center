@@ -2,78 +2,42 @@ package com.idhub.magic.center.util;
 
 import java.io.Serializable;
 import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
+import java.security.interfaces.ECPrivateKey;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.util.Base64;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.idhub.magic.center.account.AccountManager;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class JwtTokenUtil implements Serializable {
 	private static final long serialVersionUID = -2550185165626007488L;
 	public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
-	public String getUsernameFromToken(String token) {
-		return getClaimFromToken(token, Claims::getSubject);
-	}
-
-//retrieve expiration date from jwt token
-	public Date getExpirationDateFromToken(String token) {
-		return getClaimFromToken(token, Claims::getExpiration);
-	}
-
-	public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
-		final Claims claims = getAllClaimsFromToken(token);
-		return claimsResolver.apply(claims);
-	}
-
-	// for retrieveing any information from token we will need the secret key
-	private Claims getAllClaimsFromToken(String token) {
-		return Jwts.parser().parseClaimsJws(token).getBody();
-	}
-
-//check if the token has expired
-	private Boolean isTokenExpired(String token) {
-		final Date expiration = getExpirationDateFromToken(token);
-		return expiration.before(new Date());
-	}
-
-//while creating the token -
-//1. Define  claims of the token, like Issuer, Expiration, Subject, and the ID
-//2. Sign the JWT using the HS512 algorithm and secret key.
-//3. According to JWS Compact Serialization(https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-41#section-3.1)
-//   compaction of the JWT to a URL-safe string 
-	static private String doGenerateToken(String subject, String secret) {
-		return Jwts.builder().setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
-				.signWith(SignatureAlgorithm.ES256, secret).compact();
-	}
-
-//validate token
-	public Boolean validateToken(String token) {
-		final String username = getUsernameFromToken(token);
-		return false;
-	}
-
+	
 	static public void main(String[] ss) throws Exception {
-		Date now = new Date();
-		byte[] keyBytes = AccountManager.getClient().getEcKeyPair().getPrivateKey().toByteArray();
-		JwtBuilder jwtBuilder = Jwts.builder().setIssuedAt(now).setExpiration(now).setAudience("lll");
-		PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
-		KeyFactory kf = KeyFactory.getInstance("ES256");
-		String jwt = jwtBuilder.signWith(SignatureAlgorithm.ES256, kf.generatePrivate(spec)).compact();
-		System.out.println(jwt);
+		
+		 byte[] pk = AccountManager.getClient().getEcKeyPair().getPrivateKey().toByteArray();
+		 KeyFactory kf = KeyFactory.getInstance("EC256"); // or "EC" or whatever
+		 ECPrivateKey privateKey = (ECPrivateKey) kf.generatePrivate(new PKCS8EncodedKeySpec(pk));
+		    Algorithm algorithmHS = Algorithm.ECDSA256(null, privateKey);
+		    String token = JWT.create()
+		        .withSubject("")
+		        .withExpiresAt(new Date())
+		        .withNotBefore(new Date())
+		        .withIssuer("issuer")
+		        .withClaim("roles", "b")
+		        .withClaim("keys", "b")
+		        .sign(algorithmHS);
+		
+		
+		
+		
+		
+		System.out.println(token);
 	}
 }
