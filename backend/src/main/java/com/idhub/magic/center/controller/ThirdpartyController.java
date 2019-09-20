@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
@@ -41,8 +42,9 @@ import static java.util.stream.Collectors.toList;
 public class ThirdpartyController {
 	@Autowired Datastore store;
 	
-	@GetMapping("/identity_information")
-	public MagicResponse<IdentityInformation> retrieveArchive(String identity) {
+	@PostMapping("/identity_information")
+	public MagicResponse<IdentityInformation> retrieveArchive(@RequestBody String jwt, String identity) {
+		validate(jwt);
 		IdentityStorage st = store.find(IdentityStorage.class, "id", identity).get();
 		Query<MaterialWrapper> query = store.find(MaterialWrapper.class, "material.identity", identity);
 		List<MaterialWrapper> data = query.asList();
@@ -53,6 +55,20 @@ public class ThirdpartyController {
 		List<String> ld = cdata.stream().map(ClaimEntity::getClaimJsonld).collect(toList());
 		return new MagicResponse<IdentityInformation>(new IdentityInformation(st.getIdentityArchive(), mdata, ld));
 	}
+
+	private void validate(String jwt) {
+		String[] hps = jwt.split("\\.");
+		for(int i = 0; i < hps.length; i++) {
+			hps[i] = new String(Base64.encodeBase64URLSafe(hps[i].getBytes()));
+		}
+		String header = hps[0];
+		String payload = hps[1];
+		String signature = hps[2];
+		
+		
+		
+	}
+	
 
 	
 }
