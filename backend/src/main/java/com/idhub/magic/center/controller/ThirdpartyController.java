@@ -57,13 +57,16 @@ public class ThirdpartyController {
 	}
 
 	private void validate(String jwt) {
-		String[] hps = jwt.split("\\.");
-		for(int i = 0; i < hps.length; i++) {
-			hps[i] = new String(Base64.encodeBase64URLSafe(hps[i].getBytes()));
+		String[] hpse = jwt.split("\\.");
+		String[] hps = new String[hpse.length];
+		for(int i = 0; i < hpse.length; i++) {
+			hps[i] = new String(Base64.encodeBase64URLSafe(hpse[i].getBytes()));
 		}
+		String plain = hpse[0] + "." + hpse[1];
 		String header = hps[0];
 		String payload = hps[1];
 		String signature = hps[2];
+		
 		
 		
 		
