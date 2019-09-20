@@ -12,4 +12,43 @@ public class BasicInfo {
 	String taxId;
 	String ssn;
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPofImage() {
+		return pofImage;
+	}
+
+	public void setPofImage(String pofImage) {
+		this.pofImage = pofImage;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTaxId() {
+		return taxId;
+	}
+
+	public void setTaxId(String taxId) {
+		this.taxId = taxId;
+	}
+
+	public String getSsn() {
+		return ssn;
+	}
+
+	public void setSsn(String ssn) {
+		this.ssn = ssn;
+	}
 }

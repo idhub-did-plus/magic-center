@@ -27,6 +27,9 @@ public class IdentityInfo {
 	String idcardImage;
 	String passportNumber;
 	String passportImage;
+	String phoneNumber;
+	String gender;
+
 	public Date getBirthday() {
 		return birthday;
 	}
@@ -85,5 +88,20 @@ public class IdentityInfo {
 	public void setResidenceCountry(String residenceCountry) {
 		this.residenceCountry = residenceCountry;
 	}
-	
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 }
