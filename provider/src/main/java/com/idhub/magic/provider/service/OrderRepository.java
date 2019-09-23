@@ -45,7 +45,9 @@ public class OrderRepository {
 		
 		 String providerIdentity = AccountManager.getMyAccount().getAddress();
 		 fac.getOrderBook().receive(providerIdentity, orderId);
-		 ProviderOrder order = ds.find(ProviderOrder.class, "id", orderId).get();
+		 Query<ProviderOrder> query = ds.find(ProviderOrder.class, "id", orderId);
+		 
+		 ProviderOrder order =query.get();
 		
 		 IdentityData info;
 		try {
@@ -57,6 +59,8 @@ public class OrderRepository {
 		}
 		IdentityEntity id = new IdentityEntity(info);
 		ds.save(id);
+		UpdateOperations<ProviderOrder> operations = ds.createUpdateOperations(ProviderOrder.class).set("state", ProviderOrderState.processing);
+		  ds.update(query, operations);
 		return id;
 		
 	}
