@@ -4,9 +4,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 
 import org.apache.commons.codec.binary.Base64;
-import org.bitcoinj.core.ECKey;
-import org.bitcoinj.core.Sha256Hash;
-import org.bitcoinj.core.SignatureDecodeException;
+
+import org.web3j.crypto.ECKeyPair;
 
 import com.idhub.magic.ldsignatures.LdSignature;
 import com.idhub.magic.ldsignatures.suites.EcdsaKoblitzSignature2016SignatureSuite;
@@ -14,7 +13,7 @@ import com.idhub.magic.ldsignatures.suites.SignatureSuites;
 
 public class EcdsaKoblitzSignature2016LdValidator extends LdValidator<EcdsaKoblitzSignature2016SignatureSuite> {
 
-	private ECKey publicKey;
+	private 	ECKeyPair keypair;
 
 	public EcdsaKoblitzSignature2016LdValidator() {
 
@@ -25,10 +24,10 @@ public class EcdsaKoblitzSignature2016LdValidator extends LdValidator<EcdsaKobli
 
 		super(SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016);
 
-		this.publicKey = publicKey;
+		this.keypair = publicKey;
 	}
 
-	public static boolean validate(String canonicalizedDocument, LdSignature ldSignature, ECKey publicKey)
+	public static boolean validate(String canonicalizedDocument, LdSignature ldSignature, ECKeyPair publicKey)
 			throws GeneralSecurityException {
 
 		// validate
