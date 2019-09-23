@@ -84,7 +84,7 @@ public class EcdsaKoblitzSignature2016LdSigner extends LdSigner<EcdsaKoblitzSign
 		 ASN1Encodable[] as = p.toArray();
 		 for(ASN1Encodable i  : as) {
 			 ASN1Integer ii = (ASN1Integer)i;
-			byte[] s =  ii.getEncoded();
+			byte[] s =  ii.getEncoded("DER");
 			System.out.println(s);
 		 }
 	}
