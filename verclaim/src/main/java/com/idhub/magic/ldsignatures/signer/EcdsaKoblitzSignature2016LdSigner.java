@@ -1,19 +1,23 @@
 package com.idhub.magic.ldsignatures.signer;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 
-import org.bitcoinj.core.ECKey;
-import org.bitcoinj.core.Sha256Hash;
+import org.bouncycastle.asn1.ASN1Integer;
+import org.bouncycastle.asn1.DERSequenceGenerator;
 import org.jose4j.base64url.internal.apache.commons.codec.binary.Base64;
+import org.web3j.crypto.ECKeyPair;
+import org.web3j.crypto.Sign;
 
 import com.idhub.magic.ldsignatures.suites.EcdsaKoblitzSignature2016SignatureSuite;
 import com.idhub.magic.ldsignatures.suites.SignatureSuites;
 
 public class EcdsaKoblitzSignature2016LdSigner extends LdSigner<EcdsaKoblitzSignature2016SignatureSuite> {
 
-	private ECKey privateKey;
+	private 	ECKeyPair keypair;
 
 	public EcdsaKoblitzSignature2016LdSigner() {
 
@@ -21,19 +25,36 @@ public class EcdsaKoblitzSignature2016LdSigner extends LdSigner<EcdsaKoblitzSign
 	}
 
 	public EcdsaKoblitzSignature2016LdSigner(URI creator, String created, String domain, String nonce,
-			ECKey privateKey) {
+			ECKeyPair kp) {
 
 		super(SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016, creator, created, domain, nonce);
 
-		this.privateKey = privateKey;
+		this.keypair = kp;
 	}
-
-	public static String sign(String canonicalizedDocument, ECKey privateKey) throws GeneralSecurityException {
+	 static  protected ByteArrayOutputStream derByteStream(byte[] r, byte[] s, byte[] v) {
+          try {
+			// Usually 70-72 bytes.
+			  ByteArrayOutputStream bos = new ByteArrayOutputStream(72);
+			  DERSequenceGenerator seq = new DERSequenceGenerator(bos);
+			  seq.addObject(new ASN1Integer(r));
+			  seq.addObject(new ASN1Integer(s));
+			  seq.addObject(new ASN1Integer(v));
+			  seq.close();
+			  return bos;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+      }
+	public static String sign(String canonicalizedDocument, ECKeyPair kp ) throws GeneralSecurityException {
 
 		// sign
 
 		byte[] canonicalizedDocumentBytes = canonicalizedDocument.getBytes(StandardCharsets.UTF_8);
-		byte[] signatureBytes = privateKey.sign(Sha256Hash.of(canonicalizedDocumentBytes)).encodeToDER();
+		Sign.SignatureData signMessage = Sign.signMessage(canonicalizedDocumentBytes, kp);
+		derByteStream(signMessage.getR(), signMessage.getS(), signMessage.getV()).toByteArray();
+		byte[] signatureBytes = derByteStream(signMessage.getR(), signMessage.getS(), signMessage.getV()).toByteArray();
 		String signatureString = Base64.encodeBase64String(signatureBytes);
 
 		// done
@@ -44,20 +65,12 @@ public class EcdsaKoblitzSignature2016LdSigner extends LdSigner<EcdsaKoblitzSign
 	@Override
 	public String sign(String canonicalizedDocument) throws GeneralSecurityException {
 
-		return sign(canonicalizedDocument, this.privateKey);
+		return sign(canonicalizedDocument, this.keypair);
 	}
 
 	/*
 	 * Getters and setters
 	 */
 
-	public ECKey getPrivateKey() {
-
-		return this.privateKey;
-	}
-
-	public void setPrivateKey(ECKey privateKey) {
-
-		this.privateKey = privateKey;
-	}
+	
 }

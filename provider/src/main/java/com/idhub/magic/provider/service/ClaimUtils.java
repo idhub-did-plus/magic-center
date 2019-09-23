@@ -99,6 +99,7 @@ public class ClaimUtils {
 	static public void main(String[] ss) {
 		try {
 		 VerifiableClaimEntity claim = issueClaim("9987778", "hhhh",  "us",  "us");
+		 System.out.println(claim.getJsonld());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

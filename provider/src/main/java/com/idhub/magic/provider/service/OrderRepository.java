@@ -100,10 +100,10 @@ public class OrderRepository {
 		String identity = order.getOrder().identity;
 		String subject = "did:" + "erc1056:" + identity;
 		
-		IdentityData data = ds.find(IdentityData.class, "id", identity).get();
+		IdentityEntity data = ds.find(IdentityEntity.class, "id", identity).get();
 		String claimType = order.getOrder().claimType;
 		try {
-			 VerifiableClaimEntity claim = ClaimUtils.issueClaim(subject, claimType, data.getArchive().getIdentityInfo().getCountry(), "unknown");
+			 VerifiableClaimEntity claim = ClaimUtils.issueClaim(subject, claimType, data.getData().getArchive().getIdentityInfo().getCountry(), "unknown");
 			 ds.save(claim);
 			 fac.getOrderBook().issueClaim(AccountManager.getMyAccount().getAddress(), orderId, claim.getJsonld());
 			 UpdateOperations<ProviderOrder> operations = ds.createUpdateOperations(ProviderOrder.class).set("state", ProviderOrderState.issued.name());
