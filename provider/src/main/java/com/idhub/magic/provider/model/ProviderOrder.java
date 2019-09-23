@@ -28,6 +28,7 @@ public class ProviderOrder {
 		this.order = order;
 		id = order.id;
 		createTime = new Date();
+		state = ProviderOrderState.unreceived.name();
 	}
 	public Date getCreateTime() {
 		return createTime;
