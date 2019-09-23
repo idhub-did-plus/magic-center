@@ -17,6 +17,7 @@ public class MaterialWrapper {
 		super();
 		this.material = material;
 		id = material.getIdentity() + material.getType() + material.getName();
+		
 	}
 	public String getId() {
 		return id;

@@ -36,6 +36,19 @@ public class Material {
 	String identity;
 	String type;
 	String name;
+	String url;
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public byte[] getData() {
+		return data;
+	}
+	public void setData(byte[] data) {
+		this.data = data;
+	}
 	byte[] data;
 	
 
