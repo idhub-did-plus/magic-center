@@ -6,7 +6,11 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 
+import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1Integer;
+import org.bouncycastle.asn1.ASN1Primitive;
+import org.bouncycastle.asn1.ASN1StreamParser;
+import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.DERSequenceGenerator;
 import org.jose4j.base64url.internal.apache.commons.codec.binary.Base64;
 import org.web3j.crypto.ECKeyPair;
@@ -71,6 +75,18 @@ public class EcdsaKoblitzSignature2016LdSigner extends LdSigner<EcdsaKoblitzSign
 	/*
 	 * Getters and setters
 	 */
-
+	static public void main(String[] ss) throws Exception {
+		byte[] data = derByteStream(new byte[] {1,2,3}, new byte[] {3,5,7}, new byte[] {6}).toByteArray();
+		
+		 ASN1StreamParser parser = new ASN1StreamParser(data);
+		 ASN1Encodable hh = parser.readObject();
+		 DERSequence p = (DERSequence) hh.toASN1Primitive();
+		 ASN1Encodable[] as = p.toArray();
+		 for(ASN1Encodable i  : as) {
+			 ASN1Integer ii = (ASN1Integer)i;
+			byte[] s =  ii.getEncoded();
+			System.out.println(s);
+		 }
+	}
 	
 }

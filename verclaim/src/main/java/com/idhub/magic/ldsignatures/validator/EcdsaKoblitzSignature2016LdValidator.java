@@ -4,7 +4,10 @@ import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 
 import org.apache.commons.codec.binary.Base64;
-
+import org.bouncycastle.asn1.ASN1Encodable;
+import org.bouncycastle.asn1.ASN1Primitive;
+import org.bouncycastle.asn1.ASN1StreamParser;
+import org.bouncycastle.asn1.DERSequenceParser;
 import org.web3j.crypto.ECKeyPair;
 
 import com.idhub.magic.ldsignatures.LdSignature;
@@ -20,7 +23,7 @@ public class EcdsaKoblitzSignature2016LdValidator extends LdValidator<EcdsaKobli
 		super(SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016);
 	}
 
-	public EcdsaKoblitzSignature2016LdValidator(ECKey publicKey) {
+	public EcdsaKoblitzSignature2016LdValidator(ECKeyPair publicKey) {
 
 		super(SignatureSuites.SIGNATURE_SUITE_ECDSAKOBLITZSIGNATURE2016);
 
@@ -40,7 +43,10 @@ public class EcdsaKoblitzSignature2016LdValidator extends LdValidator<EcdsaKobli
 		boolean validate;
 
 		try {
-
+			 ASN1StreamParser parser = new ASN1StreamParser(signatureValueBytes);
+			 ASN1Encodable hh = parser.readObject();
+			 ASN1Primitive p = hh.toASN1Primitive();
+			 
 			validate = publicKey.verify(Sha256Hash.hash(canonicalizedDocumentBytes), signatureValueBytes);
 		} catch (SignatureDecodeException ex) {
 
