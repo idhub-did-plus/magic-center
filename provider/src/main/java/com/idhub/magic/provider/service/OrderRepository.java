@@ -93,7 +93,7 @@ public class OrderRepository {
 		
 	}
 
-	public void issueClaim(String orderId) {
+	public VerifiableClaimEntity issueClaim(String orderId) {
 		Query<ProviderOrder> q = ds.find(ProviderOrder.class, "id", orderId);
 		ProviderOrder order = q.get();
 		
@@ -108,7 +108,7 @@ public class OrderRepository {
 			 fac.getOrderBook().issueClaim(AccountManager.getMyAccount().getAddress(), orderId, claim.getJsonld());
 			 UpdateOperations<ProviderOrder> operations = ds.createUpdateOperations(ProviderOrder.class).set("state", ProviderOrderState.issued.name());
 			  ds.update(q, operations);
-			
+			return claim;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

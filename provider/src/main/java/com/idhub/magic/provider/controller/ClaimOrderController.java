@@ -13,6 +13,7 @@ import com.idhub.magic.provider.kyc.idmind.Interaction;
 import com.idhub.magic.provider.model.IdentityEntity;
 import com.idhub.magic.provider.model.ProviderOrder;
 import com.idhub.magic.provider.model.ProviderOrderState;
+import com.idhub.magic.provider.model.VerifiableClaimEntity;
 import com.idhub.magic.provider.service.OrderRepository;
 
 
@@ -76,12 +77,12 @@ public class ClaimOrderController {
 		
 	}
 	@GetMapping("/issue_claim")
-	public MagicResponse issueClaim(String orderId) {
+	public MagicResponse<VerifiableClaimEntity> issueClaim(String orderId) {
 		
 		
-		rep.issueClaim(orderId);
+		VerifiableClaimEntity claim = rep.issueClaim(orderId);
 		
-		return new MagicResponse();
+		return new MagicResponse(claim);
 		
 	}
 }
