@@ -31,8 +31,8 @@ public class ClaimOrderController {
 		
 	}
 	@GetMapping("/size")
-	public MagicResponse<Integer> size(ProviderOrderState state, int startPage, int pageSize) {
-		int size = rep.size(state, startPage, pageSize);
+	public MagicResponse<Integer> size(ProviderOrderState state) {
+		int size = rep.size(state);
 		return new MagicResponse<Integer>(size);
 		
 	}
