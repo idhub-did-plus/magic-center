@@ -20,7 +20,7 @@ public interface OrderBookAgent{
 	@GET("orderbook/list_all")
 	public Call<List<Order>> listAll(@Query("identity") String providerIdentity);
 	@POST("orderbook/issue_claim")
-	public Call<Void> issueClaim(@Query("identity") String providerIdentity, @Query("orderId") String orderId,@Body VerifiableCredential credential) ;
+	public Call<Void> issueClaim(@Query("identity") String providerIdentity, @Query("orderId") String orderId,@Body String credential) ;
 	@POST("orderbook/refuse_claim")
 	public Call<Void> refuseClaim(@Query("identity") String providerIdentity, @Query("orderId") String orderId) ;
 

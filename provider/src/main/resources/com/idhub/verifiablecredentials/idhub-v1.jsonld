@@ -1,0 +1,9 @@
+{
+  "@context": {
+    "id": "@id",
+    "type": "@type",
+
+    "idhub": "https://idhub.com/credentials#",
+    "claimType": "idhub:claimType"
+  }
+}

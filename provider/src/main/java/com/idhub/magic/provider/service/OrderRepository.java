@@ -1,6 +1,9 @@
 package com.idhub.magic.provider.service;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.mongodb.morphia.Datastore;
@@ -9,6 +12,7 @@ import org.mongodb.morphia.query.UpdateOperations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.idhub.magic.common.claim.VerifiableClaim;
 import com.idhub.magic.provider.IdentityData;
 import com.idhub.magic.provider.Order;
 import com.idhub.magic.provider.agent.AccountManager;
@@ -16,6 +20,8 @@ import com.idhub.magic.provider.agent.OrderBookFactory;
 import com.idhub.magic.provider.model.IdentityEntity;
 import com.idhub.magic.provider.model.ProviderOrder;
 import com.idhub.magic.provider.model.ProviderOrderState;
+import com.idhub.magic.provider.model.VerifiableClaimEntity;
+import com.idhub.magic.verifiablecredentials.VerifiableCredential;
 @Service
 public class OrderRepository {
 	@Autowired Datastore ds;
@@ -88,7 +94,25 @@ public class OrderRepository {
 	}
 
 	public void issueClaim(String orderId) {
-				
+		Query<ProviderOrder> q = ds.find(ProviderOrder.class, "id", orderId);
+		ProviderOrder order = q.get();
+		
+		String did = order.getOrder().identity;
+		String subject = "did:" + "erc1056:" + did;
+		String claimType = order.getOrder().claimType;
+		try {
+			 VerifiableClaimEntity claim = ClaimUtils.issueClaim(subject, claimType);
+			 ds.save(claim);
+			 fac.getOrderBook().issueClaim(AccountManager.getMyAccount().getAddress(), orderId, claim.getJsonld());
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		
+			
 	}
 
 	public int size(ProviderOrderState state) {

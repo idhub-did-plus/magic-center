@@ -50,8 +50,8 @@ public class OrderBookService implements OrderBook{
 	}
 
 	@Override
-	public void issueClaim(String identity,String orderId, VerifiableCredential credential) {
-		vcService.store(credential);
+	public void issueClaim(String identity,String orderId, String credential) {
+		vcService.store(identity, orderId, credential);
 	}
 
 	@Override

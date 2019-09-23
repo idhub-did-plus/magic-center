@@ -1,12 +1,17 @@
 [
   {
     "Content-Location": "https://w3id.org/security/v1",
-    "X-Classpath": "fi/trustnet/verifiablecredentials/security-v1.jsonld",
+    "X-Classpath": "com/idhub/verifiablecredentials/security-v1.jsonld",
     "Content-Type": "application/ld+json"
   },
   {
     "Content-Location": "https://w3id.org/credentials/v1",
-    "X-Classpath": "fi/trustnet/verifiablecredentials/credentials-v1.jsonld",
+    "X-Classpath": "com/idhub/verifiablecredentials/credentials-v1.jsonld",
+    "Content-Type": "application/ld+json"
+  },
+   {
+    "Content-Location": "https://idhub.com/credentials/v1",
+    "X-Classpath": "com/idhub/verifiablecredentials/idhub-v1.jsonld",
     "Content-Type": "application/ld+json"
   }
 ]

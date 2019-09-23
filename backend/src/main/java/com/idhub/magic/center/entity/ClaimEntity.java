@@ -26,6 +26,13 @@ public class ClaimEntity {
 	@Id
 	String id;
 	String identity;
+	String orderId;
+	public String getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
 	String claimJsonld;
 	
 }
