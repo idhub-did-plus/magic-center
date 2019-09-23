@@ -97,11 +97,13 @@ public class OrderRepository {
 		Query<ProviderOrder> q = ds.find(ProviderOrder.class, "id", orderId);
 		ProviderOrder order = q.get();
 		
-		String did = order.getOrder().identity;
-		String subject = "did:" + "erc1056:" + did;
+		String identity = order.getOrder().identity;
+		String subject = "did:" + "erc1056:" + identity;
+		
+		IdentityData data = ds.find(IdentityData.class, "id", identity).get();
 		String claimType = order.getOrder().claimType;
 		try {
-			 VerifiableClaimEntity claim = ClaimUtils.issueClaim(subject, claimType);
+			 VerifiableClaimEntity claim = ClaimUtils.issueClaim(subject, claimType, data.getArchive().getIdentityInfo().getCountry(), "unknown");
 			 ds.save(claim);
 			 fac.getOrderBook().issueClaim(AccountManager.getMyAccount().getAddress(), orderId, claim.getJsonld());
 			

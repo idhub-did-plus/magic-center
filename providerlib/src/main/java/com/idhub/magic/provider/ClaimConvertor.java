@@ -27,6 +27,10 @@ public class ClaimConvertor {
 		LinkedHashMap<String, Object> cl = cred.getJsonLdClaimsObject();
 		rst.getClaim().setId(cl.get("id").toString());
 		Object claims = cl.get("claimType");
+		Object country = cl.get("country");
+		Object jurisdiction = cl.get("jurisdiction");
+		rst.getClaim().setCountry(country.toString());
+		rst.getClaim().setJurisdiction(jurisdiction.toString());
 		rst.getClaim().setClaimType(claims.toString());
 		LdSignature sig = cred.getLdSignature();
 		rst.getSignature().setCreated(sig.getCreated());
@@ -54,6 +58,8 @@ public class ClaimConvertor {
 			Claim c = cred.getClaim();
 			rst.getJsonLdClaimsObject().put("id", c.getId());
 			rst.getJsonLdClaimsObject().put("claimType", c.getClaimType());
+			rst.getJsonLdClaimsObject().put("country", c.getCountry());
+			rst.getJsonLdClaimsObject().put("jurisdiction", c.getJurisdiction());
 			Signature sig = cred.getSignature();
 			if(sig.getSignatureValue() == null)
 				return rst;

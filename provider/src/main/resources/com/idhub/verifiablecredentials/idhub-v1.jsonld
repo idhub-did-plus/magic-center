@@ -4,6 +4,8 @@
     "type": "@type",
 
     "idhub": "https://idhub.com/credentials#",
-    "claimType": "idhub:claimType"
+    "claimType": "idhub:claimType",
+    "country": "idhub:country",
+    "jurisdiction": "idhub:jurisdiction"
   }
 }

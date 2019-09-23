@@ -29,8 +29,8 @@ import com.idhub.magic.verifiablecredentials.VerifiableCredential;
 
 public class ClaimUtils {
 	static SimpleDateFormat form = new SimpleDateFormat("YYYY-MM-DD");
-	static public VerifiableClaimEntity issueClaim(String subject, String claimType) throws Exception {
-		VerifiableClaim claim = claim(subject, claimType);
+	static public VerifiableClaimEntity issueClaim(String subject, String claimType,String country, String jurisdiction) throws Exception {
+		VerifiableClaim claim = claim(subject, claimType, country, jurisdiction);
 		VerifiableCredential cred = ClaimConvertor.to(claim);
 		LdSignature lds = signature(cred);
 		cred.getJsonLdObject().put("signature", lds.getJsonLdSignatureObject());
@@ -41,7 +41,7 @@ public class ClaimUtils {
 	
 	}
 	
-	static public VerifiableClaim claim(String subject, String claimType) {
+	static public VerifiableClaim claim(String subject, String claimType,String country, String jurisdiction) {
 		
 		VerifiableClaim claim = new VerifiableClaim();
 		String[] cs = new String[] {"https://idhub.com/credentials/v1"};
@@ -50,6 +50,8 @@ public class ClaimUtils {
 		did = "did:" + "erc1056:" + did;
 		claim.getClaim().setId(did);
 		claim.getClaim().setClaimType(claimType);
+		claim.getClaim().setCountry(country);
+		claim.getClaim().setJurisdiction(jurisdiction);
 		
 		String issued = form.format(new Date());
 		claim.setIssued(issued);
@@ -61,7 +63,7 @@ public class ClaimUtils {
 	}
 	static String encodeCononical(VerifiableCredential cred) throws Exception {
 		String canonicalizedDocument = CanonicalizationUtil.buildCanonicalizedDocument(cred.getJsonLdObject());
-
+		System.out.println(canonicalizedDocument);
 			String plainMessage = JsonUtils.toString(canonicalizedDocument);
 			return plainMessage;
 			
@@ -96,7 +98,7 @@ public class ClaimUtils {
 	}
 	static public void main(String[] ss) {
 		try {
-		 VerifiableClaimEntity claim = issueClaim("9987778", "hhhh");
+		 VerifiableClaimEntity claim = issueClaim("9987778", "hhhh",  "us",  "us");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
