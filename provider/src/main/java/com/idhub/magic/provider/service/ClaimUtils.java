@@ -18,6 +18,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jsonldjava.utils.JsonUtils;
 import com.idhub.magic.common.claim.VerifiableClaim;
+import com.idhub.magic.common.util.JsonldUtils;
 import com.idhub.magic.common.util.Signature;
 import com.idhub.magic.ldsignatures.LdSignature;
 import com.idhub.magic.ldsignatures.util.CanonicalizationUtil;
@@ -76,12 +77,14 @@ public class ClaimUtils {
 		System.out.println(new String(hexMessage));
 		ECKeyPair pair = credentials.getEcKeyPair();
 		Sign.SignatureData signMessage = Sign.signMessage(hexMessage, pair);
-		String r = Numeric.toHexString(signMessage.getR());
-		String s = Numeric.toHexString(signMessage.getS());
-		
-		int v = signMessage.getV()[0];
-		Signature sig =  new Signature(r, s, v);
-		String sss= new ObjectMapper().writeValueAsString(sig);
+		String sss = JsonldUtils.encodeSignature(signMessage.getR(), signMessage.getS(), signMessage.getV());
+		/*
+		 * String r = Numeric.toHexString(signMessage.getR()); String s =
+		 * Numeric.toHexString(signMessage.getS());
+		 * 
+		 * int v = signMessage.getV()[0]; Signature sig = new Signature(r, s, v); String
+		 * sss= new ObjectMapper().writeValueAsString(sig);
+		 */
 		LdSignature lds = new LdSignature();
 		
 		String created = form.format(new Date());

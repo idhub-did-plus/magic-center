@@ -13,7 +13,7 @@ import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.DERSequenceGenerator;
 
 public class JsonldUtils {
-	 static  protected String encodeSignature(byte[] r, byte[] s, byte[] v) {
+	 static  public String encodeSignature(byte[] r, byte[] s, byte[] v) {
          try {
 			// Usually 70-72 bytes.
 			  ByteArrayOutputStream bos = new ByteArrayOutputStream(72);
@@ -43,7 +43,7 @@ public class JsonldUtils {
 					byte[] s =  ii.getEncoded("DER");
 					
 					byte[] e = get(s);
-					rst.add(s);
+					rst.add(e);
 				 }
 				 return rst;
 			} catch (IOException e) {
@@ -58,6 +58,12 @@ public class JsonldUtils {
 			for(int i = 0; i < length; i++)
 				rst[i] = data[i + 2];
 			return rst;
+		}
+		static public void main(String[] ss) {
+			String sig = "MEcCICMXZTSiCrw0osEtV7pXtgGTqRJEay931VOpjqI3hbOyAiAyEHmqIVyxT6qnE3dO/3n3RkQ4dUCgFVRC0RpdGd0G5wIBHA==";
+			List<byte[]> sigrsv = decodeSignature(sig);
+			System.out.print(sigrsv);
+			
 		}
 
 }
