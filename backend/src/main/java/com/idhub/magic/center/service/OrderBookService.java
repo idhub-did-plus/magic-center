@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import com.idhub.magic.center.entity.OrderEntity;
 import com.idhub.magic.center.entity.OrderState;
+import com.idhub.magic.center.ustorage.IdentityStorage;
+import com.idhub.magic.center.ustorage.MaterialWrapper;
 import com.idhub.magic.common.ustorage.entity.Material;
 import com.idhub.magic.provider.IdentityData;
 import com.idhub.magic.provider.Order;
@@ -54,8 +56,11 @@ public class OrderBookService implements OrderBook{
 
 	@Override
 	public IdentityData getIdentityInformation(String targetIdentity) {
-		// TODO Auto-generated method stub
-		return null;
+		IdentityStorage st = ds.find(IdentityStorage.class, "id", targetIdentity).get();
+		Query<MaterialWrapper> query = ds.find(MaterialWrapper.class, "material.identity", targetIdentity);
+		List<MaterialWrapper> data = query.asList();
+		List<Material> mdata = data.stream().map(MaterialWrapper::getMaterial).collect(toList());
+		return new IdentityData(targetIdentity, st.getIdentityArchive(), mdata);
 	}
 
 	@Override
