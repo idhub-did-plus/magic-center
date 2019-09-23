@@ -30,8 +30,11 @@ public class OrderRepository {
 		
 	public void store(Order o) {
 		
-			ProviderOrder po = new ProviderOrder(o);
-			ds.save(po);
+			
+			if(ds.find(ProviderOrder.class, "id", o.id).asList().size() == 0) {
+				ProviderOrder po = new ProviderOrder(o);
+				ds.save(po);
+			}
 	
 	}
 	public List<ProviderOrder> list(ProviderOrderState state, int startPage, int pageSize){
