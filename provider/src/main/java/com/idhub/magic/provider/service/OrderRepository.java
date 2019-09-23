@@ -59,7 +59,7 @@ public class OrderRepository {
 		}
 		IdentityEntity id = new IdentityEntity(info);
 		ds.save(id);
-		UpdateOperations<ProviderOrder> operations = ds.createUpdateOperations(ProviderOrder.class).set("state", ProviderOrderState.processing);
+		UpdateOperations<ProviderOrder> operations = ds.createUpdateOperations(ProviderOrder.class).set("state", ProviderOrderState.processing.name());
 		  ds.update(query, operations);
 		return id;
 		
@@ -70,7 +70,7 @@ public class OrderRepository {
 		  ProviderOrder order = q.get();
 		  if(!order.getState().equals(ProviderOrderState.unreceived.name()))
 			  throw new RuntimeException("order cant be dropped after receiption!");
-		  UpdateOperations<ProviderOrder> operations = ds.createUpdateOperations(ProviderOrder.class).set("state", ProviderOrderState.dropped);
+		  UpdateOperations<ProviderOrder> operations = ds.createUpdateOperations(ProviderOrder.class).set("state", ProviderOrderState.dropped.name());
 		  ds.update(q, operations);
 		
 	}
@@ -82,7 +82,7 @@ public class OrderRepository {
 			  throw new RuntimeException("Invalid order state!");
 		  String providerIdentity = AccountManager.getMyAccount().getAddress();
 		  fac.getOrderBook().refuseClaim(providerIdentity, orderId);
-		  UpdateOperations<ProviderOrder> operations = ds.createUpdateOperations(ProviderOrder.class).set("state", ProviderOrderState.refused);
+		  UpdateOperations<ProviderOrder> operations = ds.createUpdateOperations(ProviderOrder.class).set("state", ProviderOrderState.refused.name());
 		  ds.update(q, operations);
 		
 	}
