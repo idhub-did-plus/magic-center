@@ -106,7 +106,8 @@ public class OrderRepository {
 			 VerifiableClaimEntity claim = ClaimUtils.issueClaim(subject, claimType, data.getArchive().getIdentityInfo().getCountry(), "unknown");
 			 ds.save(claim);
 			 fac.getOrderBook().issueClaim(AccountManager.getMyAccount().getAddress(), orderId, claim.getJsonld());
-			
+			 UpdateOperations<ProviderOrder> operations = ds.createUpdateOperations(ProviderOrder.class).set("state", ProviderOrderState.issued.name());
+			  ds.update(q, operations);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
