@@ -37,22 +37,18 @@ public class DirectedOrderFecher {
 				List<Order> my = fac.getOrderBook().directed(identity).execute().body();
 				if(my == null)
 					return;
-				List<Order> suc = new ArrayList<Order>();
-				for(Order o : my) {
-					boolean b = fac.getOrderBook().receive(identity, o.id).execute().body();
-					if(b) {
-						suc.add(o);
-					}
-				}
-				
-				rep.store(suc);
-				List<IdentityEntity> es = new LinkedList<IdentityEntity>(); 
-				for(Order o : suc) {
-					IdentityData ia = fac.getOrderBook().getIdentityInformation(identity, o.identity).execute().body();
-					IdentityEntity id = new IdentityEntity(ia);
-					es.add(id);
-				}
-				ds.save(es);
+				//List<Order> suc = new ArrayList<Order>();
+				/*
+				 * for(Order o : my) { boolean b = fac.getOrderBook().receive(identity,
+				 * o.id).execute().body(); if(b) { suc.add(o); } }
+				 */
+				rep.store(my);
+				/*
+				 * List<IdentityEntity> es = new LinkedList<IdentityEntity>(); for(Order o :
+				 * suc) { IdentityData ia = fac.getOrderBook().getIdentityInformation(identity,
+				 * o.identity).execute().body(); IdentityEntity id = new IdentityEntity(ia);
+				 * es.add(id); } ds.save(es);
+				 */
 				
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
