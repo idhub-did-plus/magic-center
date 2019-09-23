@@ -86,5 +86,10 @@ public class OrderRepository {
 	public void issueClaim(String orderId) {
 				
 	}
+
+	public int size(ProviderOrderState state, int startPage, int pageSize) {
+		Query<ProviderOrder> query = ds.createQuery(ProviderOrder.class).field("state").equal(state.name()).offset(startPage * pageSize).limit(pageSize).order("createTime");
+		return (int)query.countAll();
+	}
 	
 }

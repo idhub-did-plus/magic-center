@@ -30,6 +30,12 @@ public class ClaimOrderController {
 		return new MagicResponse<List<ProviderOrder>>(orders);
 		
 	}
+	@GetMapping("/size")
+	public MagicResponse<Integer> size(ProviderOrderState state, int startPage, int pageSize) {
+		int size = rep.size(state, startPage, pageSize);
+		return new MagicResponse<Integer>(size);
+		
+	}
 	@GetMapping("/identity_archive")
 	public MagicResponse<IdentityEntity> identityArchive(String identity) {
 		IdentityEntity iden = ds.find(IdentityEntity.class, "id", identity).get();
