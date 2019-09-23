@@ -1,13 +1,28 @@
 package com.idhub.magic.provider.kyc.idmind;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.idhub.magic.common.ustorage.entity.IdentityArchive;
+import com.idhub.magic.common.ustorage.entity.component.Name;
 import com.idhub.magic.provider.kyc.idmind.entity.consumer.ConsumerKycRequest;
 
 public class Converter {
-	static public ConsumerKycRequest archve2request(IdentityArchive archive){
+	static SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
+
+	static public ConsumerKycRequest archve2request(IdentityArchive archive) {
 		ConsumerKycRequest req = new ConsumerKycRequest();
-		//req.man = "req.
-		return dummy();
+		Name name = archive.getIdentityInfo().getName();
+		
+		Date birth = archive.getIdentityInfo().getBirthday();
+		String births = formatter.format(birth);
+
+		req.dob = births;
+		req.bfn = name.getFirstName();
+		req.bln = name.getLastName();
+		req.bco = archive.getIdentityInfo().getCountry();
+		
+		return req;
 	}
 
 	static public ConsumerKycRequest dummy() {
