@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.idhub.magic.center.service.ChainEventStore;
 import com.idhub.magic.center.service.ClaimOrderService;
+import com.idhub.magic.common.claim.entity.ClaimOrder;
 import com.idhub.magic.common.event.MagicEvent;
-import com.idhub.magic.common.kvc.entity.ClaimOrder;
 import com.idhub.magic.common.parameter.MagicResponse;
 import com.idhub.magic.common.ustorage.entity.IdentityArchive;
 import com.idhub.magic.common.ustorage.entity.Material;

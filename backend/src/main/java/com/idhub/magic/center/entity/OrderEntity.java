@@ -5,7 +5,7 @@ import java.util.Date;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
-import com.idhub.magic.common.kvc.entity.ClaimOrder;
+import com.idhub.magic.common.claim.entity.ClaimOrder;
 import com.idhub.magic.provider.Order;
 
 @Entity

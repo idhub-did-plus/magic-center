@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.idhub.magic.center.entity.OrderEntity;
-import com.idhub.magic.common.kvc.entity.ClaimOrder;
+import com.idhub.magic.common.claim.entity.ClaimOrder;
 import com.idhub.magic.provider.Order;
 
 @Service

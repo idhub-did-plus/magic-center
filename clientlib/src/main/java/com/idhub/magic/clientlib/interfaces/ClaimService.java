@@ -2,7 +2,7 @@ package com.idhub.magic.clientlib.interfaces;
 
 import java.util.List;
 
-import com.idhub.magic.common.kvc.entity.ClaimOrder;
+import com.idhub.magic.common.claim.entity.ClaimOrder;
 import com.idhub.magic.common.parameter.MagicResponse;
 
 import retrofit2.Call;

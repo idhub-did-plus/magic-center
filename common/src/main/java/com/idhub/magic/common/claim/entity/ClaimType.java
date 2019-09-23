@@ -1,4 +1,4 @@
-package com.idhub.magic.common.kvc.entity;
+package com.idhub.magic.common.claim.entity;
 
 public enum ClaimType {
 	qualified_investor,

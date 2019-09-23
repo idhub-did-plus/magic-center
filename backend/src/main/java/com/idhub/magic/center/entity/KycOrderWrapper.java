@@ -1,6 +1,6 @@
 package com.idhub.magic.center.entity;
 
-import com.idhub.magic.common.kvc.entity.ClaimOrder;
+import com.idhub.magic.common.claim.entity.ClaimOrder;
 
 public class KycOrderWrapper {
 	String id;
