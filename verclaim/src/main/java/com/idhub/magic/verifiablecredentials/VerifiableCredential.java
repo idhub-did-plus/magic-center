@@ -126,7 +126,13 @@ public class VerifiableCredential {
 	public String getIssued() {
 		return (String) this.jsonLdObject.get(JSONLD_TERM_ISSUED);
 	}
+	public void setExpires(String exp) {
+		this.jsonLdObject.put("expires", exp);
+	}
 
+	public String getExpires() {
+		return (String) this.jsonLdObject.get("expires");
+	}
 	public void setIssued(String issued) {
 		this.jsonLdObject.put(JSONLD_TERM_ISSUED, issued);
 	}
