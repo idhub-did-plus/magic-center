@@ -61,7 +61,12 @@ public class ThirdpartyController {
 		return new MagicResponse<IdentityInformation>(new IdentityInformation(st.getIdentityArchive(), mdata, ld));
 	}
 
+	@GetMapping("/test")
+	@DoNotAuth
+	public MagicResponse test() {
 	
+		return new MagicResponse();
+	}
 	
 
 	
