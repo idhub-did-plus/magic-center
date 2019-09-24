@@ -12,5 +12,5 @@ public interface OrderBook {
 	List<Order> listAll();
 	void issueClaim(String identity, String orderId, String credential);
 	void refuseClaim(String identity, String orderId);
-	IdentityData getIdentityInformation(String identity, String targetIdentity);
+	IdentityData getIdentityInformation(String identity, String orderId);
 }

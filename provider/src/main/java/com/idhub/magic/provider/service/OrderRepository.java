@@ -68,11 +68,9 @@ public class OrderRepository {
 		try {
 		 String providerIdentity = AccountManager.getMyAccount().getAddress();
 		 fac.getOrderBook().receive(providerIdentity, orderId).execute().body();
-		 ProviderOrder order =query.get();
-		
-		IdentityData info;
 	
-		info = fac.getOrderBook().getIdentityInformation(providerIdentity, order.getOrder().identity).execute().body();
+		
+		IdentityData info = fac.getOrderBook().getIdentityInformation(providerIdentity, orderId).execute().body();
 		
 		IdentityEntity id = new IdentityEntity(info);
 		ds.save(id);

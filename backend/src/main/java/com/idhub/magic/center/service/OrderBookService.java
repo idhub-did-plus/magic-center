@@ -80,12 +80,14 @@ public class OrderBookService implements OrderBook{
 	}
 
 	@Override
-	public IdentityData getIdentityInformation(String provider, String targetIdentity) {
-		IdentityStorage st = ds.find(IdentityStorage.class, "id", targetIdentity).get();
-		Query<MaterialWrapper> query = ds.find(MaterialWrapper.class, "material.identity", targetIdentity);
-		List<MaterialWrapper> data = query.asList();
+	public IdentityData getIdentityInformation(String provider, String orderId) {
+		Query<OrderEntity> query = check(orderId, OrderState.relayed,provider);
+		OrderEntity order = query.get();
+		IdentityStorage st = ds.find(IdentityStorage.class, "id", order.getOrder().identity).get();
+		Query<MaterialWrapper> q = ds.find(MaterialWrapper.class, "material.identity", order.getOrder().identity);
+		List<MaterialWrapper> data = q.asList();
 		List<Material> mdata = data.stream().map(MaterialWrapper::getMaterial).collect(toList());
-		return new IdentityData(targetIdentity, st.getIdentityArchive(), mdata);
+		return new IdentityData(order.getOrder().identity, st.getIdentityArchive(), mdata);
 	}
 
 	@Override

@@ -25,5 +25,5 @@ public interface OrderBookAgent{
 	public Call<Void> refuseClaim(@Query("identity") String providerIdentity, @Query("orderId") String orderId) ;
 
 	@GET("orderbook/get_identity_information")
-	public Call<IdentityData> getIdentityInformation(@Query("identity") String providerIdentity, @Query("targetIdentity") String targetIdentity);
+	public Call<IdentityData> getIdentityInformation(@Query("identity") String providerIdentity, @Query("orderId") String orderId);
 }
