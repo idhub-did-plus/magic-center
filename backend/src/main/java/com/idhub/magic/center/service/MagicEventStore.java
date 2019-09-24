@@ -44,7 +44,7 @@ public class MagicEventStore {
 	}
 	public void storeStringEvent(MagicEventType type, String identity, String eo) {
 		MagicEvent event = new MagicEvent();
-		event.encoded = true;
+		event.encoded = false;
 		event.eventClass = eo.getClass().getName();
 		event.eventType = type.name();
 		
