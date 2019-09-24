@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.idhub.magic.center.service.ChainEventStore;
+import com.idhub.magic.center.service.MagicEventStore;
 import com.idhub.magic.common.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
 import com.idhub.magic.common.event.MagicEvent;
 import com.idhub.magic.common.event.MagicEventType;
@@ -21,7 +21,7 @@ import com.idhub.magic.common.ustorage.entity.Material;
 @RequestMapping("/event")
 
 public class EventController {
-	@Autowired ChainEventStore store;
+	@Autowired MagicEventStore store;
     @GetMapping("/query_events")
 	public MagicResponse getChainEvent(String identity) {
     	List<MagicEvent> data = store.getEventsByIdentity(identity);

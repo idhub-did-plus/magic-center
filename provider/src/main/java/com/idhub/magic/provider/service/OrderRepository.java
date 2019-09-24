@@ -104,6 +104,7 @@ public class OrderRepository {
 		String claimType = order.getOrder().claimType;
 		try {
 			 VerifiableClaimEntity claim = ClaimUtils.issueClaim(subject, claimType, data.getData().getArchive().getIdentityInfo().getCountry(), "unknown");
+			claim.setId(orderId);
 			 ds.save(claim);
 			 fac.getOrderBook().issueClaim(AccountManager.getMyAccount().getAddress(), orderId, claim.getJsonld());
 			 UpdateOperations<ProviderOrder> operations = ds.createUpdateOperations(ProviderOrder.class).set("state", ProviderOrderState.issued.name());

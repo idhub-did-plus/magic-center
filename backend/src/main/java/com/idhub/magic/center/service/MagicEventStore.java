@@ -18,7 +18,7 @@ import com.idhub.magic.common.event.MagicEvent;
 import com.idhub.magic.common.event.MagicEventType;
 
 @Service
-public class ChainEventStore {
+public class MagicEventStore {
 	@Autowired Datastore store;
 	ObjectMapper mapper = new ObjectMapper();
 	public void store(MagicEventType type, String identity, Object eo) {

@@ -42,7 +42,7 @@ public class DelegationService {
 	@Autowired Datastore store;
 	@Autowired
 	ObjectMapper mapper = new ObjectMapper();
-	@Autowired ChainEventStore eventStore;
+	@Autowired MagicEventStore eventStore;
     private Web3j web3j;
 	/*
 	 * @Autowired Admin admin;
