@@ -1,7 +1,9 @@
 package com.idhub.magic.center.service;
 
 import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import org.web3j.tuples.generated.Tuple4;
 
 @Service
 public class IdentityAggregationService {
+	Map<String, List<String>> cache = new HashMap<String, List<String>>();
 	@Autowired ContractManager manager;
 	public boolean validate(String addr1, String addr2) {
 		try {
