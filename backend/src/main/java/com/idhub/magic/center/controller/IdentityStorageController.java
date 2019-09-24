@@ -1,10 +1,13 @@
 package com.idhub.magic.center.controller;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.mongodb.morphia.Datastore;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.idhub.magic.center.annotation.DoNotAuth;
 import com.idhub.magic.center.ustorage.IdentityStorage;
 import com.idhub.magic.center.ustorage.MaterialWrapper;
 import com.idhub.magic.common.parameter.MagicResponse;
@@ -72,8 +76,10 @@ public class IdentityStorageController {
 			return new MagicResponse(false, "upload fail!");
 		}
 		byte[] data = IOUtils.toByteArray(file.getInputStream());
-	
-		Material mat = new Material( identity,  type,  name, data);
+		String fname = file.getOriginalFilename();
+		String[] ne = fname.split("\\.");
+		String ext = ne[ne.length - 1];
+		Material mat = new Material( identity,  type,  name, data, ext);
 		MaterialWrapper wr = new MaterialWrapper(mat);
 		store.save(wr);
 		
@@ -100,6 +106,25 @@ public class IdentityStorageController {
 		MagicResponse rst = new MagicResponse();
 
 		return rst;
+	}
+	@GetMapping("/material_stream")
+	@DoNotAuth
+	public void materialStream(String identity, String type, String name, HttpServletResponse response) throws Exception {
+		String id = identity + type + name;
+		Query<MaterialWrapper> query = store.find(MaterialWrapper.class, "id", id);
+		
+		MaterialWrapper wrapper = query.get();
+		byte[] data = wrapper.getMaterial().getData();
+		String ext = wrapper.getMaterial().getExt();
+		if(ext.equalsIgnoreCase("jpg")) {
+			response.setContentType("image/jpeg");
+		}else {
+			response.setContentType("application/pdf");
+		}
+		response.getOutputStream().write(data);
+		response.getOutputStream().flush();
+		
+		
 	}
 	@GetMapping("/extension_meta")
 	@ResponseBody
