@@ -16,6 +16,7 @@ import com.idhub.magic.provider.kyc.idmind.Interaction;
 import com.idhub.magic.provider.kyc.idmind.entity.consumer.ConsumerKycRequest;
 import com.idhub.magic.provider.kyc.idmind.entity.consumer.ConsumerKycResponse;
 import com.idhub.magic.provider.model.IdentityEntity;
+import com.idhub.magic.provider.model.ProviderOrder;
 
 @Service
 public class IdentityMindService {
@@ -24,14 +25,15 @@ public class IdentityMindService {
 	@Autowired
 	IdentityMindProvider idm;
 	public Interaction evaluate(String orderId) {
-		Order order = ds.find(Order.class, "id", orderId).get();
-		Query<IdentityEntity> query = ds.find(IdentityEntity.class, "id", order.identity);
+		ProviderOrder order = ds.find(ProviderOrder.class, "id", orderId).get();
+		Query<IdentityEntity> query = ds.find(IdentityEntity.class, "id", order.getOrder().identity);
 		IdentityEntity ie = query.get();
 		ConsumerService service = idm.getCustomerService();
 		try {
-			ConsumerKycRequest req = Converter.archve2request(ie.getData().getArchive());
+			ConsumerKycRequest req = Converter.dummy();//archve2request(ie.getData().getArchive());
 			if(ie.getTransactionId() != null)
 				req.tid = ie.getTransactionId();
+			
 			ConsumerKycResponse resp = service.customer(req, false).execute().body();
 			Interaction inteaction = new Interaction();
 			inteaction.setOrderId(orderId);
