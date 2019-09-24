@@ -47,22 +47,37 @@ public class OrderRepository {
 		Query<ProviderOrder> query = ds.createQuery(ProviderOrder.class).field("state").equal(state.name()).offset(startPage * pageSize).limit(pageSize).order("createTime");
 		return query.asList();
 	}
+	Query<ProviderOrder> check(String orderId, ProviderOrderState current) {
+		Query<ProviderOrder> query = ds.createQuery(ProviderOrder.class).field("state").equal(current.name());
+		if(query.countAll() == 0) {
+			throw new RuntimeException("invalid order state!");
+		}
+		return query;
+		
+
+	}
+	void stepForward(Query<ProviderOrder> query,ProviderOrderState next) {
+		
+		
+		UpdateOperations<ProviderOrder> operations = ds.createUpdateOperations(ProviderOrder.class).set("state", next.name());
+		ds.update(query, operations);
+
+	}
 	public IdentityEntity receive(String orderId) {
+		Query<ProviderOrder> query = check(orderId, ProviderOrderState.unreceived);
 		try {
 		 String providerIdentity = AccountManager.getMyAccount().getAddress();
 		 fac.getOrderBook().receive(providerIdentity, orderId).execute().body();
-		 Query<ProviderOrder> query = ds.find(ProviderOrder.class, "id", orderId);
-		 
 		 ProviderOrder order =query.get();
 		
-		 IdentityData info;
+		IdentityData info;
 	
-			info = fac.getOrderBook().getIdentityInformation(providerIdentity, order.getOrder().identity).execute().body();
+		info = fac.getOrderBook().getIdentityInformation(providerIdentity, order.getOrder().identity).execute().body();
 		
 		IdentityEntity id = new IdentityEntity(info);
 		ds.save(id);
-		UpdateOperations<ProviderOrder> operations = ds.createUpdateOperations(ProviderOrder.class).set("state", ProviderOrderState.processing.name());
-		  ds.update(query, operations);
+		stepForward(query, ProviderOrderState.processing);
+		
 		return id;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -73,30 +88,34 @@ public class OrderRepository {
 	}
 
 	public void drop(String orderId) {
-		  Query<ProviderOrder> q = ds.find(ProviderOrder.class, "id", orderId);
-		  ProviderOrder order = q.get();
-		  if(!order.getState().equals(ProviderOrderState.unreceived.name()))
-			  throw new RuntimeException("order cant be dropped after receiption!");
-		  UpdateOperations<ProviderOrder> operations = ds.createUpdateOperations(ProviderOrder.class).set("state", ProviderOrderState.dropped.name());
-		  ds.update(q, operations);
+		Query<ProviderOrder> query = check(orderId, ProviderOrderState.unreceived);
+		 
+		  ProviderOrder order = query.get();
+		  
+		  stepForward(query,ProviderOrderState.dropped );
 		
 	}
 
 	public void refuseClaim(String orderId) {
-		 Query<ProviderOrder> q = ds.find(ProviderOrder.class, "id", orderId);
-		  ProviderOrder order = q.get();
-		  if(!order.getState().equals(ProviderOrderState.processing.name()))
-			  throw new RuntimeException("Invalid order state!");
+		Query<ProviderOrder> query = check(orderId, ProviderOrderState.processing);
+		
 		  String providerIdentity = AccountManager.getMyAccount().getAddress();
-		  fac.getOrderBook().refuseClaim(providerIdentity, orderId);
-		  UpdateOperations<ProviderOrder> operations = ds.createUpdateOperations(ProviderOrder.class).set("state", ProviderOrderState.refused.name());
-		  ds.update(q, operations);
+		  try {
+			fac.getOrderBook().refuseClaim(providerIdentity, orderId).execute().body();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
+		}
+		  stepForward(query,ProviderOrderState.refused );
+		 
 		
 	}
 
 	public VerifiableClaimEntity issueClaim(String orderId) {
-		Query<ProviderOrder> q = ds.find(ProviderOrder.class, "id", orderId);
-		ProviderOrder order = q.get();
+		Query<ProviderOrder> query = check(orderId, ProviderOrderState.processing);
+		
+		ProviderOrder order = query.get();
 		
 		String identity = order.getOrder().identity;
 		String subject = "did:" + "erc1056:" + identity;
@@ -108,8 +127,8 @@ public class OrderRepository {
 			claim.setId(orderId);
 			 ds.save(claim);
 			 fac.getOrderBook().issueClaim(AccountManager.getMyAccount().getAddress(), orderId, claim.getJsonld()).execute().body();
-			 UpdateOperations<ProviderOrder> operations = ds.createUpdateOperations(ProviderOrder.class).set("state", ProviderOrderState.issued.name());
-			  ds.update(q, operations);
+			 stepForward(query,ProviderOrderState.issued );
+			 
 			return claim;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

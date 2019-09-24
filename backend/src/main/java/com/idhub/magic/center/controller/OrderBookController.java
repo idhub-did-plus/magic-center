@@ -46,9 +46,9 @@ public class OrderBookController implements OrderBook {
 	}
     @GetMapping("/get_identity_information")
 	@Override
-	public IdentityData getIdentityInformation(String targetIdentity) {
+	public IdentityData getIdentityInformation(String identity,String targetIdentity) {
 		// TODO Auto-generated method stub
-		return store.getIdentityInformation(targetIdentity);
+		return store.getIdentityInformation(identity, targetIdentity);
 	}
     @GetMapping("/refuse_claim")
    	@Override

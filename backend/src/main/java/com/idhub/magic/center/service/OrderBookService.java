@@ -33,15 +33,32 @@ public class OrderBookService implements OrderBook{
 		List<Order> rst = es.stream().map(OrderEntity::getOrder).collect(toList());
 		return rst;
 	}
+	Query<OrderEntity> check(String orderId, OrderState current, String provider){
+		Query<OrderEntity> query = ds.createQuery(OrderEntity.class).field("id").equal(orderId).field("state").equal(current.name());
+		if(provider == null)
+			query = query.field("provider").exists();
+		else
+			query = query.field("provider").equal(provider);
+		if(query.countAll() == 0) {
+			throw new RuntimeException("invalide order state!");
+			
+		}
+		return query;
 
-	@Override
-	public boolean receive(String identity, String orderId) {
-		 Query<OrderEntity> query = ds.createQuery(OrderEntity.class).field("id").equal(orderId).field("state").equal(OrderState.waiting.name());
-		 UpdateOperations<OrderEntity> op = ds.createUpdateOperations(OrderEntity.class).set("provider", identity).set("state", OrderState.relayed.name()).set("receiveTime", new Date());;
+	}
+	 boolean stepForward(Query<OrderEntity> query, OrderState next, String provider){
+		 UpdateOperations<OrderEntity> op = ds.createUpdateOperations(OrderEntity.class).set("state", OrderState.relayed.name()).set("receiveTime", new Date());;;
+		 if(provider != null)
+			 op = op.set("provider", provider);
 		 UpdateResults n = ds.update(query, op);
 		 if(n.getUpdatedCount() == 0)
 			 return false;
 		 return true;
+	 }
+	@Override
+	public boolean receive(String identity, String orderId) {
+		 Query<OrderEntity> query = check(orderId, OrderState.waiting,null);
+		 return stepForward(query, OrderState.relayed, identity);
 	}
 
 	@Override
@@ -53,21 +70,17 @@ public class OrderBookService implements OrderBook{
 
 	@Override
 	public void issueClaim(String providerIdentity,String orderId, String credential) {
+		 Query<OrderEntity> query = check(orderId, OrderState.relayed,providerIdentity);
 		
-		 Query<OrderEntity> query = ds.createQuery(OrderEntity.class).field("id").equal(orderId).field("state").equal(OrderState.relayed.name());
+		 stepForward(query, OrderState.issued, null);
 		 OrderEntity order = query.get();
-		 if(order == null)
-			 return;
-		 
-		 
-		 UpdateOperations<OrderEntity> op = ds.createUpdateOperations(OrderEntity.class).set("state", OrderState.issued.name()).set("issueTime", new Date());;
-		 UpdateResults n = ds.update(query, op);
 		 vcService.store(order.getOrder().identity, orderId, credential);
 		 eventStore.storeStringEvent(MagicEventType.claim_issued_event, order.getOrder().identity, credential);
+	
 	}
 
 	@Override
-	public IdentityData getIdentityInformation(String targetIdentity) {
+	public IdentityData getIdentityInformation(String provider, String targetIdentity) {
 		IdentityStorage st = ds.find(IdentityStorage.class, "id", targetIdentity).get();
 		Query<MaterialWrapper> query = ds.find(MaterialWrapper.class, "material.identity", targetIdentity);
 		List<MaterialWrapper> data = query.asList();
@@ -77,8 +90,13 @@ public class OrderBookService implements OrderBook{
 
 	@Override
 	public void refuseClaim(String identity, String orderId) {
-		// TODO Auto-generated method stub
+		Query<OrderEntity> query = check(orderId, OrderState.relayed,identity);
 		
+		 stepForward(query, OrderState.refused, null);
+		 OrderEntity order = query.get();
+		// vcService.store(order.getOrder().identity, orderId, "refused");
+		 eventStore.storeStringEvent(MagicEventType.claim_issued_event, order.getOrder().identity, "refused");
+
 	}
 
 }
