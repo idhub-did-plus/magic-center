@@ -23,11 +23,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.idhub.magic.center.annotation.DoNotAuth;
 import com.idhub.magic.center.entity.ClaimEntity;
 import com.idhub.magic.center.entity.OrderEntity;
 import com.idhub.magic.center.entity.OrderState;
 import com.idhub.magic.center.ustorage.IdentityStorage;
 import com.idhub.magic.center.ustorage.MaterialWrapper;
+import com.idhub.magic.center.util.JwtTokenUtil;
 import com.idhub.magic.common.parameter.MagicResponse;
 import com.idhub.magic.common.ustorage.entity.FinancialProfile;
 import com.idhub.magic.common.ustorage.entity.IdentityArchive;
@@ -43,8 +45,11 @@ public class ThirdpartyController {
 	@Autowired Datastore store;
 	
 	@PostMapping("/identity_information")
+	@DoNotAuth
 	public MagicResponse<IdentityInformation> retrieveArchive(@RequestBody String jwt, String identity) {
-		validate(jwt);
+		boolean valid = JwtTokenUtil.validate(jwt);
+		if(!valid)
+			return new MagicResponse(false, "bad jwt token!");
 		IdentityStorage st = store.find(IdentityStorage.class, "id", identity).get();
 		Query<MaterialWrapper> query = store.find(MaterialWrapper.class, "material.identity", identity);
 		List<MaterialWrapper> data = query.asList();
@@ -56,20 +61,11 @@ public class ThirdpartyController {
 		return new MagicResponse<IdentityInformation>(new IdentityInformation(st.getIdentityArchive(), mdata, ld));
 	}
 
-	private void validate(String jwt) {
-		String[] hpse = jwt.split("\\.");
-		String[] hps = new String[hpse.length];
-		for(int i = 0; i < hpse.length; i++) {
-			hps[i] = new String(Base64.encodeBase64URLSafe(hpse[i].getBytes()));
-		}
-		String plain = hpse[0] + "." + hpse[1];
-		String header = hps[0];
-		String payload = hps[1];
-		String signature = hps[2];
-		
-		
-		
-		
+	@GetMapping("/test")
+	@DoNotAuth
+	public MagicResponse test() {
+	
+		return new MagicResponse();
 	}
 	
 

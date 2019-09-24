@@ -22,8 +22,10 @@ public class ClaimConvertor {
 			rst.getContext().add(o.toString());
 		}
 		rst.setIssued(cred.getIssued());
+		rst.setExpires(cred.getExpires());
 		rst.setIssuer(cred.getIssuer().toString());
 		rst.setId(cred.getId().toString());
+		rst.setSubject(cred.getSubject());
 		LinkedHashMap<String, Object> cl = cred.getJsonLdClaimsObject();
 		rst.getClaim().setId(cl.get("id").toString());
 		Object claims = cl.get("claimType");
@@ -52,6 +54,8 @@ public class ClaimConvertor {
 		try {
 			rst.setIssued(cred.getIssued());
 			rst.setIssuer(new URI(cred.getIssuer()));
+			rst.setExpires(cred.getExpires());
+			rst.setSubject(cred.getSubject());
 			if(cred.getId()!= null)
 				rst.setId(new URI(cred.getId()));
 			LinkedHashMap<String, Object> cl = new LinkedHashMap<String, Object>();

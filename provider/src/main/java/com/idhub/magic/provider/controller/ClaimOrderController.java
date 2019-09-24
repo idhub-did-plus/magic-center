@@ -77,12 +77,12 @@ public class ClaimOrderController {
 		
 	}
 	@GetMapping("/issue_claim")
-	public MagicResponse<VerifiableClaimEntity> issueClaim(String orderId) {
+	public MagicResponse<String> issueClaim(String orderId) {
 		
 		
 		VerifiableClaimEntity claim = rep.issueClaim(orderId);
 		
-		return new MagicResponse(claim);
+		return new MagicResponse(claim.getJsonld());
 		
 	}
 }

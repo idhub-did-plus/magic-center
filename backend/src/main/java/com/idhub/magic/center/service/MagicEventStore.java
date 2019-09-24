@@ -18,11 +18,12 @@ import com.idhub.magic.common.event.MagicEvent;
 import com.idhub.magic.common.event.MagicEventType;
 
 @Service
-public class ChainEventStore {
+public class MagicEventStore {
 	@Autowired Datastore store;
 	ObjectMapper mapper = new ObjectMapper();
 	public void store(MagicEventType type, String identity, Object eo) {
 		MagicEvent event = new MagicEvent();
+		event.encoded = true;
 		event.eventClass = eo.getClass().getName();
 		event.eventType = type.name();
 		try {
@@ -37,6 +38,20 @@ public class ChainEventStore {
 			throw new RuntimeException();
 			
 		}
+		
+		
+	
+	}
+	public void storeStringEvent(MagicEventType type, String identity, String eo) {
+		MagicEvent event = new MagicEvent();
+		event.encoded = false;
+		event.eventClass = eo.getClass().getName();
+		event.eventType = type.name();
+		
+			event.event = eo;
+			EventWrapper wrapper = new EventWrapper(identity, event);
+			store.save(wrapper);
+		
 		
 		
 	

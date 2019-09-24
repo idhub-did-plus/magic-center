@@ -19,6 +19,14 @@ public class OrderEntity {
 	Date createTime;
 	Date receiveTime;
 	Date completeTime;
+	Date issueTime;
+	
+	public Date getIssueTime() {
+		return issueTime;
+	}
+	public void setIssueTime(Date issueTime) {
+		this.issueTime = issueTime;
+	}
 	Boolean issued = false;
 	
 	public String getDirectTo() {

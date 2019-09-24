@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.idhub.magic.center.service.ChainEventStore;
+import com.idhub.magic.center.service.MagicEventStore;
 import com.idhub.magic.center.service.ClaimOrderService;
 import com.idhub.magic.common.claim.entity.ClaimOrder;
 import com.idhub.magic.common.event.MagicEvent;

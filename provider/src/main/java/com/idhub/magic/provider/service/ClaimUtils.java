@@ -29,7 +29,7 @@ import com.idhub.magic.provider.model.VerifiableClaimEntity;
 import com.idhub.magic.verifiablecredentials.VerifiableCredential;
 
 public class ClaimUtils {
-	static SimpleDateFormat form = new SimpleDateFormat("YYYY-MM-DD");
+	static SimpleDateFormat form = new SimpleDateFormat("YYYY-MM-dd");
 	static public VerifiableClaimEntity issueClaim(String subject, String claimType,String country, String jurisdiction) throws Exception {
 		VerifiableClaim claim = claim(subject, claimType, country, jurisdiction);
 		VerifiableCredential cred = ClaimConvertor.to(claim);
@@ -54,9 +54,13 @@ public class ClaimUtils {
 		claim.getClaim().setClaimType(claimType);
 		claim.getClaim().setCountry(country);
 		claim.getClaim().setJurisdiction(jurisdiction);
-		
-		String issued = form.format(new Date());
+		Date now = new Date();
+		String issued = form.format(now);
 		claim.setIssued(issued);
+	
+		Date exp = new Date(now.getTime() + 1000l * 3600 * 24 * 60);
+		String expires = form.format(exp);
+		claim.setExpires(expires);
 		String issuer = AccountManager.getMyAccount().getAddress();
 		issuer = "did:" + "erc1056:" + issuer;
 		claim.setIssuer(issuer);

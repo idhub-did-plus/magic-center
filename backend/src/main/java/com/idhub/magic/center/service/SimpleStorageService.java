@@ -29,30 +29,35 @@ import com.amazonaws.services.s3.transfer.TransferManager;
 
 @Service
 public class SimpleStorageService {
-	//@Autowired
+	// @Autowired
 	AmazonS3Client s3;
-	//String bucketName = "xxxxxxx"; // 【你 bucket 的名字】 # 首先需要保证 s3 上已经存在该存储桶
+	// String bucketName = "xxxxxxx"; // 【你 bucket 的名字】 # 首先需要保证 s3 上已经存在该存储桶
 	/*
 	 * void init() { s3 = new AmazonS3Client(new BasicAWSCredentials(AWS_ACCESS_KEY,
 	 * AWS_SECRET_KEY)); s3.setRegion(Region.getRegion(Regions.US_EAST_1)); //
 	 * 此处根据自己的 s3 地区位置改变 }
 	 */
 
-    private AmazonS3 s3client;
+	private AmazonS3 s3client;
 
-    @Value("${amazonProperties.endpointUrl}")
-    private String endpointUrl;
-    @Value("${amazonProperties.bucketName}")
-    private String bucketName;
-    @Value("${amazonProperties.accessKey}")
-    private String accessKey;
-    @Value("${amazonProperties.secretKey}")
-    private String secretKey;
-@PostConstruct
-    private void initializeAmazon() {
-       AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
-       this.s3client = new AmazonS3Client(credentials);
-}
+	@Value("${amazonProperties.endpointUrl}")
+	private String endpointUrl;
+	@Value("${amazonProperties.bucketName}")
+	private String bucketName;
+	@Value("${amazonProperties.accessKey}")
+	private String accessKey;
+	@Value("${amazonProperties.secretKey}")
+	private String secretKey;
+
+	@PostConstruct
+	private void initializeAmazon() {
+		
+		
+		
+		AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
+		this.s3client = new AmazonS3Client(credentials);
+	}
+
 	public String uploadToS3(MultipartFile file, String key) throws IOException {
 		try {
 			byte[] data = file.getBytes();
@@ -61,7 +66,8 @@ public class SimpleStorageService {
 
 			ObjectMetadata meta = new ObjectMetadata();
 			meta.setContentLength(data.length);
-			s3.putObject(new PutObjectRequest(bucketPath, key, in, meta).withCannedAcl(CannedAccessControlList.PublicRead));
+			s3.putObject(
+					new PutObjectRequest(bucketPath, key, in, meta).withCannedAcl(CannedAccessControlList.PublicRead));
 			GeneratePresignedUrlRequest urlRequest = new GeneratePresignedUrlRequest(bucketName, key);
 			URL url = s3.generatePresignedUrl(urlRequest);
 

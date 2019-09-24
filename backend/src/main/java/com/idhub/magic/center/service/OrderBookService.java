@@ -16,6 +16,7 @@ import com.idhub.magic.center.entity.OrderEntity;
 import com.idhub.magic.center.entity.OrderState;
 import com.idhub.magic.center.ustorage.IdentityStorage;
 import com.idhub.magic.center.ustorage.MaterialWrapper;
+import com.idhub.magic.common.event.MagicEventType;
 import com.idhub.magic.common.ustorage.entity.Material;
 import com.idhub.magic.provider.IdentityData;
 import com.idhub.magic.provider.Order;
@@ -25,6 +26,7 @@ import com.idhub.magic.verifiablecredentials.VerifiableCredential;
 public class OrderBookService implements OrderBook{
 	@Autowired Datastore ds;
 	@Autowired VerifiableCredentialService vcService;
+	@Autowired MagicEventStore eventStore;
 	@Override
 	public List<Order> tome(String providerIdentity) {
 		List<OrderEntity> es = ds.createQuery(OrderEntity.class).field("directTo").equal(providerIdentity).field("state").equal(OrderState.waiting.name()).asList();
@@ -50,8 +52,18 @@ public class OrderBookService implements OrderBook{
 	}
 
 	@Override
-	public void issueClaim(String identity,String orderId, String credential) {
-		vcService.store(identity, orderId, credential);
+	public void issueClaim(String providerIdentity,String orderId, String credential) {
+		
+		 Query<OrderEntity> query = ds.createQuery(OrderEntity.class).field("id").equal(orderId).field("state").equal(OrderState.relayed.name());
+		 OrderEntity order = query.get();
+		 if(order == null)
+			 return;
+		 
+		 
+		 UpdateOperations<OrderEntity> op = ds.createUpdateOperations(OrderEntity.class).set("state", OrderState.issued.name()).set("issueTime", new Date());;
+		 UpdateResults n = ds.update(query, op);
+		 vcService.store(order.getOrder().identity, orderId, credential);
+		 eventStore.storeStringEvent(MagicEventType.claim_issued_event, order.getOrder().identity, credential);
 	}
 
 	@Override
