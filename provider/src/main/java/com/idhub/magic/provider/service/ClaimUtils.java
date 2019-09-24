@@ -49,6 +49,7 @@ public class ClaimUtils {
 		claim.getContext().addAll(Arrays.asList(cs));
 		String did = subject;
 		did = "did:" + "erc1056:" + did;
+		
 		claim.getClaim().setId(did);
 		claim.getClaim().setClaimType(claimType);
 		claim.getClaim().setCountry(country);
