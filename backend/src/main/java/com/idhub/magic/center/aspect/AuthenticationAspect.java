@@ -21,8 +21,9 @@ import com.idhub.magic.common.util.Signature;
 public class AuthenticationAspect {
 	ObjectMapper mapper = new ObjectMapper();
 	@Autowired HttpServletRequest req;
-	@Before("@annotation(org.springframework.web.bind.annotation.PostMapping)")
+	@Before("@annotation(org.springframework.web.bind.annotation.PostMapping)&&!@annotation(com.idhub.magic.center.annotation.DoNotAuth)")
 	public void myBefore(JoinPoint joinpoint) {
+
 		String signed = req.getHeader("signature");
 		String identity = req.getParameter("identity");
 		String timestamp = req.getParameter("timestamp");

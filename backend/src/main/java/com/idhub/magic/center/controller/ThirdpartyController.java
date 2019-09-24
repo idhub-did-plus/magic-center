@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.idhub.magic.center.annotation.DoNotAuth;
 import com.idhub.magic.center.entity.ClaimEntity;
 import com.idhub.magic.center.entity.OrderEntity;
 import com.idhub.magic.center.entity.OrderState;
@@ -44,6 +45,7 @@ public class ThirdpartyController {
 	@Autowired Datastore store;
 	
 	@PostMapping("/identity_information")
+	@DoNotAuth
 	public MagicResponse<IdentityInformation> retrieveArchive(@RequestBody String jwt, String identity) {
 		boolean valid = JwtTokenUtil.validate(jwt);
 		if(!valid)
