@@ -16,13 +16,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -53,18 +51,11 @@ public class SimpleStorageService {
 
 	@PostConstruct
 	private void initializeAmazon() {
-
+		
+		
+		
 		AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
-
-		AmazonS3ClientBuilder clientBuilder = AmazonS3ClientBuilder.standard();
-
-		if (!accessKey.isEmpty() && !secretKey.isEmpty()) {
-			clientBuilder
-					.withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)));
-		}
-
-		this.s3client = clientBuilder.build();
-
+		this.s3client = new AmazonS3Client(credentials);
 	}
 
 	public String uploadToS3(MultipartFile file, String key) throws IOException {
