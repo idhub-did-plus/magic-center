@@ -64,6 +64,9 @@ public class RetrofitAccessor {
 			@Override
 			public Response intercept(Chain chain) throws IOException {
 				Request request = chain.request();
+				String pass = request.header("pass_auth");
+				if(pass != null)
+					return chain.proceed(request);
 				HttpUrl url = request.url();
 				String identity = url.queryParameter("identity");
 				long tp = System.currentTimeMillis();
