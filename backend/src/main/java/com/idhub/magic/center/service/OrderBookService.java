@@ -58,7 +58,7 @@ public class OrderBookService implements OrderBook{
 		 UpdateOperations<OrderEntity> op = ds.createUpdateOperations(OrderEntity.class).set("state", OrderState.issued.name()).set("issueTime", new Date());;
 		 UpdateResults n = ds.update(query, op);
 		 vcService.store(identity, orderId, credential);
-		 eventStore.store(MagicEventType.claim_issued_event, identity, credential);
+		 eventStore.storeStringEvent(MagicEventType.claim_issued_event, identity, credential);
 	}
 
 	@Override
