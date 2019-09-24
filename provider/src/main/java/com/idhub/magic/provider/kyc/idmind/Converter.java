@@ -8,7 +8,7 @@ import com.idhub.magic.common.ustorage.entity.component.Name;
 import com.idhub.magic.provider.kyc.idmind.entity.consumer.ConsumerKycRequest;
 
 public class Converter {
-	static SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
+	static SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd");
 
 	static public ConsumerKycRequest archve2request(IdentityArchive archive) {
 		ConsumerKycRequest req = new ConsumerKycRequest();

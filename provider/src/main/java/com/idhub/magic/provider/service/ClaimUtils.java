@@ -29,7 +29,7 @@ import com.idhub.magic.provider.model.VerifiableClaimEntity;
 import com.idhub.magic.verifiablecredentials.VerifiableCredential;
 
 public class ClaimUtils {
-	static SimpleDateFormat form = new SimpleDateFormat("YYYY-MM-DD");
+	static SimpleDateFormat form = new SimpleDateFormat("YYYY-MM-dd");
 	static public VerifiableClaimEntity issueClaim(String subject, String claimType,String country, String jurisdiction) throws Exception {
 		VerifiableClaim claim = claim(subject, claimType, country, jurisdiction);
 		VerifiableCredential cred = ClaimConvertor.to(claim);
