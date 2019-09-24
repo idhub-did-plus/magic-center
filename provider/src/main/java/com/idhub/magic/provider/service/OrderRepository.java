@@ -48,26 +48,27 @@ public class OrderRepository {
 		return query.asList();
 	}
 	public IdentityEntity receive(String orderId) {
-		
+		try {
 		 String providerIdentity = AccountManager.getMyAccount().getAddress();
-		 fac.getOrderBook().receive(providerIdentity, orderId);
+		 fac.getOrderBook().receive(providerIdentity, orderId).execute().body();
 		 Query<ProviderOrder> query = ds.find(ProviderOrder.class, "id", orderId);
 		 
 		 ProviderOrder order =query.get();
 		
 		 IdentityData info;
-		try {
+	
 			info = fac.getOrderBook().getIdentityInformation(providerIdentity, order.getOrder().identity).execute().body();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
+		
 		IdentityEntity id = new IdentityEntity(info);
 		ds.save(id);
 		UpdateOperations<ProviderOrder> operations = ds.createUpdateOperations(ProviderOrder.class).set("state", ProviderOrderState.processing.name());
 		  ds.update(query, operations);
 		return id;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 		
 	}
 
