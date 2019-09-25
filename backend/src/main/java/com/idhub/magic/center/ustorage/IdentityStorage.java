@@ -8,6 +8,7 @@ import com.idhub.magic.common.ustorage.entity.IdentityArchive;
 public class IdentityStorage {
 	@Id
 	String id;
+	String ein;
 	IdentityArchive identityArchive;
 	
 	public String getId() {

@@ -39,6 +39,7 @@ public interface IdentityStorage {
      Call<MagicResponse> uploadMaterial(@Query("identity")String identity, @Query("type") String type, @Query("name") String name, @Part MultipartBody.Part file);
      @GET("storage/extension_meta")
      Call<MagicResponse<List<ExtensionField>>>  extensionMeta(@Query("identity")String identity);
-
+     @GET("storage/aggregate_identity")
+     Call<MagicResponse>  aggregateIdentity(@Query("identity")String identity, @Query("ein")long ein);
      
 }

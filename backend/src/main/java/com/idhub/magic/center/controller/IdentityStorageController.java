@@ -136,4 +136,13 @@ public class IdentityStorageController {
 
 		return rst;
 	}
+	@GetMapping("/aggregate_identity")
+	@ResponseBody
+	public MagicResponse aggregateIdentity(String identity, long ein) {
+		Query<IdentityStorage> query = store.find(IdentityStorage.class, "id", identity);
+		UpdateOperations<IdentityStorage> up = store.createUpdateOperations(IdentityStorage.class).set("ein", ein);
+		UpdateResults rst = store.update(query, up);
+		return new MagicResponse();
+
+	}
 }
