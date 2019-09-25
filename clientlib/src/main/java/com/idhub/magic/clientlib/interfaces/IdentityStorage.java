@@ -5,6 +5,7 @@ import java.util.List;
 import com.idhub.magic.common.parameter.MagicResponse;
 import com.idhub.magic.common.ustorage.entity.FinancialProfile;
 import com.idhub.magic.common.ustorage.entity.IdentityArchive;
+import com.idhub.magic.common.ustorage.entity.IdentityEverything;
 import com.idhub.magic.common.ustorage.entity.Material;
 import com.idhub.magic.common.ustorage.entity.ext.ExtensionField;
 
@@ -41,5 +42,6 @@ public interface IdentityStorage {
      Call<MagicResponse<List<ExtensionField>>>  extensionMeta(@Query("identity")String identity);
      @GET("storage/aggregate_identity")
      Call<MagicResponse>  aggregateIdentity(@Query("identity")String identity, @Query("ein")long ein);
-     
+     @GET("storage/recover")
+     public Call<MagicResponse<IdentityEverything>> recover(String identity);
 }

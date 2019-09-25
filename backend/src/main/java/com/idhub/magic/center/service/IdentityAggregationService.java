@@ -14,6 +14,19 @@ import org.web3j.tuples.generated.Tuple4;
 public class IdentityAggregationService {
 	Map<String, List<String>> cache = new HashMap<String, List<String>>();
 	@Autowired ContractManager manager;
+	public long ein(String address) {
+		BigInteger ein;
+		try {
+			ein = manager.registry1484.getEIN(address).send();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		if(ein.longValue() <= 0)
+			throw new RuntimeException("there is no aggregation for this address!");
+		return ein.longValue();
+	}
 	public boolean validate(String addr1, String addr2) {
 		try {
 			boolean same =  addr1.equals(addr2);

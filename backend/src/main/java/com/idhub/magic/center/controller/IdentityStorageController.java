@@ -26,11 +26,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.idhub.magic.center.annotation.DoNotAuth;
+import com.idhub.magic.center.entity.ClaimEntity;
+import com.idhub.magic.center.service.IdentityAggregationService;
 import com.idhub.magic.center.ustorage.IdentityStorage;
 import com.idhub.magic.center.ustorage.MaterialWrapper;
 import com.idhub.magic.common.parameter.MagicResponse;
 import com.idhub.magic.common.ustorage.entity.FinancialProfile;
 import com.idhub.magic.common.ustorage.entity.IdentityArchive;
+import com.idhub.magic.common.ustorage.entity.IdentityEverything;
 import com.idhub.magic.common.ustorage.entity.Material;
 import com.idhub.magic.common.ustorage.entity.ext.ExtensionField;
 
@@ -40,6 +43,7 @@ import static java.util.stream.Collectors.toList;
 
 public class IdentityStorageController {
 	@Autowired Datastore store;
+	@Autowired IdentityAggregationService identityAggregationService;
 	@PostMapping("/store_archive")
 	public MagicResponse storeArchive(@RequestBody IdentityArchive archive,	String identity) {
 		boolean notexists = store.createQuery(IdentityStorage.class).field("id").equal(identity).asList().isEmpty();
@@ -144,5 +148,29 @@ public class IdentityStorageController {
 		UpdateResults rst = store.update(query, up);
 		return new MagicResponse();
 
+	}
+	@GetMapping("/recover")
+	@ResponseBody
+	public MagicResponse<IdentityEverything> recover(String identity) {
+		long ein = this.identityAggregationService.ein(identity);
+		IdentityEverything e = extractAll(ein);
+		if(e == null)
+			return new MagicResponse(false, "no aggregated data for this ein!");
+		return new MagicResponse<IdentityEverything>(e);
+	}
+	IdentityEverything extractAll(long ein){
+		
+		IdentityStorage st = store.find(IdentityStorage.class, "ein", ein).get();
+		if(st == null)
+			return null;
+		String identity = st.getId();
+		Query<MaterialWrapper> query = store.find(MaterialWrapper.class, "material.identity", identity);
+		List<MaterialWrapper> data = query.asList();
+		List<Material> mdata = data.stream().map(MaterialWrapper::getMaterial).collect(toList());
+
+		Query<ClaimEntity> cquery = store.find(ClaimEntity.class, "identity", identity);
+		List<ClaimEntity> cdata = cquery.asList();
+		List<String> ld = cdata.stream().map(ClaimEntity::getClaimJsonld).collect(toList());
+		return (new IdentityEverything(st.getIdentityArchive(), mdata, ld));
 	}
 }
