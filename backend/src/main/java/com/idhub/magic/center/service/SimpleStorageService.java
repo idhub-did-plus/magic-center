@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class SimpleStorageService {
 
 	}
 
-	public String uploadToS3(MultipartFile file, String key) {
+	public String store(MultipartFile file, String key) {
 		try {
 			byte[] data = file.getBytes();
 			ByteArrayInputStream in = new ByteArrayInputStream(data);
@@ -102,6 +103,17 @@ public class SimpleStorageService {
 			byte[] data = IOUtils.toByteArray(object.getObjectContent());
 
 			return data;
+		} catch (Exception ase) {
+			ase.printStackTrace();
+			throw new RuntimeException(ase);
+		}
+	}
+	public void stream(String key, OutputStream out) {
+		try {
+			S3Object so = s3.getObject(new GetObjectRequest(bucketName, key));
+			
+			IOUtils.copy(so.getObjectContent(), out);
+			out.flush();
 		} catch (Exception ase) {
 			ase.printStackTrace();
 			throw new RuntimeException(ase);

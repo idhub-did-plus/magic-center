@@ -9,6 +9,13 @@ public class MaterialWrapper {
 	@Id
 	String id;
 	String s3key;
+	public byte[] getData() {
+		return data;
+	}
+	public void setData(byte[] data) {
+		this.data = data;
+	}
+	byte[] data;
 	public String getS3key() {
 		return s3key;
 	}

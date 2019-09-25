@@ -82,11 +82,11 @@ public class IdentityStorageController {
 		if (file.isEmpty()) {
 			return new MagicResponse(false, "upload fail!");
 		}
-		byte[] data = IOUtils.toByteArray(file.getInputStream());
+		//byte[] data = IOUtils.toByteArray(file.getInputStream());
 		String ext = extension(file);
-		Material mat = new Material( identity,  type,  name, data, ext);
+		Material mat = new Material( identity,  type,  name,  ext);
 		MaterialWrapper wr = new MaterialWrapper(mat);
-		simpleStorageService.store(data, wr.getId());
+		simpleStorageService.store(file, wr.getId());
 		store.save(wr);
 		
 		return new MagicResponse();
@@ -123,10 +123,17 @@ public class IdentityStorageController {
 	@DoNotAuth
 	public void materialStream(String identity, String type, String name, HttpServletResponse response) throws Exception {
 		String id = identity + type + name;
+		stream(response, id);
+		
+		
+	}
+	@GetMapping("/material_stream_id")
+	@DoNotAuth
+	private void stream(HttpServletResponse response, String id) throws IOException {
 		Query<MaterialWrapper> query = store.find(MaterialWrapper.class, "id", id);
 		
 		MaterialWrapper wrapper = query.get();
-		byte[] data = getData(wrapper);
+		
 		String ext = wrapper.getMaterial().getExt();
 		if(ext == null)
 			ext = "jpg";
@@ -135,10 +142,11 @@ public class IdentityStorageController {
 		}else {
 			response.setContentType("application/pdf");
 		}
-		response.getOutputStream().write(data);
-		response.getOutputStream().flush();
-		
-		
+		this.simpleStorageService.stream(wrapper.getId(), response.getOutputStream());
+		/*
+		 * byte[] data = getData(wrapper); response.getOutputStream().write(data);
+		 * response.getOutputStream().flush();
+		 */
 	}
 	private byte[] getData(MaterialWrapper wrapper) {
 		
