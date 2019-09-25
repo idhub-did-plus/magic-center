@@ -6,9 +6,15 @@ import org.mongodb.morphia.annotations.Id;
 import com.idhub.magic.common.ustorage.entity.IdentityArchive;
 @Entity
 public class IdentityStorage {
+	public long getEin() {
+		return ein;
+	}
+	public void setEin(long ein) {
+		this.ein = ein;
+	}
 	@Id
 	String id;
-	String ein;
+	long ein;
 	IdentityArchive identityArchive;
 	
 	public String getId() {

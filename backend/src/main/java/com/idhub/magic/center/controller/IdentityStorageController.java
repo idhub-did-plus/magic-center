@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.idhub.magic.center.annotation.DoNotAuth;
 import com.idhub.magic.center.entity.ClaimEntity;
 import com.idhub.magic.center.service.IdentityAggregationService;
+import com.idhub.magic.center.service.MyIden;
 import com.idhub.magic.center.ustorage.IdentityStorage;
 import com.idhub.magic.center.ustorage.MaterialWrapper;
 import com.idhub.magic.common.parameter.MagicResponse;
@@ -172,5 +173,35 @@ public class IdentityStorageController {
 		List<ClaimEntity> cdata = cquery.asList();
 		List<String> ld = cdata.stream().map(ClaimEntity::getClaimJsonld).collect(toList());
 		return (new IdentityEverything(st.getIdentityArchive(), mdata, ld));
+	}
+	@GetMapping("/destry_legacy")
+	@ResponseBody
+	public MagicResponse destry_legacy(String identity,String legacyAddress) {
+		IdentityStorage now = store.find(IdentityStorage.class, "id", identity).get();
+		if(now == null|| now.getEin() <=0)
+			return new MagicResponse(false, "please recover data before destroy old one!");
+		IdentityStorage st = store.find(IdentityStorage.class, "id", legacyAddress).get();
+		if(now.getEin() != st.getEin())
+			return new MagicResponse(false, "can not destry data with different ein!");
+		MyIden iden = associates(identity);	
+		if(iden.getEin() != now.getEin())
+			return new MagicResponse(false, "ein in 1484 not the same with this account!!");
+		destroy(legacyAddress);
+		
+		return new MagicResponse();
+	}
+	private void destroy(String legacyAddress) {
+		Query<IdentityStorage> q1 = store.find(IdentityStorage.class, "id", legacyAddress);
+		Query<MaterialWrapper> q2 = store.find(MaterialWrapper.class, "material.identity", legacyAddress);
+		Query<ClaimEntity> q3 = store.find(ClaimEntity.class, "identity", legacyAddress);
+		store.delete(q1);
+		store.delete(q2);
+		store.delete(q3);
+		
+		
+	}
+	private MyIden associates(String identity) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

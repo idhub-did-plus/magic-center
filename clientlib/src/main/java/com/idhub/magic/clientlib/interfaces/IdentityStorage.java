@@ -44,4 +44,6 @@ public interface IdentityStorage {
      Call<MagicResponse>  aggregateIdentity(@Query("identity")String identity, @Query("ein")long ein);
      @GET("storage/recover")
      public Call<MagicResponse<IdentityEverything>> recover(String identity);
+     @GET("storage/destry_legacy")
+     public Call<MagicResponse> destryLegacy(String identity,String legacyAddress);
 }

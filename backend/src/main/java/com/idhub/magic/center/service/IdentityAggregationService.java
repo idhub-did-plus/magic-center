@@ -48,6 +48,25 @@ public class IdentityAggregationService {
 		
 		
 	}
+	public MyIden associates(String identity) {
+		try {
+			
+			BigInteger ein = manager.registry1484.getEIN(identity).send();
+			if(ein.longValue() <= 0)
+				return null;
+			
+			Tuple4<String, List<String>, List<String>, List<String>> id = manager.registry1484.getIdentity(ein).send();
+			
+			
+			return new MyIden(id.getValue2(), ein.longValue());
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
+		
+		
+		
+	}
 	
 
 }
