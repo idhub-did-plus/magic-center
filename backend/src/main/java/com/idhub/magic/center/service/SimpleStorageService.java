@@ -67,7 +67,7 @@ public class SimpleStorageService {
 		
 			ObjectMetadata meta = new ObjectMetadata();
 			meta.setContentLength(data.length);
-			s3.putObject(new PutObjectRequest(bucketName, key, in, meta).withCannedAcl(CannedAccessControlList.PublicRead));
+			s3.putObject(new PutObjectRequest(bucketName, key, in, meta).withCannedAcl(CannedAccessControlList.Private));
 			GeneratePresignedUrlRequest urlRequest = new GeneratePresignedUrlRequest(bucketName, key);
 			URL url = s3.generatePresignedUrl(urlRequest);
 
@@ -84,8 +84,7 @@ public class SimpleStorageService {
 			ByteArrayInputStream in = new ByteArrayInputStream(data);
 			ObjectMetadata meta = new ObjectMetadata();
 			meta.setContentLength(data.length);
-			s3.putObject(
-					new PutObjectRequest(bucketName, key, in, meta).withCannedAcl(CannedAccessControlList.PublicRead));
+			s3.putObject(new PutObjectRequest(bucketName, key, in, meta).withCannedAcl(CannedAccessControlList.Private));
 			GeneratePresignedUrlRequest urlRequest = new GeneratePresignedUrlRequest(bucketName, key);
 			URL url = s3.generatePresignedUrl(urlRequest);
 

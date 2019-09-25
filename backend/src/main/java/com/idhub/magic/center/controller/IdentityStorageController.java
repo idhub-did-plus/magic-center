@@ -142,8 +142,8 @@ public class IdentityStorageController {
 	}
 	private byte[] getData(MaterialWrapper wrapper) {
 		
-	//	byte[] data = this.simpleStorageService.get(wrapper.getId());//wrapper.getMaterial().getData();
-		byte[] data = wrapper.getMaterial().getData();
+		byte[] data = this.simpleStorageService.get(wrapper.getId());//wrapper.getMaterial().getData();
+	//	byte[] data = wrapper.getMaterial().getData();
 		return data;
 	}
 	@GetMapping("/extension_meta")
