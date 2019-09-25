@@ -23,12 +23,12 @@ import com.idhub.magic.provider.agent.OrderBookFactory;
 import com.idhub.magic.provider.model.IdentityEntity;
 
 @Service
-public class DirectedOrderFecher {
+public class DirectedOrderFetcher {
 	@Autowired OrderBookFactory fac;
 	@Autowired OrderRepository rep;
 	@Autowired Datastore ds;
 	ScheduledExecutorService pool;
-	Logger logger = Logger.getLogger(DirectedOrderFecher.class.getSimpleName());
+	Logger logger = Logger.getLogger(DirectedOrderFetcher.class.getSimpleName());
 	@PostConstruct
 	void start() {
 		pool = Executors.newScheduledThreadPool(1);
