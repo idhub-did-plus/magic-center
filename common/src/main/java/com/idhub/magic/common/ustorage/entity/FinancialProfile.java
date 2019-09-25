@@ -5,9 +5,4 @@ public class FinancialProfile {
 	public String investorType;
 
 }
-enum BuyerType{
-	bt1,bt2,bt3,bt4
-}
-enum InvestorType{
-	it1,it2
-}
+
