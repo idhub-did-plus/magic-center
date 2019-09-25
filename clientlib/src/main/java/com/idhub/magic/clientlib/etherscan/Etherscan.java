@@ -107,6 +107,9 @@ public class Etherscan implements IncomingService {
 		});
 
 	}
+	public void setCurrentApi(EthNetwork ethNetwork){
+		current = ethNetwork;
+	}
 	EtherScanApi api() {
 		return this.apis.get(current);
 	}
