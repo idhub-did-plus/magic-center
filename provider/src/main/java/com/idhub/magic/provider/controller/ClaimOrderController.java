@@ -14,6 +14,7 @@ import com.idhub.magic.provider.model.IdentityEntity;
 import com.idhub.magic.provider.model.ProviderOrder;
 import com.idhub.magic.provider.model.ProviderOrderState;
 import com.idhub.magic.provider.model.VerifiableClaimEntity;
+import com.idhub.magic.provider.service.BlockchainService;
 import com.idhub.magic.provider.service.OrderRepository;
 
 
@@ -24,7 +25,8 @@ public class ClaimOrderController {
 	OrderRepository rep;
 	@Autowired
 	Datastore ds;
-
+	@Autowired
+	BlockchainService blockchainService;
 	@GetMapping("/list")
 	public MagicResponse<List<ProviderOrder>> list(ProviderOrderState state, int startPage, int pageSize) {
 		List<ProviderOrder> orders = rep.list(state, startPage, pageSize);
@@ -81,7 +83,7 @@ public class ClaimOrderController {
 		
 		
 		VerifiableClaimEntity claim = rep.issueClaim(orderId);
-		
+		blockchainService.publishTo780(claim.getClaim());
 		return new MagicResponse(claim.getJsonld());
 		
 	}
