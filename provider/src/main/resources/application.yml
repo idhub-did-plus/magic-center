@@ -7,3 +7,6 @@ spring:
       host: 127.0.0.1
       port: 27017
       database: ProviderRepository
+web3j:
+  client-address: http://localhost:7545
+  admin-client: true
