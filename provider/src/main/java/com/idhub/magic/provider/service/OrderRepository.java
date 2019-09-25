@@ -49,7 +49,7 @@ public class OrderRepository {
 		return query.asList();
 	}
 	Query<ProviderOrder> check(String orderId, ProviderOrderState current) {
-		Query<ProviderOrder> query = ds.createQuery(ProviderOrder.class).field("state").equal(current.name());
+		Query<ProviderOrder> query = ds.createQuery(ProviderOrder.class).field("id").equal(orderId).field("state").equal(current.name());
 		if(query.countAll() == 0) {
 			throw new RuntimeException("invalid order state!");
 		}
