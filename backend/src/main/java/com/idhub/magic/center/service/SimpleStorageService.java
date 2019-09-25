@@ -5,9 +5,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,24 +23,20 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
+import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.transfer.TransferManager;
 
 @Service
 public class SimpleStorageService {
-	// @Autowired
-	AmazonS3Client s3;
-	// String bucketName = "xxxxxxx"; // 【你 bucket 的名字】 # 首先需要保证 s3 上已经存在该存储桶
-	/*
-	 * void init() { s3 = new AmazonS3Client(new BasicAWSCredentials(AWS_ACCESS_KEY,
-	 * AWS_SECRET_KEY)); s3.setRegion(Region.getRegion(Regions.US_EAST_1)); //
-	 * 此处根据自己的 s3 地区位置改变 }
-	 */
 
-	private AmazonS3 s3client;
+	AmazonS3Client s3;
+
 
 	@Value("${amazonProperties.endpointUrl}")
 	private String endpointUrl;
@@ -51,33 +49,63 @@ public class SimpleStorageService {
 
 	@PostConstruct
 	private void initializeAmazon() {
-		
-		
-		
+
 		AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
-		this.s3client = new AmazonS3Client(credentials);
+		
+		//ap-northeast-1
+		this.s3 = new AmazonS3Client(credentials);
+		s3.setRegion(Region.getRegion(Regions.AP_SOUTHEAST_1));
+	//	List<Bucket> bs = s3.listBuckets();
+	//	System.out.println(bs);
+
 	}
 
-	public String uploadToS3(MultipartFile file, String key) throws IOException {
+	public String uploadToS3(MultipartFile file, String key) {
 		try {
 			byte[] data = file.getBytes();
 			ByteArrayInputStream in = new ByteArrayInputStream(data);
-			String bucketPath = bucketName + "/upload";
-
+		
 			ObjectMetadata meta = new ObjectMetadata();
 			meta.setContentLength(data.length);
-			s3.putObject(
-					new PutObjectRequest(bucketPath, key, in, meta).withCannedAcl(CannedAccessControlList.PublicRead));
+			s3.putObject(new PutObjectRequest(bucketName, key, in, meta).withCannedAcl(CannedAccessControlList.PublicRead));
 			GeneratePresignedUrlRequest urlRequest = new GeneratePresignedUrlRequest(bucketName, key);
 			URL url = s3.generatePresignedUrl(urlRequest);
 
 			return url.toString();
-		} catch (AmazonServiceException ase) {
+		} catch (Exception ase) {
 			ase.printStackTrace();
-		} catch (AmazonClientException ace) {
-			ace.printStackTrace();
-		}
-		return null;
+			throw new RuntimeException(ase);
+		} 
 	}
 
+	public String store(byte[] data, String key) {
+		try {
+
+			ByteArrayInputStream in = new ByteArrayInputStream(data);
+			ObjectMetadata meta = new ObjectMetadata();
+			meta.setContentLength(data.length);
+			s3.putObject(
+					new PutObjectRequest(bucketName, key, in, meta).withCannedAcl(CannedAccessControlList.PublicRead));
+			GeneratePresignedUrlRequest urlRequest = new GeneratePresignedUrlRequest(bucketName, key);
+			URL url = s3.generatePresignedUrl(urlRequest);
+
+			return url.toString();
+		} catch (Exception ase) {
+			ase.printStackTrace();
+			throw new RuntimeException(ase);
+		}
+	}
+
+	public byte[] get(String key) {
+		try {
+			S3Object object = s3.getObject(new GetObjectRequest(bucketName, key));
+
+			byte[] data = IOUtils.toByteArray(object.getObjectContent());
+
+			return data;
+		} catch (Exception ase) {
+			ase.printStackTrace();
+			throw new RuntimeException(ase);
+		}
+	}
 }

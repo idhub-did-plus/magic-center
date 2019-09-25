@@ -8,6 +8,13 @@ import com.idhub.magic.common.ustorage.entity.Material;
 public class MaterialWrapper {
 	@Id
 	String id;
+	String s3key;
+	public String getS3key() {
+		return s3key;
+	}
+	public void setS3key(String s3key) {
+		this.s3key = s3key;
+	}
 	Material material;
 	public MaterialWrapper() {
 		super();

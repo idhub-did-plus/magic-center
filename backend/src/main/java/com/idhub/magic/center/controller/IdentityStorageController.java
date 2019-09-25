@@ -29,6 +29,7 @@ import com.idhub.magic.center.annotation.DoNotAuth;
 import com.idhub.magic.center.entity.ClaimEntity;
 import com.idhub.magic.center.service.IdentityAggregationService;
 import com.idhub.magic.center.service.MyIden;
+import com.idhub.magic.center.service.SimpleStorageService;
 import com.idhub.magic.center.ustorage.IdentityStorage;
 import com.idhub.magic.center.ustorage.MaterialWrapper;
 import com.idhub.magic.common.parameter.MagicResponse;
@@ -45,6 +46,7 @@ import static java.util.stream.Collectors.toList;
 public class IdentityStorageController {
 	@Autowired Datastore store;
 	@Autowired IdentityAggregationService identityAggregationService;
+	@Autowired SimpleStorageService simpleStorageService;
 	@PostMapping("/store_archive")
 	public MagicResponse storeArchive(@RequestBody IdentityArchive archive,	String identity) {
 		boolean notexists = store.createQuery(IdentityStorage.class).field("id").equal(identity).asList().isEmpty();
@@ -81,14 +83,19 @@ public class IdentityStorageController {
 			return new MagicResponse(false, "upload fail!");
 		}
 		byte[] data = IOUtils.toByteArray(file.getInputStream());
-		String fname = file.getOriginalFilename();
-		String[] ne = fname.split("\\.");
-		String ext = ne[ne.length - 1];
+		String ext = extension(file);
 		Material mat = new Material( identity,  type,  name, data, ext);
 		MaterialWrapper wr = new MaterialWrapper(mat);
+		simpleStorageService.store(data, wr.getId());
 		store.save(wr);
 		
 		return new MagicResponse();
+	}
+	private String extension(MultipartFile file) {
+		String fname = file.getOriginalFilename();
+		String[] ne = fname.split("\\.");
+		String ext = ne[ne.length - 1];
+		return ext;
 	}
 	@GetMapping("/retrieve_materials")
 	@ResponseBody
@@ -119,7 +126,7 @@ public class IdentityStorageController {
 		Query<MaterialWrapper> query = store.find(MaterialWrapper.class, "id", id);
 		
 		MaterialWrapper wrapper = query.get();
-		byte[] data = wrapper.getMaterial().getData();
+		byte[] data = getData(wrapper);
 		String ext = wrapper.getMaterial().getExt();
 		if(ext == null)
 			ext = "jpg";
@@ -132,6 +139,12 @@ public class IdentityStorageController {
 		response.getOutputStream().flush();
 		
 		
+	}
+	private byte[] getData(MaterialWrapper wrapper) {
+		
+	//	byte[] data = this.simpleStorageService.get(wrapper.getId());//wrapper.getMaterial().getData();
+		byte[] data = wrapper.getMaterial().getData();
+		return data;
 	}
 	@GetMapping("/extension_meta")
 	@ResponseBody

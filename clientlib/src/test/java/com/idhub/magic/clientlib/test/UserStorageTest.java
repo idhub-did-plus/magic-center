@@ -65,22 +65,22 @@ class UserStorageTest {
 		MagicResponse resp = storage.uploadMaterial(identity, "ddd", "ddd", filePart).execute().body();
 
 	}
-	@Test
+	//@Test
 	void testRetrieveArchive() throws Exception {
 			MagicResponse<IdentityArchive> user = storage.retrieveArchive(identity).execute().body();
 
 	}
-	@Test
+	//@Test
 	void testRetrieveMaterials() throws Exception {
 		 MagicResponse<List<Material>> ddd = storage.retrieveMaterials(identity).execute().body();
 
 	}
-	@Test
+	//@Test
 	void testRemoveMaterials() throws Exception {
 		MagicResponse ms = storage.removeMaterial(identity, "kkk", "lll").execute().body();
 
 	}
-	@Test
+	//@Test
 	void testExtensionMeta() throws Exception {
 		MagicResponse ms = storage.extensionMeta(identity).execute().body();
 

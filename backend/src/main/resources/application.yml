@@ -14,4 +14,4 @@ amazonProperties:
   endpointUrl: https://s3.us-east-2.amazonaws.com
   accessKey: AKIAXQQ7WMZVIRQUKJ4R
   secretKey: k9qX5fy89g2NgkvQ5ja3pWz4yAItXpW1dxIDCjWc
-  bucketName: your-bucket-name
+  bucketName: idhub-did-plus
