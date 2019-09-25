@@ -72,7 +72,8 @@ public class OrderRepository {
 	
 		
 		 MagicResponse<IdentityData> info = fac.getOrderBook().getIdentityInformation(providerIdentity, orderId).execute().body();
-		
+		if(!info.isSuccess())
+			throw new RuntimeException( "from orderbook:" + info.getMessage());
 		IdentityEntity id = new IdentityEntity(info.getData());
 		ds.save(id);
 		stepForward(query, ProviderOrderState.processing);
