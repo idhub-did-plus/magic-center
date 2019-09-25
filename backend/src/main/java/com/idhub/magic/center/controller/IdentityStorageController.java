@@ -116,6 +116,8 @@ public class IdentityStorageController {
 		MaterialWrapper wrapper = query.get();
 		byte[] data = wrapper.getMaterial().getData();
 		String ext = wrapper.getMaterial().getExt();
+		if(ext == null)
+			ext = "jpg";
 		if(ext.equalsIgnoreCase("jpg")) {
 			response.setContentType("image/jpeg");
 		}else {
