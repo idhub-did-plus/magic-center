@@ -36,7 +36,7 @@ public class OrderBookService implements OrderBook{
 	Query<OrderEntity> check(String orderId, OrderState current, String provider){
 		Query<OrderEntity> query = ds.createQuery(OrderEntity.class).field("id").equal(orderId).field("state").equal(current.name());
 		if(provider == null)
-			query = query.field("provider").exists();
+			query = query.field("provider").doesNotExist();
 		else
 			query = query.field("provider").equal(provider);
 		if(query.countAll() == 0) {
