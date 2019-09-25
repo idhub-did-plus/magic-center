@@ -183,9 +183,11 @@ public class IdentityStorageController {
 		IdentityStorage st = store.find(IdentityStorage.class, "id", legacyAddress).get();
 		if(now.getEin() != st.getEin())
 			return new MagicResponse(false, "can not destry data with different ein!");
-		MyIden iden = associates(identity);	
+		MyIden iden = this.identityAggregationService.associates(identity);	
 		if(iden.getEin() != now.getEin())
 			return new MagicResponse(false, "ein in 1484 not the same with this account!!");
+		if( iden.getAssociates().contains(legacyAddress))
+			return new MagicResponse(false, "legacy address still in 1484 associates !!");
 		destroy(legacyAddress);
 		
 		return new MagicResponse();
@@ -200,8 +202,5 @@ public class IdentityStorageController {
 		
 		
 	}
-	private MyIden associates(String identity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 }
