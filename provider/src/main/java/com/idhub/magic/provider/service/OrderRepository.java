@@ -101,7 +101,9 @@ public class OrderRepository {
 		
 		  String providerIdentity = AccountManager.getMyAccount().getAddress();
 		  try {
-			fac.getOrderBook().refuseClaim(providerIdentity, orderId).execute().body();
+			MagicResponse resp = fac.getOrderBook().refuseClaim(providerIdentity, orderId).execute().body();
+			if(!resp.isSuccess())
+				throw new RuntimeException( "from orderbook:" + resp.getMessage());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -125,8 +127,11 @@ public class OrderRepository {
 		try {
 			 VerifiableClaimEntity claim = ClaimUtils.issueClaim(subject, claimType, data.getData().getArchive().getIdentityInfo().getCountry(), "unknown");
 			claim.setId(orderId);
+			 
+			 MagicResponse resp = fac.getOrderBook().issueClaim(AccountManager.getMyAccount().getAddress(), orderId, claim.getJsonld()).execute().body();
+			 if(!resp.isSuccess())
+					throw new RuntimeException( "from orderbook:" + resp.getMessage());
 			 ds.save(claim);
-			 fac.getOrderBook().issueClaim(AccountManager.getMyAccount().getAddress(), orderId, claim.getJsonld()).execute().body();
 			 stepForward(query,ProviderOrderState.issued );
 			 
 			return claim;
