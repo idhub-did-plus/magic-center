@@ -12,48 +12,54 @@ import org.springframework.web.bind.annotation.RestController;
 import com.idhub.magic.center.service.MagicEventStore;
 import com.idhub.magic.center.service.OrderBookService;
 import com.idhub.magic.center.service.VerifiableCredentialService;
+import com.idhub.magic.common.parameter.MagicResponse;
 import com.idhub.magic.provider.IdentityData;
 import com.idhub.magic.provider.Order;
 import com.idhub.magic.provider.interfaces.OrderBook;
+import com.idhub.magic.provider.interfaces.OrderBookWrapper;
 import com.idhub.magic.verifiablecredentials.VerifiableCredential;
 @RestController
 @RequestMapping("/orderbook")
-public class OrderBookController implements OrderBook {
+public class OrderBookController implements OrderBookWrapper {
 	@Autowired OrderBookService store;
 
     @GetMapping("/directed")
 	@Override
-	public List<Order> tome(String identity) {
-		return store.tome(identity);
+	public MagicResponse<List<Order>> tome(String identity) {
+		return new MagicResponse<List<Order>>(store.tome(identity));
 	}
     @GetMapping("/receive")
 	@Override
-	public boolean receive(String identity, String orderId) {
+	public MagicResponse receive(String identity, String orderId) {
 		// TODO Auto-generated method stub
-    	return store.receive(identity,orderId);
+    	 store.receive(identity,orderId);
+    	 return new MagicResponse();
 	}
     @GetMapping("/list_all")
 	@Override
-	public List<Order> listAll() {
+	public MagicResponse<List<Order>> listAll() {
 		// TODO Auto-generated method stub
-		return store.listAll();
+		return new  MagicResponse<List<Order>>(store.listAll());
+		
 	}
     @PostMapping("/issue_claim")
 	@Override
-	public void issueClaim(String identity,String orderId,@RequestBody String credential) {
+	public MagicResponse issueClaim(String identity,String orderId,@RequestBody String credential) {
 		store.issueClaim(identity, orderId, credential);
+		return new MagicResponse();
 		
 	}
     @GetMapping("/get_identity_information")
 	@Override
-	public IdentityData getIdentityInformation(String identity,String orderId) {
+	public MagicResponse<IdentityData> getIdentityInformation(String identity,String orderId) {
 		// TODO Auto-generated method stub
-		return store.getIdentityInformation(identity, orderId);
+		return new MagicResponse<IdentityData>(store.getIdentityInformation(identity, orderId));
 	}
     @GetMapping("/refuse_claim")
    	@Override
-	public void refuseClaim(String identity, String orderId) {
+	public MagicResponse refuseClaim(String identity, String orderId) {
 		store.refuseClaim(identity, orderId);
+		return new MagicResponse();
 		
 	}
 

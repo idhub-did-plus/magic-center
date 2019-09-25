@@ -9,6 +9,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -18,6 +19,7 @@ import com.idhub.magic.common.util.Signature;
 
 @Aspect
 @Configuration
+@Order(2)
 public class AuthenticationAspect {
 	ObjectMapper mapper = new ObjectMapper();
 	@Autowired HttpServletRequest req;

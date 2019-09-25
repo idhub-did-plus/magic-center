@@ -52,7 +52,8 @@ class ClaimServiceTest {
 		ClaimOrder order = new ClaimOrder();
 		order.identity = identity;
 		order.requestedClaimType = ClaimType.qualified_buyer.name();
-		service.order(order, identity).execute().body();
+		MagicResponse resp = service.order(order, identity).execute().body();
+		System.out.println(resp.getMessage());
 
 	}
 }

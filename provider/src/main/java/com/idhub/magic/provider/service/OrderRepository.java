@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.idhub.magic.common.claim.VerifiableClaim;
+import com.idhub.magic.common.parameter.MagicResponse;
 import com.idhub.magic.provider.IdentityData;
 import com.idhub.magic.provider.Order;
 import com.idhub.magic.provider.agent.AccountManager;
@@ -70,9 +71,9 @@ public class OrderRepository {
 		 fac.getOrderBook().receive(providerIdentity, orderId).execute().body();
 	
 		
-		IdentityData info = fac.getOrderBook().getIdentityInformation(providerIdentity, orderId).execute().body();
+		 MagicResponse<IdentityData> info = fac.getOrderBook().getIdentityInformation(providerIdentity, orderId).execute().body();
 		
-		IdentityEntity id = new IdentityEntity(info);
+		IdentityEntity id = new IdentityEntity(info.getData());
 		ds.save(id);
 		stepForward(query, ProviderOrderState.processing);
 		

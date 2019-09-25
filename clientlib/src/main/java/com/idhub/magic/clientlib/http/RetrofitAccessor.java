@@ -2,6 +2,7 @@ package com.idhub.magic.clientlib.http;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import org.web3j.crypto.Credentials;
 
@@ -59,7 +60,9 @@ public class RetrofitAccessor {
 	}
 
 	void init() {
-		OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
+		OkHttpClient client = new OkHttpClient.Builder().  connectTimeout(60, TimeUnit.SECONDS).
+		        readTimeout(60, TimeUnit.SECONDS).
+		        writeTimeout(60, TimeUnit.SECONDS).addInterceptor(new Interceptor() {
 			
 			@Override
 			public Response intercept(Chain chain) throws IOException {

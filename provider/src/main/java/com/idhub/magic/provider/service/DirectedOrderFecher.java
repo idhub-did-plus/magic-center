@@ -15,6 +15,7 @@ import org.mongodb.morphia.Datastore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.idhub.magic.common.parameter.MagicResponse;
 import com.idhub.magic.provider.IdentityData;
 import com.idhub.magic.provider.Order;
 import com.idhub.magic.provider.agent.AccountManager;
@@ -34,7 +35,7 @@ public class DirectedOrderFecher {
 		pool.scheduleAtFixedRate(() -> {
 			try {
 				String identity = AccountManager.getMyAccount().getAddress();
-				List<Order> my = fac.getOrderBook().directed(identity).execute().body();
+				MagicResponse<List<Order>> my = fac.getOrderBook().directed(identity).execute().body();
 				if(my == null)
 					return;
 				//List<Order> suc = new ArrayList<Order>();
@@ -42,7 +43,7 @@ public class DirectedOrderFecher {
 				 * for(Order o : my) { boolean b = fac.getOrderBook().receive(identity,
 				 * o.id).execute().body(); if(b) { suc.add(o); } }
 				 */
-				rep.store(my);
+				rep.store(my.getData());
 				/*
 				 * List<IdentityEntity> es = new LinkedList<IdentityEntity>(); for(Order o :
 				 * suc) { IdentityData ia = fac.getOrderBook().getIdentityInformation(identity,
