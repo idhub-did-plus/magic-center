@@ -2,6 +2,7 @@ package com.idhub.magic.provider.kyc.idmind;
 
 import java.io.IOException;
 import java.util.Base64;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 
@@ -43,7 +44,9 @@ public class IdentityMindProvider {
 	@PostConstruct
 	public void init() {
 		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-		OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
+		OkHttpClient client = new OkHttpClient.Builder().  connectTimeout(60, TimeUnit.SECONDS).
+		        readTimeout(60, TimeUnit.SECONDS).
+		        writeTimeout(60, TimeUnit.SECONDS).addInterceptor(new Interceptor() {
 
 			@Override
 			public Response intercept(Chain chain) throws IOException {
