@@ -40,7 +40,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.idhub.magic.kyprividerlib</groupId>
+			<groupId>com.idhub.magic.prividerlib</groupId>
 			<artifactId>magic-providerlib</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
