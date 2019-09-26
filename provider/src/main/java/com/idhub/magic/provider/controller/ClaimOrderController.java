@@ -1,8 +1,12 @@
 package com.idhub.magic.provider.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +20,13 @@ import com.idhub.magic.provider.model.ProviderOrderState;
 import com.idhub.magic.provider.model.VerifiableClaimEntity;
 import com.idhub.magic.provider.service.BlockchainService;
 import com.idhub.magic.provider.service.OrderRepository;
+import com.idhub.magic.provider.service.SimpleStorageService;
 
 
 @RestController
 @RequestMapping("/order")
 public class ClaimOrderController {
+	@Autowired SimpleStorageService simpleStorageService;
 	@Autowired
 	OrderRepository rep;
 	@Autowired
@@ -86,5 +92,15 @@ public class ClaimOrderController {
 		blockchainService.publishTo780(claim.getClaim());
 		return new MagicResponse(claim.getJsonld());
 		
+	}
+	@GetMapping("/material_stream_id")
+
+	private void stream(HttpServletResponse response, String id) throws IOException {
+	
+		this.simpleStorageService.stream(id, response.getOutputStream());
+		/*
+		 * byte[] data = getData(wrapper); response.getOutputStream().write(data);
+		 * response.getOutputStream().flush();
+		 */
 	}
 }
