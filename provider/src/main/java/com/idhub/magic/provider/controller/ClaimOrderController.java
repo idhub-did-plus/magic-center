@@ -93,7 +93,7 @@ public class ClaimOrderController {
 		return new MagicResponse(claim.getJsonld());
 		
 	}
-	@GetMapping("/material_stream_id")
+	@GetMapping("/material_stream")
 
 	private void stream(HttpServletResponse response, String id) throws IOException {
 	
