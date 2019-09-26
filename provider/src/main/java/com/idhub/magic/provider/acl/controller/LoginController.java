@@ -34,7 +34,7 @@ public class LoginController {
         SignatureToken token = new SignatureToken("ddd", "ddd","eee");
           
         sub.login(token);
-        String login = (String) SecurityUtils.getSubject().getPrincipal();
+      //  SecurityUtils.getSubject().checkRole("lawer");
         return new MagicResponse();
 
     }

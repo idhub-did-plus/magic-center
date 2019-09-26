@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,7 @@ public class ClaimOrderController {
 		return new MagicResponse<List<Interaction>>(iden);
 		
 	}
+
 	@GetMapping("/receive")
 	public MagicResponse<IdentityEntity> receive(String orderId) {
 		

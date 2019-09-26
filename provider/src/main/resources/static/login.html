@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>Insert title here</title>
+</head>
+<body>
+
+	<script type="text/javascript">
+    window.addEventListener('load', function() {
+        if (!window.web3) {//用来判断你是否安装了metamask
+          window.alert('Please install MetaMask first.');//如果没有会去提示你先去安装
+          return;
+        }
+       
+      // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+        if (typeof web3 !== 'undefined') {
+           
+            // Use the browser's ethereum provider
+            web3.personal.sign(web3.fromUtf8("Hello from wanghui!"), web3.eth.coinbase, console.log);
+
+　　　}
+});
+	</script>
+</body>
+</html>
