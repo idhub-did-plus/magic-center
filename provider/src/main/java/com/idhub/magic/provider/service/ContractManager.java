@@ -44,16 +44,29 @@ public class ContractManager {
 	@PostConstruct
 	private void init() throws Exception, CipherException {
 		credentials = AccountManager.getMyAccount();
-
+		
 		ContractGasProvider contractGasProvider = new DefaultGasProvider();
-		registry1484 = IdentityRegistryInterface.load(DeployedContractAddress.IdentityRegistryInterface, web3j,
-				credentials, contractGasProvider);
-		resolver1056 = ERC1056ResolverInterface.load(DeployedContractAddress.ERC1056ResolverInterface, web3j,
-				credentials, contractGasProvider);
-		registry1056 = EthereumDIDRegistryInterface.load(DeployedContractAddress.EthereumDIDRegistryInterface, web3j,
-				credentials, contractGasProvider);
-		registry780 = registry780.load(DeployedContractAddress.EthereumClaimsRegistryInterface, web3j, credentials,
-				contractGasProvider);
+
+        registry1484 = IdentityRegistryInterface.load(DeployedContractAddress.getInstance().addr1484(),
+                web3j,
+                credentials,
+                contractGasProvider
+        );
+        resolver1056 = ERC1056ResolverInterface.load(DeployedContractAddress.getInstance().addr1056Resolver(),
+                web3j,
+                credentials,
+                contractGasProvider
+        );
+        registry1056 = EthereumDIDRegistryInterface.load(DeployedContractAddress.getInstance().addr1056(),
+                web3j,
+                credentials,
+                contractGasProvider
+        );
+        registry780 = registry780.load(DeployedContractAddress.getInstance().addr780(),
+                web3j,
+                credentials,
+                contractGasProvider
+        );
 
 	}
 

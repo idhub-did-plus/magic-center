@@ -20,7 +20,7 @@ public class ClientEncoderLocal {
 
     public static RecoveryIdentityParam recoveryIdentityEncoder(RecoveryIdentityParam param) {
 
-        Address contract = new Address(DeployedContractAddress.IdentityRegistryInterface);
+        Address contract = new Address(DeployedContractAddress.getInstance().addr1484());
         Address newAssociatedAddress = new Address(param.newAssociationAddress);
 
         byte[] hexMessage = CryptoUtil.encodePacked(
@@ -40,7 +40,7 @@ public class ClientEncoderLocal {
 
     public static AddAssociatedAddressParam addAssociatedAddressEncoder(AddAssociatedAddressParam addAssociatedAddressParam) {
 
-        Address contract = new Address(DeployedContractAddress.IdentityRegistryInterface);
+        Address contract = new Address(DeployedContractAddress.getInstance().addr1484());
         Address addressToAdd = new Address(addAssociatedAddressParam.addressToAdd);
 
         byte[] encodeMessage = CryptoUtil.encodePacked(
@@ -58,8 +58,8 @@ public class ClientEncoderLocal {
     }
 
     public static InitializeIdentityParam initializeIdentity(InitializeIdentityParam initializeIdentityParam) {
-        Address contract = new Address(DeployedContractAddress.ERC1056ResolverInterface);
-        Address ethereumDIDRegistryContract = new Address(DeployedContractAddress.EthereumDIDRegistryInterface);
+        Address contract = new Address(DeployedContractAddress.getInstance().addr1056Resolver());
+        Address ethereumDIDRegistryContract = new Address(DeployedContractAddress.getInstance().addr1056());
         Address identityAddress = new Address(initializeIdentityParam.identity);
         byte[] encodeMessage = CryptoUtil.encodePacked(
                 (byte) 0x19, (byte) 0, ethereumDIDRegistryContract, initializeIdentityParam.noce, identityAddress, "changeOwner", contract);
@@ -74,8 +74,8 @@ public class ClientEncoderLocal {
     }
 
     public static ResetIdentityParam resetIdentity(ResetIdentityParam resetIdentityParam) {
-        Address contract = new Address(DeployedContractAddress.ERC1056ResolverInterface);
-        Address ethereumDIDRegistryContract = new Address(DeployedContractAddress.EthereumDIDRegistryInterface);
+        Address contract = new Address(DeployedContractAddress.getInstance().addr1056Resolver());
+        Address ethereumDIDRegistryContract = new Address(DeployedContractAddress.getInstance().addr1056());
         Address identityAddress = new Address(resetIdentityParam.identity);
         byte[] encodeMessage = CryptoUtil.encodePacked(
                 (byte) 0x19, (byte) 0, ethereumDIDRegistryContract, resetIdentityParam.noce, identityAddress, "changeOwner", contract);

@@ -24,7 +24,7 @@ public class ClientEncoder {
 		List<BigInteger> providers = toAddresses(param.providers);
 		List<BigInteger> resolvers = toAddresses(param.resolvers);
 		BigInteger tst = Numeric.toBigInt(param.timestamp);
-		Address contract = new Address(DeployedContractAddress.IdentityRegistryInterface);
+		Address contract = new Address(DeployedContractAddress.getInstance().addr1484());
 		byte[] hexMessage = CryptoUtil.encodePacked((byte) 0x19, (byte) 0x00,
 				contract,
 				"I authorize the creation of an Identity on my behalf.", 

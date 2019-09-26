@@ -56,9 +56,9 @@ public class LocalTest {
 		BigInteger tst = BigInteger.valueOf(ts);
 
 		byte[] hexMessage = CryptoUtil.encodePacked((byte) 0x19, (byte) 0x00,
-				new Address(DeployedContractAddress.IdentityRegistryInterface),
+				new Address(DeployedContractAddress.getInstance().addr1484()),
 				"I authorize the creation of an Identity on my behalf.", address, address,
-				Numeric.toBigInt(DeployedContractAddress.ERC1056ResolverInterface), tst
+				Numeric.toBigInt(DeployedContractAddress.getInstance().addr1056Resolver()), tst
 
 		);
 		// hexMessage =
@@ -69,13 +69,13 @@ public class LocalTest {
 		Sign.SignatureData signMessage = Sign.signMessage(hexMessage, pair);
 
 		List<String> rss = new ArrayList<String>();
-		rss.add(DeployedContractAddress.ERC1056ResolverInterface);
+		rss.add(DeployedContractAddress.getInstance().addr1056Resolver());
 		List<String> pss = new ArrayList<String>();
 
 		ContractGasProvider contractGasProvider = new DefaultGasProvider();
 		Web3j web3j = Web3j.build(new HttpService("http://localhost:7545"));
 		IdentityRegistryInterface registry1484 = IdentityRegistryInterface
-				.load(DeployedContractAddress.IdentityRegistryInterface, web3j, credentials, contractGasProvider);
+				.load(DeployedContractAddress.getInstance().addr1484(), web3j, credentials, contractGasProvider);
 		/*
 		 * BigInteger ein =
 		 * registry1484.getEIN("0x458b6862cac349a47658ef7251f22054ffa0d4ed").send();

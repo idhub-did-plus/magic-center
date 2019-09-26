@@ -47,7 +47,7 @@ public class ChainEventListener {
 				)
 				);
 		EthFilter filter = new EthFilter(DefaultBlockParameterName.EARLIEST, DefaultBlockParameterName.LATEST,
-				DeployedContractAddress.IdentityRegistryInterface.substring(2));
+				DeployedContractAddress.getInstance().addr1484().substring(2));
 		filter.addSingleTopic(EventEncoder.encode(event));
 		String address = "0x" + TypeEncoder.encode(new Address("0xC8Efc3D648862eDcad4e222bDc073DAEf0203409"));//ProviderFactory.getProvider().getDefaultCredentials().getAddress()));
 		String ein = "0x" + TypeEncoder.encode(new Uint256(1));

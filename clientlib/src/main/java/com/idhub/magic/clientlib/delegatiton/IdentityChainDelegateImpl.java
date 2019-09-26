@@ -52,7 +52,7 @@ public class IdentityChainDelegateImpl implements IdentityChainDelegate{
 		String asso = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
 		List<String> ps = new ArrayList<String>();
 		List<String> rs = new ArrayList<String>();
-		rs.add(DeployedContractAddress.IdentityRegistryInterface);
+		rs.add(DeployedContractAddress.getInstance().addr1484());
 		
 		createIdentity(rec, asso, ps, rs);
 	}

@@ -39,22 +39,22 @@ public class ContractManager {
     	Credentials credentials = ProviderFactory.getProvider().getDefaultCredentials();
         
         ContractGasProvider contractGasProvider = new DefaultGasProvider();
-        registry1484 = IdentityRegistryInterface.load(DeployedContractAddress.IdentityRegistryInterface,
+        registry1484 = IdentityRegistryInterface.load(DeployedContractAddress.getInstance().addr1484(),
                 web3j,
                 credentials,
                 contractGasProvider
         );
-        resolver1056 = ERC1056ResolverInterface.load(DeployedContractAddress.ERC1056ResolverInterface,
+        resolver1056 = ERC1056ResolverInterface.load(DeployedContractAddress.getInstance().addr1056Resolver(),
                 web3j,
                 credentials,
                 contractGasProvider
         );
-        registry1056 = EthereumDIDRegistryInterface.load(DeployedContractAddress.EthereumDIDRegistryInterface,
+        registry1056 = EthereumDIDRegistryInterface.load(DeployedContractAddress.getInstance().addr1056(),
                 web3j,
                 credentials,
                 contractGasProvider
         );
-        registry780 = registry780.load(DeployedContractAddress.EthereumClaimsRegistryInterface,
+        registry780 = registry780.load(DeployedContractAddress.getInstance().addr780(),
                 web3j,
                 credentials,
                 contractGasProvider

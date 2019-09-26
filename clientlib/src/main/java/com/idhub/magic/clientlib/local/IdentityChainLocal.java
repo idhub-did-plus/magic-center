@@ -92,7 +92,7 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
         String asso = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
         List<String> ps = new ArrayList<String>();
         List<String> rs = new ArrayList<String>();
-        rs.add(DeployedContractAddress.ERC1056ResolverInterface);
+        rs.add(DeployedContractAddress.getInstance().addr1056Resolver());
 
         return createIdentity(rec, asso, ps, rs);
 
