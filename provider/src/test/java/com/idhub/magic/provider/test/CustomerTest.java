@@ -2,6 +2,7 @@ package com.idhub.magic.provider.test;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.junit.Test;
@@ -9,23 +10,38 @@ import org.junit.Test;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.idhub.magic.common.parameter.MagicResponse;
+import com.idhub.magic.common.ustorage.entity.IdentityArchive;
 import com.idhub.magic.provider.kyc.idmind.ConsumerService;
 import com.idhub.magic.provider.kyc.idmind.Converter;
 import com.idhub.magic.provider.kyc.idmind.IdentityMindProvider;
 import com.idhub.magic.provider.kyc.idmind.entity.consumer.ConsumerKycResponse;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
 public class CustomerTest {
 
-	@Test
+	//@Test
 	public void test() throws Exception {
 		IdentityMindProvider provider = new IdentityMindProvider();
 		provider.init();
 		ConsumerService service = provider.getCustomerService();
 		ConsumerKycResponse resp = service.customer(Converter.dummy(), false).execute().body();
 		System.out.println( resp);
-		
+	}
+	@Test
+	public void testDV() throws Exception
+	{
+		IdentityMindProvider provider = new IdentityMindProvider();
+		provider.init();
+		ConsumerService service = provider.getCustomerService();
+		File file = new File("timg.jpg");
+		  MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/*"), new byte[900]));
+
+		  service.uploadDodumentVerification("48e12ed469bb4934a2582cfc5e27bcda", "dddd",  filePart).execute().body();
 		
 	}
 
