@@ -57,7 +57,7 @@ public class IdentityMindProvider {
 
 				Request.Builder builder = request.newBuilder().addHeader("authorization", auth).url(url);
 				Response resp = chain.proceed(builder.build());
-				System.out.println(new String(resp.body().bytes()));
+				//System.out.println(new String(resp.body().bytes()));
 				return resp;
 			}
 		}).build();
