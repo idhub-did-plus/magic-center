@@ -32,7 +32,7 @@ public class IdentityMindController {
 	Datastore ds;
 	@Autowired
 	IdentityMindProvider idm;
-	@Autowired SimpleStorageService simpleStorageService;
+
 	@GetMapping("/evaluate")
 	public MagicResponse<Interaction> evaluate(String orderId) {
 		Interaction inter = service.evaluate(orderId);
@@ -41,23 +41,9 @@ public class IdentityMindController {
 	}
 	@GetMapping("/document_verification")
 	public MagicResponse documentVerification(String orderId, String materialId,String description) throws Exception {
-		ProviderOrder order = ds.find(ProviderOrder.class, "id", orderId).get();
-		IdentityEntity iden = ds.find(IdentityEntity.class, "id", order.getOrder().identity).get();
-		String tid = iden.getTransactionId();
-		if(tid == null)
-			return new MagicResponse(false, "please call evaluate first!");
-		Material mat = find(iden, materialId);
-		byte[] data = this.simpleStorageService.get(materialId);
-		MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", materialId + "." + mat.getExt(), RequestBody.create(MediaType.parse("image/*"), data));
-		idm.getCustomerService().uploadDodumentVerification(tid, description,  filePart).execute().body();
+		service.documentVerification(orderId, materialId, description);
 		return new MagicResponse();
 	}
-	Material find(IdentityEntity iden, String id) {
-		for(Material m : iden.getData().getMaterials()) {
-			if(m.getId().equals(id))
-				return m;
-			
-		}
-		return null;
-	}
+	
+	
 }
