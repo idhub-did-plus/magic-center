@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.idhub.magic.provider.acl.controller.SmartRealm;
 
-@Configuration
+//@Configuration
 public class ShiroConfig {
 	@Bean
 	SmartRealm myRealm() {
