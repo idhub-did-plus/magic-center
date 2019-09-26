@@ -21,29 +21,29 @@ public class ShiroConfig {
 	SmartRealm myRealm() {
 		return new SmartRealm();
 	}
-	 @Bean("lifecycleBeanPostProcessor")
-	    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
-	        return new LifecycleBeanPostProcessor();
-	    }
-	 
-	
-	
+
+	@Bean("lifecycleBeanPostProcessor")
+	public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+		return new LifecycleBeanPostProcessor();
+	}
+
 	@Bean
 	DefaultWebSecurityManager securityManager() {
 		DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
 		SmartRealm rm = myRealm();
-		
+
 		manager.setAuthorizer(rm);
 		manager.setRealm(rm);
 		return manager;
 	}
+
 	@Bean
-    public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor(
-            DefaultWebSecurityManager securityManager) {
-        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
-        advisor.setSecurityManager(securityManager);
-        return advisor;
-    }
+	public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor(
+			DefaultWebSecurityManager securityManager) {
+		AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
+		advisor.setSecurityManager(securityManager);
+		return advisor;
+	}
 
 	/*
 	 * @Bean ShiroFilterChainDefinition shiroFilterChainDefinition() {
