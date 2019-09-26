@@ -8,6 +8,7 @@ import org.mongodb.morphia.query.UpdateOperations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.idhub.magic.common.parameter.MagicResponse;
 import com.idhub.magic.common.ustorage.entity.Material;
 import com.idhub.magic.provider.Order;
@@ -23,6 +24,7 @@ import com.idhub.magic.provider.model.ProviderOrder;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 
 @Service
 public class IdentityMindService {
@@ -31,17 +33,22 @@ public class IdentityMindService {
 	@Autowired
 	IdentityMindProvider idm;
 	@Autowired SimpleStorageService simpleStorageService;
+	ObjectMapper mapper = new ObjectMapper();
 	public Interaction evaluate(String orderId) {
 		ProviderOrder order = ds.find(ProviderOrder.class, "id", orderId).get();
 		Query<IdentityEntity> query = ds.find(IdentityEntity.class, "id", order.getOrder().identity);
 		IdentityEntity ie = query.get();
 		ConsumerService service = idm.getCustomerService();
 		try {
-			ConsumerKycRequest req = Converter.dummy();//archve2request(ie.getData().getArchive());
+			ConsumerKycRequest req = Converter.archve2request(ie.getData().getArchive());
 			if(ie.getTransactionId() != null)
 				req.tid = ie.getTransactionId();
 			
-			ConsumerKycResponse resp = service.customer(req, false).execute().body();
+			 ResponseBody body = service.customer(req, false).execute().body();
+			 if(body == null)
+				 throw new RuntimeException("request to idm api failed!");
+			String json = new String(body.bytes());
+			ConsumerKycResponse resp = mapper.readValue(json, ConsumerKycResponse.class);
 			Interaction inteaction = new Interaction();
 			inteaction.setOrderId(orderId);
 			inteaction.setRequest(req);

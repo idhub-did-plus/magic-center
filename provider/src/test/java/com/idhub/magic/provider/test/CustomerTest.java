@@ -24,15 +24,16 @@ import okhttp3.ResponseBody;
 
 public class CustomerTest {
 
-	//@Test
+	@Test
 	public void test() throws Exception {
 		IdentityMindProvider provider = new IdentityMindProvider();
 		provider.init();
 		ConsumerService service = provider.getCustomerService();
-		ConsumerKycResponse resp = service.customer(Converter.dummy(), false).execute().body();
-		System.out.println( resp);
+		 ResponseBody resp = service.customer(Converter.dummy(), false).execute().body();
+		String json = new String(resp.bytes());
+		System.out.println( json);
 	}
-	@Test
+	//@Test
 	public void testDV() throws Exception
 	{
 		IdentityMindProvider provider = new IdentityMindProvider();

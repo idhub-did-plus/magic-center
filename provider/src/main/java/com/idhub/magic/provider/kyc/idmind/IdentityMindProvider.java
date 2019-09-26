@@ -16,6 +16,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -57,7 +58,8 @@ public class IdentityMindProvider {
 
 				Request.Builder builder = request.newBuilder().addHeader("authorization", auth).url(url);
 				Response resp = chain.proceed(builder.build());
-				//System.out.println(new String(resp.body().bytes()));
+				ResponseBody copy = resp.peekBody(1000000);
+				System.out.println(new String(copy.bytes()));
 				return resp;
 			}
 		}).build();
