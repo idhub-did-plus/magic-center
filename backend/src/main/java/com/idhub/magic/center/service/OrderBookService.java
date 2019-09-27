@@ -97,7 +97,7 @@ public class OrderBookService implements OrderBook{
 		 stepForward(query, OrderState.refused, null);
 		 OrderEntity order = query.get();
 		// vcService.store(order.getOrder().identity, orderId, "refused");
-		 eventStore.storeStringEvent(MagicEventType.claim_issued_event, order.getOrder().identity, "refused");
+		 eventStore.storeStringEvent(MagicEventType.claim_issued_event, order.getOrder().identity, "refused@" + order.getOrder().claimType);
 
 	}
 
