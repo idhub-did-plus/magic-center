@@ -31,7 +31,7 @@ public class LoginController {
         
         
 
-        SignatureToken token = new SignatureToken("ddd", "ddd","eee");
+        SignatureToken token = new SignatureToken(identity, identity + timestamp,signature);
           
         sub.login(token);
       //  SecurityUtils.getSubject().checkRole("lawer");
