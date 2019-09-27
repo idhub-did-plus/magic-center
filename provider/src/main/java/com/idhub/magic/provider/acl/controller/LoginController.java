@@ -25,7 +25,7 @@ public class LoginController {
 
 
     @GetMapping("/login")
-    public MagicResponse login(String identity) {
+    public MagicResponse login(String identity, String timestamp, String signature) {
     	
         Subject sub = SecurityUtils.getSubject();
         
