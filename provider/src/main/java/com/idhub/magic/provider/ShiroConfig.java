@@ -15,7 +15,7 @@ import org.springframework.context.annotation.DependsOn;
 
 import com.idhub.magic.provider.acl.controller.SmartRealm;
 
-//@Configuration
+@Configuration
 public class ShiroConfig {
 	@Bean
 	SmartRealm myRealm() {
@@ -61,9 +61,10 @@ public class ShiroConfig {
 		shiroFilterFactoryBean.setLoginUrl("/login.html");
 
 		LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-		filterChainDefinitionMap.put("/auth/login", "anon");
-		filterChainDefinitionMap.put("/order/**", "roles[lawer]");
-		filterChainDefinitionMap.put("/**", "authc");
+		//filterChainDefinitionMap.put("/auth/login", "anon");
+		//filterChainDefinitionMap.put("/order/**", "roles[lawer]");
+		//filterChainDefinitionMap.put("/**", "authc");
+		filterChainDefinitionMap.put("/**", "anon");
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 		return shiroFilterFactoryBean;
 	}
