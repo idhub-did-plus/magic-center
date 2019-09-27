@@ -91,7 +91,7 @@ public class ClaimOrderController {
 		
 		
 		VerifiableClaimEntity claim = rep.issueClaim(orderId);
-		blockchainService.publishTo780(claim.getClaim());
+		//blockchainService.publishTo780(claim.getClaim());
 		return new MagicResponse(claim.getJsonld());
 		
 	}
