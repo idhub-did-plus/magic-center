@@ -8,20 +8,30 @@
 <body>
 
 	<script type="text/javascript">
+	login(){
+			
+            web3.personal.sign(web3.fromUtf8(web3.eth.coinbase), web3.eth.coinbase, console.log);
+
+　　　}
     window.addEventListener('load', function() {
         if (!window.web3) {//用来判断你是否安装了metamask
           window.alert('Please install MetaMask first.');//如果没有会去提示你先去安装
           return;
         }
-       
-      // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-        if (typeof web3 !== 'undefined') {
-           
-            // Use the browser's ethereum provider
-            web3.personal.sign(web3.fromUtf8("Hello from wanghui!"), web3.eth.coinbase, console.log);
+	      if (window.ethereum) {
+		        window.web3 = new Web3(ethereum);
+		        try {
+		            // Request account access if needed
+		             ethereum.enable();
+		            // Acccounts now exposed
+		            web3.eth.sendTransaction({/* ... */});
+		        } catch (error) {
+		            // User denied account access...
+		        }
+	        }
 
-　　　}
-});
+       
+	});
 	</script>
 </body>
 </html>
