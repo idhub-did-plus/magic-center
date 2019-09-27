@@ -11,11 +11,13 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.web3j.crypto.Hash;
 import org.web3j.crypto.Keys;
 import org.web3j.crypto.Sign;
 import org.web3j.crypto.Sign.SignatureData;
 import org.web3j.utils.Numeric;
 
+import java.io.UnsupportedEncodingException;
 import java.security.SignatureException;
 
 import javax.servlet.http.HttpSession;
@@ -42,7 +44,13 @@ public class SmartRealm extends AuthorizingRealm {
 		SignatureToken token = (SignatureToken) authcToken;
 		String[] credentials = (String[]) token.getCredentials();
 		String plain = credentials[0];
-		byte[] data = Numeric.hexStringToByteArray(plain);
+		byte[] data = null;
+		try {
+			data = plain.getBytes("UTF8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}//Numeric.hexStringToByteArray(plain);
 		String rsv = credentials[1];
 		byte[] signature = Numeric.hexStringToByteArray(rsv);
 		byte[] r = copy(signature, 0, 32);
@@ -51,6 +59,7 @@ public class SmartRealm extends AuthorizingRealm {
 		SignatureData sig = new Sign.SignatureData(v, r, s);
 		String pubKey;
 		try {
+			byte[] hash = Hash.sha3(data);
 			pubKey = Sign.signedMessageToKey(data, sig).toString(16);
 		} catch (SignatureException e) {
 			// TODO Auto-generated catch block

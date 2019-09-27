@@ -36,8 +36,8 @@
         	sendLogin(msg);
         };
 	function login(){
-		
-        web3.personal.sign(web3.fromUtf8(web3.eth.coinbase + timestamp), web3.eth.coinbase,onsign);
+		var data = web3.fromUtf8(timestamp + web3.eth.coinbase)
+        web3.personal.sign(data, web3.eth.coinbase,onsign);
        
 
 　　　};
