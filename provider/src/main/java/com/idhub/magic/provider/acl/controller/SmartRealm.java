@@ -42,6 +42,7 @@ public class SmartRealm extends AuthorizingRealm {
 		SignatureToken token = (SignatureToken) authcToken;
 		String[] credentials = (String[]) token.getCredentials();
 		String plain = credentials[0];
+		byte[] data = Numeric.hexStringToByteArray(plain);
 		String rsv = credentials[1];
 		byte[] signature = Numeric.hexStringToByteArray(rsv);
 		byte[] r = copy(signature, 0, 32);
@@ -50,7 +51,7 @@ public class SmartRealm extends AuthorizingRealm {
 		SignatureData sig = new Sign.SignatureData(v, r, s);
 		String pubKey;
 		try {
-			pubKey = Sign.signedMessageToKey(plain.getBytes(), sig).toString(16);
+			pubKey = Sign.signedMessageToKey(data, sig).toString(16);
 		} catch (SignatureException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
