@@ -25,13 +25,13 @@ public class LoginController {
 
 
     @GetMapping("/login")
-    public MagicResponse login(String identity) {
+    public MagicResponse login(String identity, String timestamp, String signature) {
     	
         Subject sub = SecurityUtils.getSubject();
         
         
 
-        SignatureToken token = new SignatureToken("ddd", "ddd","eee");
+        SignatureToken token = new SignatureToken(identity, timestamp + identity  ,signature);
           
         sub.login(token);
       //  SecurityUtils.getSubject().checkRole("lawer");

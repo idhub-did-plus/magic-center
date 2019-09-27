@@ -31,6 +31,7 @@ public class Converter {
 	static public ConsumerKycRequest dummy() {
 		ConsumerKycRequest req = new ConsumerKycRequest();
 		req.man = "baiyuqi";
+		req.tid = "123456";
 		/*
 		 * req.soc = "facebook"; req.tea = "jdoe1964@gmail.com"; req.bc = "Jersey City";
 		 * req.bco = "US"; req.bfn = "John"; req.bln = "Doe"; req.bz = "07304"; req.bs =

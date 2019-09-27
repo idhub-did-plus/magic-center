@@ -104,7 +104,7 @@ public class OrderRepository {
 			MagicResponse resp = fac.getOrderBook().refuseClaim(providerIdentity, orderId).execute().body();
 			if(!resp.isSuccess())
 				throw new RuntimeException( "from orderbook:" + resp.getMessage());
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new RuntimeException(e.getMessage());

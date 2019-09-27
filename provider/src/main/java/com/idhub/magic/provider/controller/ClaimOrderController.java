@@ -63,7 +63,7 @@ public class ClaimOrderController {
 	public MagicResponse<IdentityEntity> receive(String orderId) {
 		
 		
-		IdentityEntity id = rep.receive(orderId);
+		IdentityEntity id = this.rep.receive(orderId);
 		
 		return new MagicResponse<IdentityEntity>(id);
 		
@@ -91,15 +91,21 @@ public class ClaimOrderController {
 		
 		
 		VerifiableClaimEntity claim = rep.issueClaim(orderId);
-		blockchainService.publishTo780(claim.getClaim());
+		//blockchainService.publishTo780(claim.getClaim());
 		return new MagicResponse(claim.getJsonld());
 		
 	}
 	@GetMapping("/material_stream")
 
-	private void stream(HttpServletResponse response, String id) throws IOException {
+	public  void stream(String id, HttpServletResponse response)  {
 	
-		this.simpleStorageService.stream(id, response.getOutputStream());
+		try {
+			this.simpleStorageService.stream(id, response.getOutputStream());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 		/*
 		 * byte[] data = getData(wrapper); response.getOutputStream().write(data);
 		 * response.getOutputStream().flush();

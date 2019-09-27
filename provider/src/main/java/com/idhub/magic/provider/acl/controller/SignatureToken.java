@@ -22,7 +22,7 @@ public class SignatureToken implements AuthenticationToken {
 	@Override
 	public Object getCredentials() {
 		// TODO Auto-generated method stub
-		return signature;
+		return new String[] {queryString, signature};
 	}
 
 }
