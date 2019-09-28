@@ -17,10 +17,9 @@ import com.idhub.magic.provider.acl.controller.SmartRealm;
 
 @Configuration
 public class ShiroConfig {
-	@Bean
-	SmartRealm myRealm() {
-		return new SmartRealm();
-	}
+	/*
+	 * @Bean SmartRealm myRealm() { return new SmartRealm(); }
+	 */
 
 	@Bean("lifecycleBeanPostProcessor")
 	public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
@@ -28,9 +27,9 @@ public class ShiroConfig {
 	}
 
 	@Bean
-	DefaultWebSecurityManager securityManager() {
+	DefaultWebSecurityManager securityManager(SmartRealm rm) {
 		DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
-		SmartRealm rm = myRealm();
+		//SmartRealm rm = myRealm();
 
 		manager.setAuthorizer(rm);
 		manager.setRealm(rm);
