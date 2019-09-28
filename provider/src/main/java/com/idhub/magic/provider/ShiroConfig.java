@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
-import com.idhub.magic.provider.acl.controller.SmartRealm;
+import com.idhub.magic.provider.access.SmartRealm;
 
 @Configuration
 public class ShiroConfig {

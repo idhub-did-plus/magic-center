@@ -1,4 +1,4 @@
-package com.idhub.magic.provider.acl.controller;
+package com.idhub.magic.provider.access;
 
 import org.apache.shiro.authc.AuthenticationToken;
 
