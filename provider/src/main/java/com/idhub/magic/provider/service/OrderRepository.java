@@ -44,8 +44,10 @@ public class OrderRepository {
 			}
 	
 	}
-	public List<ProviderOrder> list(ProviderOrderState state, int startPage, int pageSize){
+	public List<ProviderOrder> list(String identity, ProviderOrderState state, int startPage, int pageSize){
 		Query<ProviderOrder> query = ds.createQuery(ProviderOrder.class).field("state").equal(state.name()).offset(startPage * pageSize).limit(pageSize).order("createTime");
+		if(identity != null)
+			query.field("owner").equal(identity);
 		return query.asList();
 	}
 	Query<ProviderOrder> check(String orderId, ProviderOrderState current) {
@@ -57,14 +59,16 @@ public class OrderRepository {
 		
 
 	}
-	void stepForward(Query<ProviderOrder> query,ProviderOrderState next) {
+	void stepForward(Query<ProviderOrder> query,ProviderOrderState next, String identity) {
 		
 		
 		UpdateOperations<ProviderOrder> operations = ds.createUpdateOperations(ProviderOrder.class).set("state", next.name());
+		if(identity != null)
+			operations.set("owner", identity);
 		ds.update(query, operations);
 
 	}
-	public IdentityEntity receive(String orderId) {
+	public IdentityEntity receive(String identity, String orderId) {
 		Query<ProviderOrder> query = check(orderId, ProviderOrderState.unreceived);
 		try {
 		 String providerIdentity = AccountManager.getMyAccount().getAddress();
@@ -76,7 +80,7 @@ public class OrderRepository {
 			throw new RuntimeException( "from orderbook:" + info.getMessage());
 		IdentityEntity id = new IdentityEntity(info.getData());
 		ds.save(id);
-		stepForward(query, ProviderOrderState.processing);
+		stepForward(query, ProviderOrderState.processing, identity);
 		
 		return id;
 		} catch (IOException e) {
@@ -92,7 +96,7 @@ public class OrderRepository {
 		 
 		  ProviderOrder order = query.get();
 		  
-		  stepForward(query,ProviderOrderState.dropped );
+		  stepForward(query,ProviderOrderState.dropped, null );
 		
 	}
 
@@ -109,7 +113,7 @@ public class OrderRepository {
 			e.printStackTrace();
 			throw new RuntimeException(e.getMessage());
 		}
-		  stepForward(query,ProviderOrderState.refused );
+		  stepForward(query,ProviderOrderState.refused, null );
 		 
 		
 	}
@@ -132,7 +136,7 @@ public class OrderRepository {
 			 if(!resp.isSuccess())
 					throw new RuntimeException( "from orderbook:" + resp.getMessage());
 			 ds.save(claim);
-			 stepForward(query,ProviderOrderState.issued );
+			 stepForward(query,ProviderOrderState.issued, null );
 			 
 			return claim;
 		} catch (Exception e) {
@@ -144,8 +148,10 @@ public class OrderRepository {
 			
 	}
 
-	public int size(ProviderOrderState state) {
+	public int size(String identity, ProviderOrderState state) {
 		Query<ProviderOrder> query = ds.createQuery(ProviderOrder.class).field("state").equal(state.name());
+		if(identity != null)
+			query.field("owner").equal(identity);
 		return (int)query.countAll();
 	}
 	

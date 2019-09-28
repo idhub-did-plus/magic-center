@@ -10,6 +10,13 @@ import com.idhub.magic.provider.Order;
 public class ProviderOrder {
 	@Id
 	String id;
+	String owner;
+	public String getOwner() {
+		return owner;
+	}
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
 	String state;
 	Date createTime;
 	public String getState() {

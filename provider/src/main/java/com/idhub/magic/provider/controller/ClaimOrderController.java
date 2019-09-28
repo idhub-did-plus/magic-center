@@ -5,7 +5,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.subject.Subject;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +38,17 @@ public class ClaimOrderController {
 	BlockchainService blockchainService;
 	@GetMapping("/list")
 	public MagicResponse<List<ProviderOrder>> list(ProviderOrderState state, int startPage, int pageSize) {
-		List<ProviderOrder> orders = rep.list(state, startPage, pageSize);
+		Subject sub = SecurityUtils.getSubject();
+		String identity = sub == null? null : (String)sub.getPrincipal();
+		List<ProviderOrder> orders = rep.list(identity, state, startPage, pageSize);
 		return new MagicResponse<List<ProviderOrder>>(orders);
 		
 	}
 	@GetMapping("/size")
 	public MagicResponse<Integer> size(ProviderOrderState state) {
-		int size = rep.size(state);
+		Subject sub = SecurityUtils.getSubject();
+		String identity = sub == null? null : (String)sub.getPrincipal();
+		int size = rep.size(identity,state);
 		return new MagicResponse<Integer>(size);
 		
 	}
@@ -61,9 +67,10 @@ public class ClaimOrderController {
 
 	@GetMapping("/receive")
 	public MagicResponse<IdentityEntity> receive(String orderId) {
+		Subject sub = SecurityUtils.getSubject();
+		String identity = sub == null? null : (String)sub.getPrincipal();
 		
-		
-		IdentityEntity id = this.rep.receive(orderId);
+		IdentityEntity id = this.rep.receive(identity, orderId);
 		
 		return new MagicResponse<IdentityEntity>(id);
 		
