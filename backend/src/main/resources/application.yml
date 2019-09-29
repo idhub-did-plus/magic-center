@@ -4,7 +4,9 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://readWriteDidPlusTest:IDHubreadWriteDidPlusTest@18.140.101.226,18.140.76.46,18.136.252.105/MagicRepository?connect=replicaSet;replicaSet=IDHub
+      host: 127.0.0.1
+      port: 27017
+      database: MagicRepository
 web3j:
   client-address: http://localhost:7545
   admin-client: true
