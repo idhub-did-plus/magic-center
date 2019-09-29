@@ -8,58 +8,48 @@
 <body>
 
 	<script type="text/javascript">
-	var myDate = new Date();
+		var myDate = new Date();
 		var timestamp = myDate.getTime();
-	function sendLogin(signature){
-	
-		var ajax = new XMLHttpRequest();
 
-		ajax.onreadystatechange = function(){
-			
-			if(ajax.readyState == 4 && ajax.status == 200){
-				var msg = ajax.responseText;
-				console.log(msg);
-				//alert(msg);
+		function onsign(error, signature){
+	        	var ajax = new XMLHttpRequest();
+	
+				ajax.onreadystatechange = function(){
+					
+					if(ajax.readyState == 4 && ajax.status == 200){
+						var msg = ajax.responseText;
+						alert(msg);
+						//alert(msg);
+						
+					}
+				}
 				
-			}
-		}
-		
-		
-		var identity = web3.eth.coinbase;
-		ajax.open('get','auth/login?identity='+identity+'&timestamp='+timestamp + "&signature=" + signature);
-		ajax.send(null);
-	}
-
+				
+				var identity = web3.eth.coinbase;
+				ajax.open('get','auth/login?identity='+identity+'&timestamp='+timestamp + "&signature=" + signature);
+				ajax.send(null);
+	        };
+	        
+		function login(){
+			var data = web3.fromUtf8(timestamp + web3.eth.coinbase)
+	        web3.personal.sign(data, web3.eth.coinbase,onsign);
+	　　　};
 	
-	
-	function onsign(jj, msg){
-        	sendLogin(msg);
-        };
-	function login(){
-		var data = web3.fromUtf8(timestamp + web3.eth.coinbase)
-        web3.personal.sign(data, web3.eth.coinbase,onsign);
-       
-
-　　　};
-	
-    window.addEventListener('load', function() {
-        if (!window.web3) {//用来判断你是否安装了metamask
-          window.alert('Please install MetaMask first.');//如果没有会去提示你先去安装
-          return;
-        }
+	    window.addEventListener('load', function() {
+	        if (!window.web3) {//用来判断你是否安装了metamask
+	          window.alert('Please install MetaMask first.');//如果没有会去提示你先去安装
+	          return;
+	        }
 	      if (window.ethereum) {
 		        window.web3 = new Web3(ethereum);
 		        try {
-		            
 		             ethereum.enable();
-		            
 		        } catch (error) {
-		            // User denied account access...
+		           window.alert('something is wrong.');
 		        }
 	        }
 
-       
-	});
+		});
 	</script>
 	<input type="button" onclick="javascropt:login()">sign</input>
 </body>
