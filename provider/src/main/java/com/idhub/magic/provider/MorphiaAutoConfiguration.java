@@ -39,7 +39,7 @@ public class MorphiaAutoConfiguration {
 			}
 		}
 
-		return morphia.createDatastore(mongoClient, "dataStoreInstanceId"); // "dataStoreInstanceId" may come from
+		return morphia.createDatastore(mongoClient, "ProviderRepository"); // "dataStoreInstanceId" may come from
 																			// properties?
 	}
 
