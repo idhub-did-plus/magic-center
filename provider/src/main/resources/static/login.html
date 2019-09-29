@@ -59,14 +59,13 @@ body{ text-align:center}
 		function login(){
 			var data = web3.fromUtf8(timestamp + web3.eth.coinbase)
 	        web3.personal.sign(data, web3.eth.coinbase,onsign);
-	　　　};
-	
-	    window.addEventListener('load', function() {
+		}
+		window.addEventListener('load', function() {
 	        if (!window.web3) {//用来判断你是否安装了metamask
 	          window.alert('Please install MetaMask first.');//如果没有会去提示你先去安装
 	          return;
 	        }
-	      if (window.ethereum) {
+	      	if (window.ethereum) {
 		        window.web3 = new Web3(ethereum);
 		        try {
 		             ethereum.enable();
