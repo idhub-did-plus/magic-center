@@ -6,7 +6,6 @@ spring:
     mongodb:
       host: 127.0.0.1
       port: 27017
-      database: MagicRepository
 web3j:
   client-address: http://localhost:7545
   admin-client: true
