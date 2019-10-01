@@ -14,3 +14,5 @@ amazonProperties:
   accessKey: AKIAXQQ7WMZVIRQUKJ4R
   secretKey: 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
   bucketName: idhub-did-plus
+orderbook:
+  url: http://localhost:8080

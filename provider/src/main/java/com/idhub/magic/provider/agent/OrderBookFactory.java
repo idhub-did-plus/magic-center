@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.web3j.crypto.Credentials;
 
@@ -23,7 +24,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 @Service
 public class OrderBookFactory {
-	static public String baseurl = "http://localhost:8080";
+	@Value("${orderbook.url}")
+	String baseurl;
 
 	ObjectMapper mapper = new ObjectMapper();
 	OrderBookAgent orderBook;
