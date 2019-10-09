@@ -40,6 +40,8 @@ public class ClaimOrderController {
 	public MagicResponse<List<ProviderOrder>> list(ProviderOrderState state, int startPage, int pageSize) {
 		Subject sub = SecurityUtils.getSubject();
 		String identity = sub == null? null : (String)sub.getPrincipal();
+		if(state == ProviderOrderState.unreceived)
+			identity = null;
 		List<ProviderOrder> orders = rep.list(identity, state, startPage, pageSize);
 		return new MagicResponse<List<ProviderOrder>>(orders);
 		
