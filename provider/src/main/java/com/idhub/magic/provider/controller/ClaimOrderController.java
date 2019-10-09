@@ -50,6 +50,8 @@ public class ClaimOrderController {
 	public MagicResponse<Integer> size(ProviderOrderState state) {
 		Subject sub = SecurityUtils.getSubject();
 		String identity = sub == null? null : (String)sub.getPrincipal();
+		if(state == ProviderOrderState.unreceived)
+			identity = null;
 		int size = rep.size(identity,state);
 		return new MagicResponse<Integer>(size);
 		
