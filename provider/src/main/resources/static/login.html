@@ -5,7 +5,11 @@
 
 <title>Insert title here</title>
 <style>
-body{ text-align:center} 
+body{ 
+background-color:#5544aa;
+background-image:url('images/b9.jpg');
+text-align:center;
+} 
  
 .div{ 
 	margin:0 auto; 
@@ -45,7 +49,11 @@ body{ text-align:center}
 					if(ajax.readyState == 4 && ajax.status == 200){
 						var msg = ajax.responseText;
 						alert(msg);
-						//alert(msg);
+						var json =  JSON.parse(msg)
+						if(json.success)
+							window.location = 'index.html';
+						else
+							alert(json.message)
 						
 					}
 				}
