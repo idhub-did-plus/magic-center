@@ -1,10 +1,13 @@
 package com.idhub.magic.center;
 
+import javax.servlet.MultipartConfigElement;
+
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.annotations.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.context.annotation.Configuration;
@@ -36,4 +39,11 @@ public class MorphiaAutoConfiguration {
 
         return morphia.createDatastore(mongoClient, "MagicRepository"); // "dataStoreInstanceId" may come from properties?
     }
+	@Bean
+	public MultipartConfigElement multipartConfigElement() {
+		MultipartConfigFactory factory = new MultipartConfigFactory();
+		factory.setMaxFileSize("20480KB");
+		factory.setMaxRequestSize("102400KB");
+		return factory.createMultipartConfig();
+	}
 }
