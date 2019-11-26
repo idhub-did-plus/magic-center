@@ -22,7 +22,7 @@
 /nbproject/private/
 /build/
 /nbbuild/
+**/dist
 /dist/
-/dist
 /nbdist/
 /.nb-gradle/
