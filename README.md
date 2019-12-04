@@ -1,6 +1,80 @@
-## magic-node
+# Magic-Center
 
-  1. identity mind µ÷ÓÃ½ñºóĞèÒª°şÀë³öÀ´£¬×÷ÎªÒ»¸ökyc provider½ÓÈëÍøÂç¡£kyc provider´ÓÍøÂçÖĞ¶©ÔÄ»òÖ÷¶¯»ñµÃkyc¶©µ¥²¢´¦Àí£¬ÒÔÈõ»¯ÖĞĞÄ»¯µÄ³É¶¼¡£compliance¼´Ê¹²»ÄÜ¹»¶ÌÆÚĞÎ³ÉÈ¥ÖĞĞÄ»¯£¬ÈõÖĞĞÄ»¯Ò²ÊÇÒ»¸öĞ¡Ä¿±ê¡£Òò´ËcomplianceÒ²ĞèÒª¹¹½¨ÀàËÆÓÚ0xÕâÑùµÄÍøÂç
-  2. 0xĞ­ÒéÖ§³ÖÁËÒ»¸öÈ¥ÖĞĞÄ»¯½»Ò×ËùÍøÂç£¬Ä¿Ç°ÎÒÃÇÓ¦ÔÚ¹Ø×¢ÉõÖÁÒÆÖ²ËüµÄrelay backend frontendÏîÄ¿
-  3. magic-backend²¢²»ÊÇÒ»¸öÓ¦ÓÃÖĞĞÄ·şÎñÆ÷£¬¶øÊÇmagic networkµÄÒ»¸öÍøÂç½áµã£¬Ä¿Ç°ËüÓĞÒ»ÏÂ½ÇÉ«£ºchain delegation¡¢Ç®°üÊı¾İÍĞ¹Ü¡¢kyc¶©µ¥ÖĞ¼Ì£¬ÈçÍ¬0xµÄ¶©µ¥ÖĞ¼Ì½áµãÀàËÆ¡£»¹¿ÉÒÔÀ©³äÆäËû½ÇÉ«¹¦ÄÜ¡£µ«ÕâĞ©½ÇÉ«£¬¶¼ÊÇmagicÍøÂç½áµãµÄ½ÇÉ«£¬¶ø²»ÊÇÓ¦ÓÃÖĞĞÄ·şÎñÆ÷¡£
-  4. ÌåÏµÓ¦ÒÔ¸ïĞÂ¼ÓÎñÊµµÄÌ¬¶È£¬ÕÒµ½Ñİ½øÂ·¾¶
+`magic-center`æ˜¯ `Magic Circle` æ„å»ºèº«ä»½æœåŠ¡å’ŒSTæœåŠ¡çš„ç½‘ç»œçš„åŸºç¡€ç»„ä»¶ã€‚
+
+## `magic-node`è®¾è®¡åŸåˆ™
+
+1. `identity mind` è°ƒç”¨ä»Šåéœ€è¦å‰¥ç¦»å‡ºæ¥ï¼Œä½œä¸ºä¸€ä¸ª `kyc provider` æ¥å…¥ç½‘ç»œã€‚`kyc provider` ä»ç½‘ç»œä¸­è®¢é˜…æˆ–ä¸»åŠ¨è·å¾—kycè®¢å•å¹¶å¤„ç†ï¼Œä»¥å¼±åŒ–ä¸­å¿ƒåŒ–çš„ç¨‹åº¦ã€‚`compliance` å³ä½¿ä¸èƒ½å¤ŸçŸ­æœŸå½¢æˆå»ä¸­å¿ƒåŒ–ï¼Œå¼±ä¸­å¿ƒåŒ–ä¹Ÿæ˜¯ä¸€ä¸ªå°ç›®æ ‡ã€‚å› æ­¤ `compliance` ä¹Ÿéœ€è¦æ„å»ºç±»ä¼¼äº0xè¿™æ ·çš„ç½‘ç»œ
+2. 0xåè®®æ”¯æŒäº†ä¸€ä¸ªå»ä¸­å¿ƒåŒ–äº¤æ˜“æ‰€ç½‘ç»œï¼Œç›®å‰æˆ‘ä»¬åº”åœ¨å…³æ³¨ç”šè‡³ç§»æ¤å®ƒçš„relay backend frontendé¡¹ç›®
+3. `magic-backend` å¹¶ä¸æ˜¯ä¸€ä¸ªåº”ç”¨ä¸­å¿ƒæœåŠ¡å™¨ï¼Œè€Œæ˜¯ `magic network` çš„ä¸€ä¸ªç½‘ç»œç»“ç‚¹ï¼Œç›®å‰å®ƒæœ‰ä¸€ä¸‹è§’è‰²ï¼š`chain delegation` ã€` é’±åŒ…æ•°æ®æ‰˜ç®¡` ã€ `kycè®¢å•ä¸­ç»§` ï¼Œå¦‚åŒ0xçš„è®¢å•ä¸­ç»§ç»“ç‚¹ç±»ä¼¼ã€‚è¿˜å¯ä»¥æ‰©å……å…¶ä»–è§’è‰²åŠŸèƒ½ã€‚ä½†è¿™äº›è§’è‰²ï¼Œéƒ½æ˜¯magicç½‘ç»œç»“ç‚¹çš„è§’è‰²ï¼Œè€Œä¸æ˜¯åº”ç”¨ä¸­å¿ƒæœåŠ¡å™¨ã€‚
+4. ä½“ç³»åº”ä»¥é©æ–°åŠ åŠ¡å®çš„æ€åº¦ï¼Œæ‰¾åˆ°æ¼”è¿›è·¯å¾„
+
+## Requirements
+
+* [Java](https://www.java.com/)
+* [MongoDB](https://www.mongodb.com/)
+* [Node](https://nodejs.org/en/)
+* [yarn](https://www.yarnpkg.com/)
+* [Vue](https://vuejs.org/)
+* [AWS S3](https://s3.console.aws.amazon.com/s3/home)
+
+## Installation
+
+```
+git clone https://github.com/idhub-did-plus/magic-center.git
+
+cd magic-center
+```
+
+## Usage
+
+### config
+
+`backend server` çš„åŸºæœ¬é…ç½®é¡¹åœ¨ `backend/src/main/resources/application.yml` ï¼›
+`provider server` çš„åŸºæœ¬é…ç½®é¡¹åœ¨ `provider/src/main/resources/application.yml` ï¼›
+é…ç½®é¡¹åŒ…æ‹¬ï¼š
+* server port
+* mongodb link
+* web3j web3-provider
+* aws-s3 bucketname and key
+
+è·¨åŸŸé…ç½®åˆ†åˆ«åœ¨`backend/src/main/java/com/idhub/magic/backend/CorsConfig.java`å’Œ`backend/src/main/java/com/idhub/magic/backend/CorsConfig.java`
+
+### package
+
+```
+// install maven package
+cd common
+mvn clean install -Dmaven.test.skip=true
+
+cd providerlib
+mvn clean install -Dmaven.test.skip=true
+
+cd verclaim
+mvn clean install -Dmaven.test.skip=true
+
+cd clientlib
+mvn clean install -Dmaven.test.skip=true
+
+// package server code
+cd backend
+mvn clean package -Dmaven.test.skip=true
+
+cd provider
+mvn clean package -Dmaven.test.skip=true
+
+// build proiver web page
+cd provider/provider
+npm install
+yarn build
+```
+
+### run
+
+```
+cd backend
+nohup java -jar ./target/magic-backend-0.0.1-SNAPSHOT.jar &
+
+cd ../provider
+nohup java -jar ./target/magic-provider-0.0.1-SNAPSHOT.jar &
+```
