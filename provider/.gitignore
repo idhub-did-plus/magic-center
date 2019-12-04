@@ -2,6 +2,7 @@
 /magic-contract/build
 /magic-contract/node_modules
 !.mvn/wrapper/maven-wrapper.jar
+/main/resources/static
 
 ### STS ###
 .apt_generated
