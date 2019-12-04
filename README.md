@@ -73,8 +73,8 @@ yarn build
 
 ```
 cd backend
-nohup java -jar ./target/magic-backend-0.0.1-SNAPSHOT.jar &
+java -jar ./target/magic-backend-0.0.1-SNAPSHOT.jar
 
 cd ../provider
-nohup java -jar ./target/magic-provider-0.0.1-SNAPSHOT.jar &
+java -jar ./target/magic-provider-0.0.1-SNAPSHOT.jar
 ```
