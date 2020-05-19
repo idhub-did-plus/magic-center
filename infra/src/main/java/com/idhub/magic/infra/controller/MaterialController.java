@@ -43,14 +43,14 @@ public class MaterialController {
 	
 	@PostMapping("/upload_material")
 	@ResponseBody
-	public MagicResponse upload(@RequestParam("file") MultipartFile file, String identity, String type, String name)
+	public MagicResponse upload(@RequestParam("file") MultipartFile file, String pid, String type, String name)
 			throws Exception {
 		if (file.isEmpty()) {
 			return new MagicResponse(false, "upload fail!");
 		}
 		// byte[] data = IOUtils.toByteArray(file.getInputStream());
 		String ext = extension(file);
-		ProjectMaterial mat = new ProjectMaterial(identity, type, name, ext);
+		ProjectMaterial mat = new ProjectMaterial(pid, type, name, ext);
 
 		simpleStorageService.store(file, mat.getId());
 		ds.save(mat);
@@ -66,8 +66,8 @@ public class MaterialController {
 	}
 	@GetMapping("/retrieve_materials")
 	@ResponseBody
-	public MagicResponse<List<ProjectMaterial>> retrieveMaterials(String identity) {
-		Query<ProjectMaterial> query = ds.find(ProjectMaterial.class, "material.identity", identity);
+	public MagicResponse<List<ProjectMaterial>> retrieveMaterials(String pid) {
+		Query<ProjectMaterial> query = ds.find(ProjectMaterial.class, "material.projectId", pid);
 		List<ProjectMaterial> data = query.asList();
 		
 		MagicResponse<List<ProjectMaterial>> rst = new MagicResponse<List<ProjectMaterial>>();
