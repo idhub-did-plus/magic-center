@@ -108,4 +108,13 @@ public class IssueProjectController {
 
 		return new MagicResponse();
 	}
+	@GetMapping("/test")
+	public MagicResponse test() {
+		//Subject sub = SecurityUtils.getSubject();
+	//	String identity = sub == null ? null : (String) sub.getPrincipal();
+		IssueProject p = new IssueProject();
+		ds.save(p);
+		
+		return new MagicResponse(p);
+	}
 }

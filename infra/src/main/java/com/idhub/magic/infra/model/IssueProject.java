@@ -13,8 +13,8 @@ public class IssueProject{
 	String agentIdentity ;
 	String status;
 	Date createTime;
-	ProjectMaterial projectMaterial;
-	IssuerInformation issuerInformation;
+	ProjectDetail projectDetail = new ProjectDetail();
+	IssuerInformation issuerInformation = new IssuerInformation();
 	TokenConfig tokenConfig;
 	DeployedToken deployedToken;
 	public String getId() {
@@ -47,11 +47,12 @@ public class IssueProject{
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	public ProjectMaterial getProjectMaterial() {
-		return projectMaterial;
+
+	public ProjectDetail getProjectDetail() {
+		return projectDetail;
 	}
-	public void setProjectMaterial(ProjectMaterial projectMaterial) {
-		this.projectMaterial = projectMaterial;
+	public void setProjectDetail(ProjectDetail projectDetail) {
+		this.projectDetail = projectDetail;
 	}
 	public IssuerInformation getIssuerInformation() {
 		return issuerInformation;

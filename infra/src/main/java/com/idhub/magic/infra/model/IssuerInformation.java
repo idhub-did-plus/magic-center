@@ -5,8 +5,8 @@ public class IssuerInformation {
 	String registrationNumber;
 	String vatRegistrationNumber;
 	String website;
-	Address address;
-	ContactPerson contactPerson;
+	Address address = new Address();
+	ContactPerson contactPerson = new ContactPerson();
 	public String getLegalEntityName() {
 		return legalEntityName;
 	}
