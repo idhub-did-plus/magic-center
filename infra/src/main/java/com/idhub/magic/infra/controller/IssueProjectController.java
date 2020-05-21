@@ -60,7 +60,7 @@ public class IssueProjectController {
 		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("state").equal(state.name())
 				.offset(startPage * pageSize).limit(pageSize).order("createTime");
 		if (identity != null)
-			query.field("owner").equal(identity);
+			query.field("agentIdentity").equal(identity);
 		return query.asList();
 	}
 
@@ -68,7 +68,7 @@ public class IssueProjectController {
 		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("state").equal(state.name())
 				.order("createTime");
 		if (identity != null)
-			query.field("owner").equal(identity);
+			query.field("agentIdentity").equal(identity);
 		return query.asList();
 	}
 
@@ -79,7 +79,7 @@ public class IssueProjectController {
 
 		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("state").equal(state.name());
 		if (identity != null)
-			query.field("owner").equal(identity);
+			query.field("agentIdentity").equal(identity);
 		return new MagicResponse<Long>(query.countAll());
 	}
 
