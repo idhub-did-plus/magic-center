@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.idhub.magic.infra.model.DeployedToken;
 import com.idhub.magic.infra.model.IssueProject;
 import com.idhub.magic.infra.model.IssuerInformation;
+import com.idhub.magic.infra.model.ProjectDetail;
 import com.idhub.magic.infra.model.ProjectMaterial;
 import com.idhub.magic.infra.model.ProjectStatus;
 import com.idhub.magic.infra.model.TokenConfig;
@@ -46,7 +48,7 @@ public class IssueProjectController {
 		String identity = sub == null ? null : (String) sub.getPrincipal();
 		List<IssueProject> rst = listPage(identity, ProjectStatus.deployed, startPage, pageSize);
 		return new MagicResponse<List<IssueProject>>(rst);
-	}
+	} 
 
 	@GetMapping("/list")
 	public MagicResponse<List<IssueProject>> list(ProjectStatus status) {
@@ -84,12 +86,15 @@ public class IssueProjectController {
 	}
 
 	@PostMapping("/save_issuer_information")
-	public MagicResponse saveIssuerInformation(String pid, IssuerInformation info) {
+	public MagicResponse saveIssuerInformation(String pid, @RequestBody IssuerInformation info) {
 		return new MagicResponse<IssueProject>();
 	}
-
+	@PostMapping("/save_project_detail")
+	public MagicResponse saveProjectDetail(String pid,@RequestBody ProjectDetail info) {
+		return new MagicResponse<IssueProject>();
+	}
 	@PostMapping("/save_token_config")
-	public MagicResponse saveTokenConfig(String pid, TokenConfig tokenConfig) {
+	public MagicResponse saveTokenConfig(String pid,@RequestBody TokenConfig tokenConfig) {
 		return new MagicResponse<IssueProject>();
 	}
 
