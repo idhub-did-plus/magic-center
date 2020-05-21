@@ -1,5 +1,8 @@
 package com.idhub.magic.infra.model;
 
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
+@Entity
 public class ProjectMaterial {
 	public String getId() {
 		return id;
@@ -8,12 +11,21 @@ public class ProjectMaterial {
 	public void setId(String id) {
 		this.id = id;
 	}
-
+	@Id
 	String id;
 	String ext;
 	String name;
 	String type;
 	String projectId;
+	String contentDescription;
+
+	public String getContentDescription() {
+		return contentDescription;
+	}
+
+	public void setContentDescription(String contentDescription) {
+		this.contentDescription = contentDescription;
+	}
 
 	public ProjectMaterial(String pid, String type, String name, String ext) {
 		this.projectId = pid;
