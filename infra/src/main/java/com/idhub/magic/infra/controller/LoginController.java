@@ -1,5 +1,7 @@
 package com.idhub.magic.infra.controller;
 
+import javax.validation.constraints.NotNull;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.mongodb.morphia.Datastore;
@@ -20,7 +22,7 @@ public class LoginController {
 	Datastore datastore;
 
 	@GetMapping("/login")
-	public MagicResponse login(String action, String identity, String timestamp, String claim, String signature) {
+	public MagicResponse login(String action, @NotNull String identity, String timestamp, String claim, String signature) {
 
 		Subject sub = SecurityUtils.getSubject();
 		if (sub.hasRole(claim)) {
@@ -33,8 +35,11 @@ public class LoginController {
 		SignatureToken token = new SignatureToken(identity, claim, timestamp, signature);
 
 		sub.login(token);
-
-		return new MagicResponse();
+		MagicResponse resp = new MagicResponse();
+		resp.setMessage("login successful!");
+		resp.setClaim(claim);
+		return resp;
+	
 
 	}
 

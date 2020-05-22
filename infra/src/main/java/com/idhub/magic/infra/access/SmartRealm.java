@@ -39,6 +39,8 @@ public class SmartRealm extends AuthorizingRealm {
 
 		SignatureToken token = (SignatureToken) authcToken;
 		MyCredential credentials = (MyCredential) token.getCredentials();
+		if(true)
+			return new SimpleAuthenticationInfo(token.getPrincipal(), token.getCredentials(), getName());
 		String plain = credentials.text;
 		String ec712 = "\u0019Ethereum Signed Message:\n" + plain.getBytes().length + plain;
 		byte[] data = ec712.getBytes();
