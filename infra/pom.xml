@@ -39,7 +39,7 @@
 
 
 	<dependencies>
-		
+
 		<dependency>
 			<groupId>net.sf.json-lib</groupId>
 			<artifactId>json-lib</artifactId>
@@ -126,11 +126,11 @@
 			<scope>compile</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
-<dependency>
-    <groupId>com.auth0</groupId>
-    <artifactId>java-jwt</artifactId>
-    <version>3.8.2</version>
-</dependency>
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>3.8.2</version>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -158,10 +158,15 @@
 			<artifactId>aws-java-sdk-s3</artifactId>
 			<version>1.11.618</version>
 		</dependency>
-<dependency>
+		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-spring-boot-starter</artifactId>
 			<version>1.4.1</version>
+		</dependency>
+			<dependency>
+			<groupId>com.idhub.magic.common</groupId>
+			<artifactId>magic-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
