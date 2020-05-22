@@ -4,7 +4,14 @@ public class MagicResponse<T> {
 	
 	boolean success;
 	String message;
+	String claim;
 	
+	public String getClaim() {
+		return claim;
+	}
+	public void setClaim(String claim) {
+		this.claim = claim;
+	}
 	T data;
 	public MagicResponse(boolean suc, String msg) {
 		success = suc;

@@ -16,24 +16,30 @@ import com.idhub.magic.infra.access.SignatureToken;
 @RequestMapping("/auth")
 public class LoginController {
 
-    @Autowired Datastore datastore;
-    @GetMapping("/login")
-	public MagicResponse login(String action, String identity, String timestamp, String claim, String signature) {
-	
-    	
-     Subject sub = SecurityUtils.getSubject();
-        
-        
+	@Autowired
+	Datastore datastore;
 
-        SignatureToken token = new SignatureToken(identity, timestamp + identity  ,signature);
-          
-        sub.login(token);
-      //  SecurityUtils.getSubject().checkRole("lawer");
-        return new MagicResponse();
+	@GetMapping("/login")
+	public MagicResponse login(String action, String identity, String timestamp, String claim, String signature) {
+
+		Subject sub = SecurityUtils.getSubject();
+		if (sub.hasRole(claim)) {
+			MagicResponse resp = new MagicResponse();
+			resp.setMessage("login successful!");
+			resp.setClaim(claim);
+			return resp;
+		}
+
+		SignatureToken token = new SignatureToken(identity, claim, timestamp, signature);
+
+		sub.login(token);
+
+		return new MagicResponse();
 
 	}
-    @GetMapping("/logout")
-   	public MagicResponse logout() {
-   		return new MagicResponse();
-   	}
+
+	@GetMapping("/logout")
+	public MagicResponse logout() {
+		return new MagicResponse();
+	}
 }

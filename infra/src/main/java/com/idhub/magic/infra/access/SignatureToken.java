@@ -4,12 +4,15 @@ import org.apache.shiro.authc.AuthenticationToken;
 
 public class SignatureToken implements AuthenticationToken {
 	String address;
-	String queryString;
+
 	String signature;
-	public SignatureToken(String address, String queryString,String sig) {
+	String claim;
+	String timestamp;
+	public SignatureToken(String address, String claim, String timestamp,String sig) {
 		super();
 		this.address = address;
-		this.queryString = queryString;
+		this.claim = claim;
+		this.timestamp = timestamp;
 		this.signature = sig;
 	}
 
@@ -22,7 +25,7 @@ public class SignatureToken implements AuthenticationToken {
 	@Override
 	public Object getCredentials() {
 		// TODO Auto-generated method stub
-		return new MyCredential(queryString, signature);
+		return new MyCredential(address + claim + timestamp, signature);
 	}
 
 }

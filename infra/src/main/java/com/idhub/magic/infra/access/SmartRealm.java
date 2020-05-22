@@ -25,7 +25,7 @@ public class SmartRealm extends AuthorizingRealm {
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-
+		
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
 		info.addRole("lawer");
