@@ -57,10 +57,11 @@ public class ShiroConfig {
 	ShiroFilterFactoryBean shiroFilterFactoryBean(org.apache.shiro.mgt.SecurityManager securityManager) {
 		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 		shiroFilterFactoryBean.setSecurityManager(securityManager);
-		shiroFilterFactoryBean.setLoginUrl("/login.html");
+		shiroFilterFactoryBean.setLoginUrl("/auth/notice");
 
 		LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
 		filterChainDefinitionMap.put("/auth/login", "anon");
+		filterChainDefinitionMap.put("/auth/notice", "anon");
 		//filterChainDefinitionMap.put("/issue_project/**", "roles[lawer]");
 		filterChainDefinitionMap.put("/**", "authc");
 		//filterChainDefinitionMap.put("/**", "anon");

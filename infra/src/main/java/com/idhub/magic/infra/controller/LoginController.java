@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.idhub.magic.infra.access.SignatureToken;
@@ -22,7 +23,7 @@ public class LoginController {
 	Datastore datastore;
 
 	@GetMapping("/login")
-	public MagicResponse login(String action, @NotNull String identity, String timestamp, String claim, String signature) {
+	public MagicResponse login(String action, @RequestParam String identity, @RequestParam String timestamp, @RequestParam String claim, @RequestParam String signature) {
 
 		Subject sub = SecurityUtils.getSubject();
 		if (sub.hasRole(claim)) {
@@ -46,5 +47,13 @@ public class LoginController {
 	@GetMapping("/logout")
 	public MagicResponse logout() {
 		return new MagicResponse();
+	}
+
+	@GetMapping("/notice")
+	public MagicResponse notice() {
+		MagicResponse resp = new MagicResponse();
+		resp.setMessage("Please login first!");
+		resp.setSuccess(false);
+		return resp;
 	}
 }
