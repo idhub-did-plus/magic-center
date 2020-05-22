@@ -12,6 +12,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -87,14 +88,24 @@ public class IssueProjectController {
 
 	@PostMapping("/save_issuer_information")
 	public MagicResponse saveIssuerInformation(String pid, @RequestBody IssuerInformation info) {
-		return new MagicResponse<IssueProject>();
+		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("id").equal(pid);
+		UpdateOperations<IssueProject> operations = ds.createUpdateOperations(IssueProject.class).set("issuerInformation", info);
+		ds.update(query, operations);
+		return new MagicResponse();
 	}
 	@PostMapping("/save_project_detail")
 	public MagicResponse saveProjectDetail(String pid,@RequestBody ProjectDetail info) {
+		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("id").equal(pid);
+		UpdateOperations<IssueProject> operations = ds.createUpdateOperations(IssueProject.class).set("projectDetail", info);
+		ds.update(query, operations);
+
 		return new MagicResponse<IssueProject>();
 	}
 	@PostMapping("/save_token_config")
 	public MagicResponse saveTokenConfig(String pid,@RequestBody TokenConfig tokenConfig) {
+		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("id").equal(pid);
+		UpdateOperations<IssueProject> operations = ds.createUpdateOperations(IssueProject.class).set("tokenConfig", tokenConfig);
+		ds.update(query, operations);
 		return new MagicResponse<IssueProject>();
 	}
 
@@ -110,7 +121,9 @@ public class IssueProjectController {
 	public MagicResponse tokenDeployed(String pid, DeployedToken dt) {
 		Subject sub = SecurityUtils.getSubject();
 		String identity = sub == null ? null : (String) sub.getPrincipal();
-
+		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("id").equal(pid);
+		UpdateOperations<IssueProject> operations = ds.createUpdateOperations(IssueProject.class).set("deployedToken", dt);
+		ds.update(query, operations);
 		return new MagicResponse();
 	}
 	@GetMapping("/test")
