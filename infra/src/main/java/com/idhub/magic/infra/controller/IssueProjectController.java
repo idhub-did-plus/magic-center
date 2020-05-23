@@ -59,16 +59,16 @@ public class IssueProjectController {
 		return new MagicResponse<List<IssueProject>>(rst);
 	}
 
-	public List<IssueProject> listPage(String identity, ProjectStatus state, int startPage, int pageSize) {
-		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("state").equal(state.name())
+	public List<IssueProject> listPage(String identity, ProjectStatus status, int startPage, int pageSize) {
+		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("status").equal(status.name())
 				.offset(startPage * pageSize).limit(pageSize).order("createTime");
 		if (identity != null)
 			query.field("agentIdentity").equal(identity);
 		return query.asList();
 	}
 
-	public List<IssueProject> listAll(String identity, ProjectStatus state) {
-		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("state").equal(state.name())
+	public List<IssueProject> listAll(String identity, ProjectStatus status) {
+		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("status").equal(status.name())
 				.order("createTime");
 		if (identity != null)
 			query.field("agentIdentity").equal(identity);
@@ -76,11 +76,11 @@ public class IssueProjectController {
 	}
 
 	@GetMapping("/size")
-	public MagicResponse<Long> size( ProjectStatus state) {
+	public MagicResponse<Long> size( ProjectStatus status) {
 		Subject sub = SecurityUtils.getSubject();
 		String identity = sub == null ? null : (String) sub.getPrincipal();
 
-		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("state").equal(state.name());
+		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("status").equal(status.name());
 		if (identity != null)
 			query.field("agentIdentity").equal(identity);
 		return new MagicResponse<Long>(query.countAll());
@@ -114,7 +114,10 @@ public class IssueProjectController {
 	public MagicResponse audit(String pid, boolean agree, String comment) {
 		Subject sub = SecurityUtils.getSubject();
 		String identity = sub == null ? null : (String) sub.getPrincipal();
-
+		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("id").equal(pid);
+		ProjectStatus st = agree?ProjectStatus.audit_passed:ProjectStatus.audit_denied;
+		UpdateOperations<IssueProject> operations = ds.createUpdateOperations(IssueProject.class).set("status", st);
+		ds.update(query, operations);
 		return new MagicResponse();
 	}
 	@GetMapping("/token_deployed")
