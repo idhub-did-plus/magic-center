@@ -26,44 +26,48 @@ public class LoginController {
 	public MagicResponse login(String action, String identity, String timestamp, String claim, String signature) {
 
 		Subject sub = SecurityUtils.getSubject();
-		if(action != null && action.equals("reentry")) {
-		if(sub.isAuthenticated()){
-			MagicResponse resp = new MagicResponse();
-			resp.setMessage("login successful!");
-			resp.setClaim(claim);
-			return resp;
-		}else {
-			MagicResponse resp = new MagicResponse();
-			resp.setMessage("Please login first!");
-			resp.setSuccess(false);
-			return resp;
-		}
+		if (action != null && action.equals("reentry")) {
+			if (sub.isAuthenticated()) {
+
+				return success(claim);
+			} else {
+
+				return fail();
+			}
 		}
 		if (sub.hasRole(claim)) {
-			MagicResponse resp = new MagicResponse();
-			resp.setMessage("login successful!");
-			resp.setClaim(claim);
-			return resp;
+
+			return success(claim);
 		}
 
 		SignatureToken token = new SignatureToken(identity, claim, timestamp, signature);
 
 		sub.login(token);
-		MagicResponse resp = new MagicResponse();
-		resp.setMessage("login successful!");
-		resp.setClaim(claim);
-		return resp;
-	
+
+		return success(claim);
 
 	}
 
 	@GetMapping("/logout")
 	public MagicResponse logout() {
+		Subject sub = SecurityUtils.getSubject();
+		sub.logout();
 		return new MagicResponse();
 	}
 
 	@GetMapping("/notice")
 	public MagicResponse notice() {
+		return fail();
+	}
+
+	MagicResponse success(String claim) {
+		MagicResponse resp = new MagicResponse();
+		resp.setMessage("login successful!");
+		resp.setClaim(claim);
+		return resp;
+	}
+
+	MagicResponse fail() {
 		MagicResponse resp = new MagicResponse();
 		resp.setMessage("Please login first!");
 		resp.setSuccess(false);
