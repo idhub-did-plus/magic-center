@@ -52,16 +52,16 @@ public class IssuranceController {
 	}
 
 	@GetMapping("/list")
-	public MagicResponse<List<IssueProject>> list(String pid) {
+	public MagicResponse<List<IssuranceRecord>> list(String pid) {
 		Subject sub = SecurityUtils.getSubject();
 		String identity = sub == null ? null : (String) sub.getPrincipal();
-		List<IssueProject> rst = listAll(identity, ProjectStatus.deployed);
-		return new MagicResponse<List<IssueProject>>(rst);
+		List<IssuranceRecord> rst = listAll(pid);
+		return new MagicResponse<List<IssuranceRecord>>(rst);
 	}
 
 	
-	public List<IssueProject> listAll(String identity, ProjectStatus state) {
-		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("state").equal(state.name())
+	public List<IssuranceRecord> listAll(String pid) {
+		Query<IssuranceRecord> query = ds.createQuery(IssuranceRecord.class).field("projectId").equal(pid)
 				.order("createTime");
 
 		return query.asList();
@@ -72,7 +72,7 @@ public class IssuranceController {
 		Subject sub = SecurityUtils.getSubject();
 		String identity = sub == null ? null : (String) sub.getPrincipal();
 
-		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("projectId").equal(pid);
+		Query<IssuranceRecord> query = ds.createQuery(IssuranceRecord.class).field("projectId").equal(pid);
 		return new MagicResponse<Long>(query.countAll());
 	}
 
