@@ -11,8 +11,8 @@ public class IssueProject{
 	String id;
 	String name   ;
 	String agentIdentity ;
-	String status;
-	Date createTime;
+	String status = ProjectStatus.editing.name();
+	Date createTime = new Date();
 	ProjectDetail projectDetail = new ProjectDetail();
 	IssuerInformation issuerInformation = new IssuerInformation();
 	TokenConfig tokenConfig;

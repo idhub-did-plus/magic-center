@@ -88,8 +88,11 @@ public class IssueProjectController {
 
 	@PostMapping("/save_issuer_information")
 	public MagicResponse saveIssuerInformation(String pid, @RequestBody IssuerInformation info) {
+		Subject sub = SecurityUtils.getSubject();
+		String identity = sub == null ? null : (String) sub.getPrincipal();
 		if(pid == null) {
 			IssueProject p = new IssueProject();
+			p.setAgentIdentity(identity);
 			ds.save(p);
 			pid = p.getId();
 		}
@@ -100,8 +103,11 @@ public class IssueProjectController {
 	}
 	@PostMapping("/save_project_detail")
 	public MagicResponse saveProjectDetail(String pid,@RequestBody ProjectDetail info) {
+		Subject sub = SecurityUtils.getSubject();
+		String identity = sub == null ? null : (String) sub.getPrincipal();
 		if(pid == null) {
 			IssueProject p = new IssueProject();
+			p.setAgentIdentity(identity);
 			ds.save(p);
 			pid = p.getId();
 		}
