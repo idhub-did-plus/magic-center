@@ -47,7 +47,7 @@ public class IssueProjectController {
 	public MagicResponse<List<IssueProject>> listPage(ProjectStatus status, int startPage, int pageSize) {
 		Subject sub = SecurityUtils.getSubject();
 		String identity = sub == null ? null : (String) sub.getPrincipal();
-		List<IssueProject> rst = listPage(identity, ProjectStatus.deployed, startPage, pageSize);
+		List<IssueProject> rst = listPage(identity, status, startPage, pageSize);
 		return new MagicResponse<List<IssueProject>>(rst);
 	} 
 
@@ -55,7 +55,7 @@ public class IssueProjectController {
 	public MagicResponse<List<IssueProject>> list(ProjectStatus status) {
 		Subject sub = SecurityUtils.getSubject();
 		String identity = sub == null ? null : (String) sub.getPrincipal();
-		List<IssueProject> rst = listAll(identity, ProjectStatus.deployed);
+		List<IssueProject> rst = listAll(identity, status);
 		return new MagicResponse<List<IssueProject>>(rst);
 	}
 
@@ -147,9 +147,10 @@ public class IssueProjectController {
 	}
 	@GetMapping("/test")
 	public MagicResponse test() {
-		//Subject sub = SecurityUtils.getSubject();
-	//	String identity = sub == null ? null : (String) sub.getPrincipal();
+		Subject sub = SecurityUtils.getSubject();
+		String identity = sub == null ? null : (String) sub.getPrincipal();
 		IssueProject p = new IssueProject();
+		p.setAgentIdentity(identity);
 		ds.save(p);
 		
 		return new MagicResponse(p);
