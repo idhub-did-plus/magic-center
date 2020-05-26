@@ -42,26 +42,26 @@ public class IssuranceController {
 	private SimpleStorageService simpleStorageService;
 
 	@GetMapping("/list_page")
-	public MagicResponse<List<IssuranceRecord>> listPage(String pid, int startPage, int pageSize) {
+	public MagicResponse<List<IssuranceRecord>> listPage(ProjectStatus status, int startPage, int pageSize) {
 		Subject sub = SecurityUtils.getSubject();
 		String identity = sub == null ? null : (String) sub.getPrincipal();
-		Query<IssuranceRecord> query = ds.createQuery(IssuranceRecord.class).field("projectId").equal(pid)
+		Query<IssuranceRecord> query = ds.createQuery(IssuranceRecord.class).field("status").equal(status.name())
 				.offset(startPage * pageSize).limit(pageSize).order("createTime");
 		List<IssuranceRecord> rst = query.asList();
 		return new MagicResponse<List<IssuranceRecord>>(rst);
 	}
 
 	@GetMapping("/list")
-	public MagicResponse<List<IssueProject>> list(String pid) {
+	public MagicResponse<List<IssueProject>> list(ProjectStatus status) {
 		Subject sub = SecurityUtils.getSubject();
 		String identity = sub == null ? null : (String) sub.getPrincipal();
-		List<IssueProject> rst = listAll(identity, ProjectStatus.deployed);
+		List<IssueProject> rst = listAll(identity, status);
 		return new MagicResponse<List<IssueProject>>(rst);
 	}
 
 	
 	public List<IssueProject> listAll(String identity, ProjectStatus state) {
-		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("state").equal(state.name())
+		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("status").equal(state.name())
 				.order("createTime");
 
 		return query.asList();
