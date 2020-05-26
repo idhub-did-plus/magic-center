@@ -23,9 +23,22 @@ public class LoginController {
 	Datastore datastore;
 
 	@GetMapping("/login")
-	public MagicResponse login(String action, @RequestParam String identity, @RequestParam String timestamp, @RequestParam String claim, @RequestParam String signature) {
+	public MagicResponse login(String action, String identity, String timestamp, String claim, String signature) {
 
 		Subject sub = SecurityUtils.getSubject();
+		if(action != null && action.equals("reentry")) {
+		if(sub.isAuthenticated()){
+			MagicResponse resp = new MagicResponse();
+			resp.setMessage("login successful!");
+			resp.setClaim(claim);
+			return resp;
+		}else {
+			MagicResponse resp = new MagicResponse();
+			resp.setMessage("Please login first!");
+			resp.setSuccess(false);
+			return resp;
+		}
+		}
 		if (sub.hasRole(claim)) {
 			MagicResponse resp = new MagicResponse();
 			resp.setMessage("login successful!");
