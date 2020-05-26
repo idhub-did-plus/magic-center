@@ -88,6 +88,11 @@ public class IssueProjectController {
 
 	@PostMapping("/save_issuer_information")
 	public MagicResponse saveIssuerInformation(String pid, @RequestBody IssuerInformation info) {
+		if(pid == null) {
+			IssueProject p = new IssueProject();
+			ds.save(p);
+			pid = p.getId();
+		}
 		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("id").equal(pid);
 		UpdateOperations<IssueProject> operations = ds.createUpdateOperations(IssueProject.class).set("issuerInformation", info);
 		ds.update(query, operations);
@@ -95,6 +100,11 @@ public class IssueProjectController {
 	}
 	@PostMapping("/save_project_detail")
 	public MagicResponse saveProjectDetail(String pid,@RequestBody ProjectDetail info) {
+		if(pid == null) {
+			IssueProject p = new IssueProject();
+			ds.save(p);
+			pid = p.getId();
+		}
 		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("id").equal(pid);
 		UpdateOperations<IssueProject> operations = ds.createUpdateOperations(IssueProject.class).set("projectDetail", info);
 		ds.update(query, operations);

@@ -1,5 +1,7 @@
 package com.idhub.magic.infra.model;
 
+import java.util.Date;
+
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 @Entity
@@ -18,6 +20,7 @@ public class ProjectMaterial {
 	String type;
 	String projectId;
 	String contentDescription;
+	Date uploadTime;
 
 	public String getContentDescription() {
 		return contentDescription;
@@ -27,7 +30,21 @@ public class ProjectMaterial {
 		this.contentDescription = contentDescription;
 	}
 
+	public ProjectMaterial() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Date getUploadTime() {
+		return uploadTime;
+	}
+
+	public void setUploadTime(Date uploadTime) {
+		this.uploadTime = uploadTime;
+	}
+
 	public ProjectMaterial(String pid, String type, String name, String ext) {
+		this.uploadTime = new Date();
 		this.projectId = pid;
 		this.name = name;
 		this.type = type;

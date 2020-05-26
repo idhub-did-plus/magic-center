@@ -43,7 +43,7 @@ public class MaterialController {
 	
 	@PostMapping("/upload_material")
 	@ResponseBody
-	public MagicResponse upload(@RequestParam("file") MultipartFile file, String pid, String type, String name)
+	public MagicResponse<ProjectMaterial> upload(@RequestParam("file") MultipartFile file, String pid, String type, String name)
 			throws Exception {
 		if (file.isEmpty()) {
 			return new MagicResponse(false, "upload fail!");
@@ -55,7 +55,7 @@ public class MaterialController {
 		simpleStorageService.store(file, mat.getId());
 		ds.save(mat);
 
-		return new MagicResponse();
+		return new MagicResponse<ProjectMaterial>(mat);
 	}
 
 	private String extension(MultipartFile file) {
