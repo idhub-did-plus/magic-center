@@ -49,6 +49,7 @@ public class ProjectMaterial {
 		this.name = name;
 		this.type = type;
 		this.ext = ext;
+		this.id = pid + type + name;
 	}
 
 	public String getExt() {
