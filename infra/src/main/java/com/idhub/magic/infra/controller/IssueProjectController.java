@@ -99,7 +99,7 @@ public class IssueProjectController {
 		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("id").equal(pid);
 		UpdateOperations<IssueProject> operations = ds.createUpdateOperations(IssueProject.class).set("issuerInformation", info);
 		ds.update(query, operations);
-		return new MagicResponse();
+		return new MagicResponse(pid);
 	}
 	@PostMapping("/save_project_detail")
 	public MagicResponse saveProjectDetail(String pid,@RequestBody ProjectDetail info) {
@@ -115,14 +115,14 @@ public class IssueProjectController {
 		UpdateOperations<IssueProject> operations = ds.createUpdateOperations(IssueProject.class).set("projectDetail", info);
 		ds.update(query, operations);
 
-		return new MagicResponse<IssueProject>();
+		return new MagicResponse(pid);
 	}
 	@PostMapping("/save_token_config")
 	public MagicResponse saveTokenConfig(String pid,@RequestBody TokenConfig tokenConfig) {
 		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("id").equal(pid);
 		UpdateOperations<IssueProject> operations = ds.createUpdateOperations(IssueProject.class).set("tokenConfig", tokenConfig);
 		ds.update(query, operations);
-		return new MagicResponse<IssueProject>();
+		return new MagicResponse(pid);
 	}
 
 
