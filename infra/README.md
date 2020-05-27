@@ -44,4 +44,6 @@
 有关broker dealer注册功能：
 1. 快速注册，不经审批，即刻完成。这时只填写简单信息。
 2. 高级功能须申请专用claim。这时要补充完整相应资料。
+接口参见RegistrationController.
+其中的signup是不需要登录状态
 
