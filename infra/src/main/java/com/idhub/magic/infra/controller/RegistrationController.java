@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.idhub.magic.infra.model.Account;
 import com.idhub.magic.infra.model.AgentAdvancedInformation;
 import com.idhub.magic.infra.model.AgentStatus;
 import com.idhub.magic.infra.model.IssueAgent;
@@ -31,6 +32,11 @@ public class RegistrationController {
 		agent.setStatus(AgentStatus.auditing.name());
 		agent.setCreateTime(new Date());
 		ds.save(agent);
+		
+		
+		Account ac = new Account();
+		ac.setIdentity(agent.getIdentity());
+		ds.save(ac);
 		return new MagicResponse();
 	}
 	@GetMapping("/signup")
@@ -39,6 +45,7 @@ public class RegistrationController {
 		UpdateOperations<IssueAgent> operations = ds.createUpdateOperations(IssueAgent.class).set("advancedInformation", agent);
 		ds.update(query, operations);
 		ds.save(agent);
+
 		return new MagicResponse();
 	}
 
