@@ -39,7 +39,7 @@ public class RegistrationController {
 		ds.save(ac);
 		return new MagicResponse();
 	}
-	@GetMapping("/signup")
+	@GetMapping("/complete")
 	public MagicResponse complete(String id, AgentAdvancedInformation agent) {
 		Query<IssueAgent> query = ds.createQuery(IssueAgent.class).field("id").equal(id);
 		UpdateOperations<IssueAgent> operations = ds.createUpdateOperations(IssueAgent.class).set("advancedInformation", agent);
