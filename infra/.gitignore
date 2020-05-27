@@ -1,6 +1,5 @@
 /target/
-/magic-contract/build
-/magic-contract/node_modules
+/src/main/resources/application.yml
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
