@@ -43,14 +43,14 @@ public class MaterialController {
 	
 	@PostMapping("/upload_material")
 	@ResponseBody
-	public MagicResponse<ProjectMaterial> upload(@RequestParam("file") MultipartFile file, String pid, String type, String name)
+	public MagicResponse<ProjectMaterial> upload(@RequestParam(" ") MultipartFile file, String pid, String type, String name,String content)
 			throws Exception {
 		if (file.isEmpty()) {
 			return new MagicResponse(false, "upload fail!");
 		}
 		// byte[] data = IOUtils.toByteArray(file.getInputStream());
 		String ext = extension(file);
-		ProjectMaterial mat = new ProjectMaterial(pid, type, name, ext);
+		ProjectMaterial mat = new ProjectMaterial(pid, type, name, ext, content);
 
 		simpleStorageService.store(file, mat.getId());
 		ds.save(mat);

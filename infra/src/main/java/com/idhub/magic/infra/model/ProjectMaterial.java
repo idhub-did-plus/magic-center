@@ -43,13 +43,14 @@ public class ProjectMaterial {
 		this.uploadTime = uploadTime;
 	}
 
-	public ProjectMaterial(String pid, String type, String name, String ext) {
+	public ProjectMaterial(String pid, String type, String name, String ext,String content) {
 		this.uploadTime = new Date();
 		this.projectId = pid;
 		this.name = name;
 		this.type = type;
 		this.ext = ext;
 		this.id = pid + type + name;
+		this.contentDescription = content;
 	}
 
 	public String getExt() {
