@@ -90,6 +90,7 @@ public class IssueProjectController {
 	public MagicResponse saveIssuerInformation(String pid, @RequestBody IssuerInformation info) {
 		Subject sub = SecurityUtils.getSubject();
 		String identity = sub == null ? null : (String) sub.getPrincipal();
+		pid = trim(pid);
 		if(pid == null) {
 			IssueProject p = new IssueProject();
 			p.setAgentIdentity(identity);
@@ -103,6 +104,7 @@ public class IssueProjectController {
 	}
 	@PostMapping("/save_project_detail")
 	public MagicResponse saveProjectDetail(String pid,@RequestBody ProjectDetail info) {
+		pid = trim(pid);
 		Subject sub = SecurityUtils.getSubject();
 		String identity = sub == null ? null : (String) sub.getPrincipal();
 		if(pid == null) {
@@ -116,6 +118,16 @@ public class IssueProjectController {
 		ds.update(query, operations);
 
 		return new MagicResponse(pid);
+	}
+	String trim(String s) {
+		if(s == null)
+			return null;
+		s = s.trim();
+		if(s.isEmpty())
+			return null;
+		if(s.equals("null"))
+			return null;
+		return s;
 	}
 	@PostMapping("/save_token_config")
 	public MagicResponse saveTokenConfig(String pid,@RequestBody TokenConfig tokenConfig) {
