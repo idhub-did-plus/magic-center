@@ -37,3 +37,11 @@
 /material/upload_material?pid=name=type=
 /material/retrieve_materials?pid=
 /material/material_stream?id=
+
+
+
+
+有关broker dealer注册功能：
+1. 快速注册，不经审批，即刻完成。这时只填写简单信息。
+2. 高级功能须申请专用claim。这时要补充完整相应资料。
+

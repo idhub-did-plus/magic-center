@@ -9,7 +9,6 @@ import org.mongodb.morphia.annotations.Id;
 public class IssueProject{
 	@Id
 	String id;
-	String name   ;
 	String agentIdentity ;
 	String status = ProjectStatus.editing.name();
 	Date createTime = new Date();
@@ -23,12 +22,7 @@ public class IssueProject{
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+
 	public String getAgentIdentity() {
 		return agentIdentity;
 	}
