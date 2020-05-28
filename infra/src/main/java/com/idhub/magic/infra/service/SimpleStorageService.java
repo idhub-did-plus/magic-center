@@ -34,7 +34,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.transfer.TransferManager;
 
 @Service
-public class SimpleStorageService {
+public class SimpleStorageService implements StorageService{
 
 	AmazonS3Client s3;
 

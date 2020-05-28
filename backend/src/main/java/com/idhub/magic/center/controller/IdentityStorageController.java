@@ -29,7 +29,7 @@ import com.idhub.magic.center.annotation.DoNotAuth;
 import com.idhub.magic.center.entity.ClaimEntity;
 import com.idhub.magic.center.service.IdentityAggregationService;
 import com.idhub.magic.center.service.MyIden;
-import com.idhub.magic.center.service.SimpleStorageService;
+import com.idhub.magic.center.service.StorageService;
 import com.idhub.magic.center.ustorage.IdentityStorage;
 import com.idhub.magic.center.ustorage.MaterialWrapper;
 import com.idhub.magic.common.parameter.MagicResponse;
@@ -46,7 +46,7 @@ import static java.util.stream.Collectors.toList;
 public class IdentityStorageController {
 	@Autowired Datastore store;
 	@Autowired IdentityAggregationService identityAggregationService;
-	@Autowired SimpleStorageService simpleStorageService;
+	@Autowired StorageService simpleStorageService;
 	@PostMapping("/store_archive")
 	public MagicResponse storeArchive(@RequestBody IdentityArchive archive,	String identity) {
 		boolean notexists = store.createQuery(IdentityStorage.class).field("id").equal(identity).asList().isEmpty();

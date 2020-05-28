@@ -30,6 +30,7 @@ import com.idhub.magic.infra.model.ProjectMaterial;
 import com.idhub.magic.infra.model.ProjectStatus;
 import com.idhub.magic.infra.model.TokenConfig;
 import com.idhub.magic.infra.service.SimpleStorageService;
+import com.idhub.magic.infra.service.StorageService;
 
 @CrossOrigin
 @RestController
@@ -38,7 +39,8 @@ public class MaterialController {
 
 	@Autowired
 	Datastore ds;
-	private SimpleStorageService simpleStorageService;
+	@Autowired
+	private StorageService storageService;
 
 	
 	@PostMapping("/upload_material")
@@ -52,7 +54,7 @@ public class MaterialController {
 		String ext = extension(file);
 		ProjectMaterial mat = new ProjectMaterial(pid, type, name, ext, content);
 
-		simpleStorageService.store(file, mat.getId());
+		storageService.store(file, mat.getId());
 		ds.save(mat);
 
 		return new MagicResponse<ProjectMaterial>(mat);
@@ -100,7 +102,7 @@ public class MaterialController {
 		}else {
 			response.setContentType("application/pdf");
 		}
-		this.simpleStorageService.stream(mat.getId(), response.getOutputStream());
+		this.storageService.stream(mat.getId(), response.getOutputStream());
 		/*
 		 * byte[] data = getData(wrapper); response.getOutputStream().write(data);
 		 * response.getOutputStream().flush();
@@ -108,7 +110,7 @@ public class MaterialController {
 	}
 	private byte[] getData(ProjectMaterial wrapper) {
 		
-		byte[] data = this.simpleStorageService.get(wrapper.getId());//wrapper.getMaterial().getData();
+		byte[] data = this.storageService.get(wrapper.getId());//wrapper.getMaterial().getData();
 	//	byte[] data = wrapper.getMaterial().getData();
 		return data;
 	}

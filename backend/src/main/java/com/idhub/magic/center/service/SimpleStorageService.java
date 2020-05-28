@@ -34,7 +34,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.transfer.TransferManager;
 
 @Service
-public class SimpleStorageService {
+public class SimpleStorageService implements StorageService {
 
 	AmazonS3Client s3;
 
@@ -61,6 +61,7 @@ public class SimpleStorageService {
 
 	}
 
+	@Override
 	public String store(MultipartFile file, String key) {
 		try {
 			byte[] data = file.getBytes();
@@ -79,6 +80,7 @@ public class SimpleStorageService {
 		} 
 	}
 
+	@Override
 	public String store(byte[] data, String key) {
 		try {
 
@@ -96,6 +98,7 @@ public class SimpleStorageService {
 		}
 	}
 
+	@Override
 	public byte[] get(String key) {
 		try {
 			S3Object object = s3.getObject(new GetObjectRequest(bucketName, key));
@@ -108,6 +111,7 @@ public class SimpleStorageService {
 			throw new RuntimeException(ase);
 		}
 	}
+	@Override
 	public void stream(String key, OutputStream out) {
 		try {
 			S3Object so = s3.getObject(new GetObjectRequest(bucketName, key));
