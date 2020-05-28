@@ -43,7 +43,7 @@ public class MaterialController {
 	
 	@PostMapping("/upload_material")
 	@ResponseBody
-	public MagicResponse<ProjectMaterial> upload(@RequestParam(" ") MultipartFile file, String pid, String type, String name,String content)
+	public MagicResponse<ProjectMaterial> upload(@RequestParam("file") MultipartFile file, String pid, String type, String name,String content)
 			throws Exception {
 		if (file.isEmpty()) {
 			return new MagicResponse(false, "upload fail!");
