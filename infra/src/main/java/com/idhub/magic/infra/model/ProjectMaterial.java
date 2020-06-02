@@ -21,6 +21,8 @@ public class ProjectMaterial {
 	String projectId;
 	String contentDescription;
 	Date uploadTime;
+	Date onchainTime;
+	boolean onchain = false;
 
 	public String getContentDescription() {
 		return contentDescription;

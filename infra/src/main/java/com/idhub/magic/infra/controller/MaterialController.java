@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toList;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -80,10 +82,21 @@ public class MaterialController {
 	
 	@GetMapping("/remove_material")
 	@ResponseBody
-	public MagicResponse removeMaterial(String identity, String type, String name) {
-		String id = identity + type + name;
+	public MagicResponse removeMaterial(String id) {
+
 		Query<ProjectMaterial> query = ds.find(ProjectMaterial.class, "id", id);
 		ds.delete(query);
+		MagicResponse rst = new MagicResponse();
+
+		return rst;
+	}
+	@GetMapping("/onchain")
+	@ResponseBody
+	public MagicResponse onchain(String id) {
+
+		Query<ProjectMaterial> query = ds.find(ProjectMaterial.class, "id", id);
+		UpdateOperations<ProjectMaterial> up = ds.createUpdateOperations(ProjectMaterial.class).set("onchainTime", new Date()).set("onchain", true);
+		ds.update(query, up);
 		MagicResponse rst = new MagicResponse();
 
 		return rst;
