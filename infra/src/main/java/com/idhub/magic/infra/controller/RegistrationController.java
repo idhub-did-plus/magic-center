@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
@@ -82,7 +83,8 @@ public class RegistrationController {
 	public MagicResponse audit(String aid, boolean agree, String comment) {
 		Subject sub = SecurityUtils.getSubject();
 		String identity = sub == null ? null : (String) sub.getPrincipal();
-		Query<IssueAgent> query = ds.createQuery(IssueAgent.class).field("id").equal(aid);
+		ObjectId objectId = new ObjectId(aid);
+		Query<IssueAgent> query = ds.createQuery(IssueAgent.class).field("id").equal(objectId);
 		AgentStatus st = agree?AgentStatus.passed:AgentStatus.denied;
 		UpdateOperations<IssueAgent> operations = ds.createUpdateOperations(IssueAgent.class).set("status", st);
 		ds.update(query, operations);

@@ -29,6 +29,7 @@ import com.idhub.magic.infra.model.IssuerInformation;
 import com.idhub.magic.infra.model.ProjectMaterial;
 import com.idhub.magic.infra.model.ProjectStatus;
 import com.idhub.magic.infra.model.TokenConfig;
+import com.idhub.magic.infra.service.MongoStorageService;
 import com.idhub.magic.infra.service.SimpleStorageService;
 import com.idhub.magic.infra.service.StorageService;
 
@@ -40,7 +41,7 @@ public class MaterialController {
 	@Autowired
 	Datastore ds;
 	@Autowired
-	private StorageService storageService;
+	private MongoStorageService storageService;
 
 	
 	@PostMapping("/upload_material")

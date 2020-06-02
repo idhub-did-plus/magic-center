@@ -35,7 +35,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.idhub.magic.infra.model.FileStorage;
 
-//@Service
+@Service
 public class MongoStorageService implements StorageService{
 	@Autowired
 	Datastore ds;
