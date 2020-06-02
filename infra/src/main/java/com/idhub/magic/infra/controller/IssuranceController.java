@@ -40,7 +40,13 @@ public class IssuranceController {
 	@Autowired
 	Datastore ds;
 	private SimpleStorageService simpleStorageService;
-
+	@GetMapping("/record")
+	public MagicResponse record(IssuranceRecord rec) {
+		Subject sub = SecurityUtils.getSubject();
+		String identity = sub == null ? null : (String) sub.getPrincipal();
+		ds.save(rec);
+		return new MagicResponse(rec);
+	}
 	@GetMapping("/list_page")
 	public MagicResponse<List<IssuranceRecord>> listPage(String pid, int startPage, int pageSize) {
 		Subject sub = SecurityUtils.getSubject();
