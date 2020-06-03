@@ -163,7 +163,7 @@ public class IssueProjectController {
 		String identity = sub == null ? null : (String) sub.getPrincipal();
 		ObjectId objectId = new ObjectId(pid);
 		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("id").equal(objectId);
-		UpdateOperations<IssueProject> operations = ds.createUpdateOperations(IssueProject.class).set("deployedToken", dt);
+		UpdateOperations<IssueProject> operations = ds.createUpdateOperations(IssueProject.class).set("deployedToken", dt).set("status", ProjectStatus.deployed);
 		ds.update(query, operations);
 		return new MagicResponse();
 	}
