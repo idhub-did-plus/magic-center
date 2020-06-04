@@ -158,7 +158,7 @@ public class IssueProjectController {
 		return new MagicResponse();
 	}
 	@GetMapping("/token_deployed")
-	public MagicResponse tokenDeployed(String pid, DeployedToken dt) {
+	public MagicResponse tokenDeployed(String pid, @RequestBody  DeployedToken dt) {
 		Subject sub = SecurityUtils.getSubject();
 		String identity = sub == null ? null : (String) sub.getPrincipal();
 		ObjectId objectId = new ObjectId(pid);
