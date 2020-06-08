@@ -75,7 +75,7 @@ public class MaterialController {
 	@GetMapping("/retrieve_materials")
 	@ResponseBody
 	public MagicResponse<List<ProjectMaterial>> retrieveMaterials(String pid) {
-		Query<ProjectMaterial> query = ds.find(ProjectMaterial.class, "material.projectId", pid);
+		Query<ProjectMaterial> query = ds.find(ProjectMaterial.class, "projectId", pid);
 		List<ProjectMaterial> data = query.asList();
 		
 		MagicResponse<List<ProjectMaterial>> rst = new MagicResponse<List<ProjectMaterial>>();
