@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.mongodb.morphia.Datastore;
@@ -56,8 +57,10 @@ public class MaterialController {
 		// byte[] data = IOUtils.toByteArray(file.getInputStream());
 		String ext = extension(file);
 		ProjectMaterial mat = new ProjectMaterial(pid, type, name, ext, content);
-
-		storageService.store(file, mat.getId());
+		byte[] data = file.getBytes();
+		String md5Hex = DigestUtils.md5Hex(data).toUpperCase();
+		mat.setHash(md5Hex);
+		storageService.store(data, mat.getId());
 		ds.save(mat);
 
 		return new MagicResponse<ProjectMaterial>(mat);

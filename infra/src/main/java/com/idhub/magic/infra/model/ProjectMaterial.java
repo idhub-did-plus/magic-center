@@ -22,6 +22,30 @@ public class ProjectMaterial {
 	String contentDescription;
 	Date uploadTime;
 	Date onchainTime;
+	String hash;
+	public Date getOnchainTime() {
+		return onchainTime;
+	}
+
+	public void setOnchainTime(Date onchainTime) {
+		this.onchainTime = onchainTime;
+	}
+
+	public String getHash() {
+		return hash;
+	}
+
+	public void setHash(String hash) {
+		this.hash = hash;
+	}
+
+	public boolean isOnchain() {
+		return onchain;
+	}
+
+	public void setOnchain(boolean onchain) {
+		this.onchain = onchain;
+	}
 	boolean onchain = false;
 
 	public String getContentDescription() {
