@@ -52,7 +52,7 @@ public class IssuranceController {
 		Subject sub = SecurityUtils.getSubject();
 		String identity = sub == null ? null : (String) sub.getPrincipal();
 		Query<IssuranceRecord> query = ds.createQuery(IssuranceRecord.class).field("projectId").equal(pid)
-				.offset(startPage * pageSize).limit(pageSize).order("createTime");
+				.offset(startPage * pageSize).limit(pageSize).order("time");
 		List<IssuranceRecord> rst = query.asList();
 		return new MagicResponse<List<IssuranceRecord>>(rst);
 	}

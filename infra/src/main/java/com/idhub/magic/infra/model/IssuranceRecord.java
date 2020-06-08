@@ -8,7 +8,7 @@ import org.mongodb.morphia.annotations.Id;
 public class IssuranceRecord {
 	@Id
 	String id;
-	Date time;
+	Date time = new Date();
 	String projectId;
 	String tokenAddress;
 
