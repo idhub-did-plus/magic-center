@@ -68,7 +68,7 @@ public class IssuranceController {
 	
 	public List<IssuranceRecord> listAll(String pid) {
 		Query<IssuranceRecord> query = ds.createQuery(IssuranceRecord.class).field("projectId").equal(pid)
-				.order("createTime");
+				.order("time");
 
 		return query.asList();
 	}
