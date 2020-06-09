@@ -43,6 +43,7 @@ public class LoginController {
 		SignatureToken token = new SignatureToken(identity, claim, timestamp, signature);
 
 		sub.login(token);
+		sub.checkRole(claim);
 
 		return success(claim);
 

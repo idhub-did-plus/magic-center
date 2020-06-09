@@ -3,6 +3,9 @@ package com.idhub.magic.infra.access;
 import java.io.UnsupportedEncodingException;
 import java.security.SignatureException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -11,7 +14,10 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.web3j.crypto.Keys;
 import org.web3j.crypto.Sign;
 import org.web3j.utils.Numeric;
@@ -22,13 +28,26 @@ public class SmartRealm extends AuthorizingRealm {
 		super();
 		this.setAuthenticationTokenClass(SignatureToken.class);
 	}
+	public HttpSession getSession(){
+        //获取到ServletRequestAttributes 里面有 
+        ServletRequestAttributes attrs = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        //获取到Request对象
+        HttpServletRequest request = attrs.getRequest();
+        //获取到Session对象
+        HttpSession session = request.getSession();
+
+        //获取到Response对象
+        //HttpServletResponse response = attrs.getResponse();
+        return session;
+    }
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		
+		HttpSession sess = getSession();
+		String claim = (String) sess.getAttribute("claim");
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
-		info.addRole("lawer");
+		info.addRole(claim);
 
 		return info;
 	}
@@ -38,6 +57,8 @@ public class SmartRealm extends AuthorizingRealm {
 			throws AuthenticationException {
 
 		SignatureToken token = (SignatureToken) authcToken;
+		HttpSession sess = getSession();
+		sess.setAttribute("claim", token.getClaim());
 		MyCredential credentials = (MyCredential) token.getCredentials();
 		if(true)
 			return new SimpleAuthenticationInfo(token.getPrincipal(), token.getCredentials(), getName());
@@ -67,6 +88,7 @@ public class SmartRealm extends AuthorizingRealm {
 		boolean rst = signerAddress.equalsIgnoreCase(identity);
 		if (!rst)
 			throw new AuthenticationException("auth failed!");
+		
 		return new SimpleAuthenticationInfo(token.getPrincipal(), token.getCredentials(), getName());
 
 	}

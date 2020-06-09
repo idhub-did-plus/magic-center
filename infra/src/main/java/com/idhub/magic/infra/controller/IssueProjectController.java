@@ -58,7 +58,8 @@ public class IssueProjectController {
 	public MagicResponse<List<IssueProject>> list(ProjectStatus status) {
 		Subject sub = SecurityUtils.getSubject();
 		String identity = sub == null ? null : (String) sub.getPrincipal();
-		List<IssueProject> rst = listAll(identity, status);
+		boolean isManager = sub.hasRole("complianceManager");
+		List<IssueProject> rst = isManager?listAll(status): listMy(identity, status);
 		return new MagicResponse<List<IssueProject>>(rst);
 	}
 
@@ -69,8 +70,13 @@ public class IssueProjectController {
 			query.field("agentIdentity").equal(identity);
 		return query.asList();
 	}
+	public List<IssueProject> listAll( ProjectStatus status) {
+		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("status").equal(status.name())
+				.order("createTime");
 
-	public List<IssueProject> listAll(String identity, ProjectStatus status) {
+		return query.asList();
+	}
+	public List<IssueProject> listMy(String identity, ProjectStatus status) {
 		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("status").equal(status.name())
 				.order("createTime");
 		if (identity != null)

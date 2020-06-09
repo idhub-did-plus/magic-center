@@ -3,6 +3,10 @@ package com.idhub.magic.infra.access;
 import org.apache.shiro.authc.AuthenticationToken;
 
 public class SignatureToken implements AuthenticationToken {
+	public String getClaim() {
+		return claim;
+	}
+
 	String address;
 
 	String signature;
