@@ -152,6 +152,17 @@ public class IssueProjectController {
 	}
 
 
+	@GetMapping("/submit_to_audit")
+	public MagicResponse submit_to_audit(String pid) {
+		Subject sub = SecurityUtils.getSubject();
+		String identity = sub == null ? null : (String) sub.getPrincipal();
+		ObjectId objectId = new ObjectId(pid);
+		Query<IssueProject> query = ds.createQuery(IssueProject.class).field("id").equal(objectId);
+		ProjectStatus st = ProjectStatus.ready_for_audit;
+		UpdateOperations<IssueProject> operations = ds.createUpdateOperations(IssueProject.class).set("status", st);
+		ds.update(query, operations);
+		return new MagicResponse();
+	}
 	@GetMapping("/audit")
 	public MagicResponse audit(String pid, boolean agree, String comment) {
 		Subject sub = SecurityUtils.getSubject();
