@@ -11,6 +11,10 @@ public class FileStorage {
 		id = key;
 		data = data2;
 	}
+	public FileStorage() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	public String getId() {
 		return id;
 	}

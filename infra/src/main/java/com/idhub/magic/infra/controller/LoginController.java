@@ -24,7 +24,7 @@ public class LoginController {
 
 	@GetMapping("/login")
 	public MagicResponse login(String action, String identity, String timestamp, String claim, String signature) {
-
+		
 		Subject sub = SecurityUtils.getSubject();
 		if (action != null && action.equals("reentry")) {
 			if (sub.isAuthenticated()) {
@@ -34,6 +34,9 @@ public class LoginController {
 
 				return fail();
 			}
+		}
+		if(!claim.equals("complianceManager") && !claim.equals("BD")) {
+			return fail();
 		}
 		if (sub.hasRole(claim)) {
 

@@ -44,7 +44,7 @@ public class MaterialController {
 	@Autowired
 	Datastore ds;
 	@Autowired
-	private SimpleStorageService storageService;
+	private MongoStorageService storageService;
 
 	
 	@PostMapping("/upload_material")
