@@ -35,9 +35,11 @@ public class LoginController {
 				return fail();
 			}
 		}
-		if(!claim.equals("complianceManager") && !claim.equals("BD")) {
-			return fail();
+
+		if(!claim.equals("complianceManager") && !claim.equals("BD")) { 
+			return	fail();
 		}
+
 		if (sub.hasRole(claim)) {
 
 			return success(claim);

@@ -7,7 +7,7 @@ public class ProjectDetail {
 	boolean hasFinancialRegulator;
 	boolean everRaseedFunds;
 	String stepsCompleted;
-	int plannedRasedCapital;
+	String plannedRasedCapital;
 	public String getName() {
 		return name;
 	}
@@ -44,13 +44,12 @@ public class ProjectDetail {
 	public void setStepsCompleted(String stepsCompleted) {
 		this.stepsCompleted = stepsCompleted;
 	}
-	public int getPlannedRasedCapital() {
+	public String getPlannedRasedCapital() {
 		return plannedRasedCapital;
 	}
-	public void setPlannedRasedCapital(int plannedRasedCapital) {
+	public void setPlannedRasedCapital(String plannedRasedCapital) {
 		this.plannedRasedCapital = plannedRasedCapital;
 	}
-	
 	
 	
 
