@@ -13,7 +13,7 @@ public class IssuranceRecord {
 	String tokenAddress;
 
 	 String partition;
-	 int amount;
+	 String amount;
 	 String receiverAddress;
 	public String getId() {
 		return id;
@@ -45,10 +45,11 @@ public class IssuranceRecord {
 	public void setPartition(String partition) {
 		this.partition = partition;
 	}
-	public int getAmount() {
+
+	public String getAmount() {
 		return amount;
 	}
-	public void setAmount(int amount) {
+	public void setAmount(String amount) {
 		this.amount = amount;
 	}
 	public String getReceiverAddress() {
